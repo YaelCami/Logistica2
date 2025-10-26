@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.logistica2.viewController.CotizarTarifaViewController">
+   <children>
+      <Label layoutX="209.0" layoutY="14.0" text="Cotización Tarifa">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <VBox layoutX="22.0" layoutY="72.0" prefHeight="164.0" prefWidth="269.0" style="-fx-border-color: black;">
+         <children>
+            <VBox prefHeight="144.0" prefWidth="233.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="217.0" text="Dirección Origen" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="7.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Bell MT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Ciudad:" />
+                  <TextField prefHeight="25.0" prefWidth="199.0">
+                     <VBox.margin>
+                        <Insets left="4.0" right="4.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label text="Coordenadas:" />
+                  <TextField prefHeight="24.0" prefWidth="204.0">
+                     <VBox.margin>
+                        <Insets left="4.0" right="4.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Buscar">
+                     <VBox.margin>
+                        <Insets left="6.0" top="6.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="6.0" right="6.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox layoutX="22.0" layoutY="245.0" prefHeight="164.0" prefWidth="269.0" style="-fx-border-color: black;">
+         <children>
+            <VBox prefHeight="144.0" prefWidth="233.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="217.0" text="Dirección Destino" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="7.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Bell MT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Ciudad:" />
+                  <TextField prefHeight="25.0" prefWidth="199.0">
+                     <VBox.margin>
+                        <Insets left="4.0" right="4.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label text="Coordenadas:" />
+                  <TextField prefHeight="24.0" prefWidth="204.0">
+                     <VBox.margin>
+                        <Insets left="4.0" right="4.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Buscar">
+                     <VBox.margin>
+                        <Insets left="6.0" top="6.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="6.0" right="6.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox layoutX="300.0" layoutY="72.0" prefHeight="204.0" prefWidth="269.0" style="-fx-border-color: black;">
+         <children>
+            <VBox prefHeight="166.0" prefWidth="233.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="217.0" text="Informacion del Paquete" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="7.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Bell MT" size="14.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Peso:" />
+                  <TextField prefHeight="25.0" prefWidth="100.0">
+                     <VBox.margin>
+                        <Insets left="4.0" right="18.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label text="Volumen:" />
+                  <TextField prefHeight="24.0" prefWidth="204.0">
+                     <VBox.margin>
+                        <Insets left="4.0" right="18.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label text="Condicion:" />
+                  <ComboBox prefWidth="150.0">
+                     <VBox.margin>
+                        <Insets left="4.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <Button mnemonicParsing="false" text="Ingresar">
+                     <VBox.margin>
+                        <Insets left="4.0" top="6.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="8.0" right="8.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox layoutX="300.0" layoutY="288.0" prefHeight="121.0" prefWidth="269.0" style="-fx-border-color: black;">
+         <children>
+            <Button mnemonicParsing="false" text="Calcular Tarifa">
+               <VBox.margin>
+                  <Insets left="6.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Label text="Su pedido tendría un precio de:">
+               <VBox.margin>
+                  <Insets left="6.0" top="4.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="\$">
+               <VBox.margin>
+                  <Insets left="40.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="pesos">
+               <VBox.margin>
+                  <Insets left="35.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <Button fx:id="btnRegresar" layoutX="22.0" layoutY="19.0" mnemonicParsing="false" onAction="#onRegresar" text="Regresar" />
+   </children>
+</AnchorPane>

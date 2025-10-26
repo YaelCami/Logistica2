@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.logistica2.viewController.UsuarioViewController">
+   <children>
+      <Button layoutX="124.0" layoutY="164.0" mnemonicParsing="false" text="Solicitar Envío" />
+      <Button layoutX="248.0" layoutY="177.0" mnemonicParsing="false" text="Visualizar Historial" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Regresar" />
+      <Label layoutX="185.0" layoutY="42.0" prefHeight="40.0" prefWidth="126.0" text="Bienvenido">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Label layoutX="228.0" layoutY="106.0" text="¿Qúe deseas hacer?">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="321.0" layoutY="44.0" text="Usuario">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

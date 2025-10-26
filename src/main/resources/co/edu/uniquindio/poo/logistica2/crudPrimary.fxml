@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.logistica2.viewController.PrimaryViewController">
+   <children>
+      <Label layoutX="233.0" layoutY="98.0" prefHeight="27.0" prefWidth="100.0" text="Bienvenido">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField fx:id="txtIngresarId" layoutX="191.0" layoutY="202.0" prefHeight="25.0" prefWidth="120.0" />
+      <Button fx:id="btnIngresarId" layoutX="322.0" layoutY="202.0" mnemonicParsing="false" onAction="#onIngresar" text="Ingresar" />
+      <Button fx:id="btnCotizarTarifa" layoutX="180.0" layoutY="152.0" mnemonicParsing="false" onAction="#onCotizar" text="Cotizar Tarifa" />
+      <Button fx:id="btnRastrearPedido" layoutX="294.0" layoutY="152.0" mnemonicParsing="false" onAction="#onRastrear" text="Rastrear Pedido" />
+   </children>
+</AnchorPane>
