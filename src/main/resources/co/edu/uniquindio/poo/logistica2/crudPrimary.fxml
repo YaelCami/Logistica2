@@ -14,5 +14,6 @@
       <Button fx:id="btnIngresarId" layoutX="272.0" layoutY="202.0" mnemonicParsing="false" onAction="#onIngresar" text="Ingresar" textFill="#7d9453" />
       <Button fx:id="btnCotizarTarifa" layoutX="131.0" layoutY="143.0" mnemonicParsing="false" onAction="#onCotizar" text="Cotizar Tarifa" textFill="#7d9453" />
       <Button fx:id="btnRastrearPedido" layoutX="251.0" layoutY="143.0" mnemonicParsing="false" onAction="#onRastrear" text="Rastrear Pedido" textFill="#7d9453" />
+      <Button layoutX="199.0" layoutY="235.0" mnemonicParsing="false" onAction="#onAdmi" text="Admi" />
    </children>
 </AnchorPane>

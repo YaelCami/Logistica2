@@ -20,6 +20,10 @@ public class PrimaryViewController {
     @FXML
     public TextField txtIngresarId;
     @FXML
+    private void onAdmi(){
+        controller.irALAdmi();//PROVISIONAL
+    }
+    @FXML
     private void onIngresar(){
         controller.irAUsuario();//PROVISIONAL
     }

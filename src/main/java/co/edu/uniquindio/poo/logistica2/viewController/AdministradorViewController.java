@@ -13,7 +13,9 @@ public class AdministradorViewController {
         controller.irAlInicio();
     }
     @FXML
-    public void onGestionRepartidor(){}
+    public void onGestionRepartidor(){
+        controller.irAGestionRepartidor();
+    }
     @FXML
     public void onAsignarEnvio(){}
     public void setApp(App app) {

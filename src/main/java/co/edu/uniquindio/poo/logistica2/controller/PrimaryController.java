@@ -12,7 +12,9 @@ public class PrimaryController {
     public void irACotizar(){
         app.openCotizarTarifa();
     }
-
+    public void irALAdmi(){
+        app.openAdministrador();
+    }
     public void irAlRastreo(){
         app.openRastrearPedido();
     }
