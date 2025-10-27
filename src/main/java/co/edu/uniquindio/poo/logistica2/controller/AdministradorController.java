@@ -2,11 +2,11 @@ package co.edu.uniquindio.poo.logistica2.controller;
 
 import co.edu.uniquindio.poo.logistica2.App;
 
-public class HistorialEnviosController {
+public class AdministradorController {
     private App app;
 
     public void irAlInicio() {
-        app.openUsuario();
+        app.openViewPrincipal();
     }
     public void setApp(App app) {
         this.app = app;

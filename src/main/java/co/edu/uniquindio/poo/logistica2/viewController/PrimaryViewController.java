@@ -21,6 +21,7 @@ public class PrimaryViewController {
     public TextField txtIngresarId;
     @FXML
     private void onIngresar(){
+        controller.irAUsuario();//PROVISIONAL
     }
     @FXML
     private void onCotizar(){

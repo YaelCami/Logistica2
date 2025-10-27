@@ -7,11 +7,11 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.logistica2.viewController.CotizarTarifaViewController">
    <children>
-      <Label layoutX="209.0" layoutY="14.0" text="Cotización Tarifa">
+      <Label layoutX="209.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Cotización Tarifa">
          <font>
             <Font size="24.0" />
          </font></Label>
-      <VBox layoutX="22.0" layoutY="72.0" prefHeight="164.0" prefWidth="269.0" style="-fx-border-color: black;">
+      <VBox layoutX="22.0" layoutY="72.0" prefHeight="164.0" prefWidth="269.0" style="-fx-border-color: a5c36e;">
          <children>
             <VBox prefHeight="144.0" prefWidth="233.0">
                <children>
@@ -25,18 +25,18 @@
                   </Label>
                   <Separator prefWidth="200.0" />
                   <Label text="Ciudad:" />
-                  <TextField prefHeight="25.0" prefWidth="199.0">
+                  <ComboBox fx:id="cbxCiudadOrigen" prefHeight="25.0" prefWidth="224.0">
                      <VBox.margin>
-                        <Insets left="4.0" right="4.0" />
+                        <Insets left="4.0" />
                      </VBox.margin>
-                  </TextField>
+                  </ComboBox>
                   <Label text="Coordenadas:" />
-                  <TextField prefHeight="24.0" prefWidth="204.0">
+                  <TextField fx:id="txtCoordenadasOrigen" prefHeight="24.0" prefWidth="204.0">
                      <VBox.margin>
                         <Insets left="4.0" right="4.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Buscar">
+                     <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBuscarDireccionOrigen" prefHeight="25.0" prefWidth="57.0" text="Buscar" textFill="#7d9453">
                      <VBox.margin>
                         <Insets left="6.0" top="6.0" />
                      </VBox.margin>
@@ -62,18 +62,18 @@
                   </Label>
                   <Separator prefWidth="200.0" />
                   <Label text="Ciudad:" />
-                  <TextField prefHeight="25.0" prefWidth="199.0">
+                  <ComboBox fx:id="cbxCiudadDestino" prefHeight="25.0" prefWidth="224.0">
                      <VBox.margin>
-                        <Insets left="4.0" right="4.0" />
+                        <Insets left="4.0" />
                      </VBox.margin>
-                  </TextField>
+                  </ComboBox>
                   <Label text="Coordenadas:" />
-                  <TextField prefHeight="24.0" prefWidth="204.0">
+                  <TextField fx:id="txtCoordenadasDestino" prefHeight="24.0" prefWidth="204.0">
                      <VBox.margin>
                         <Insets left="4.0" right="4.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="Buscar">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBuscarDireccionDestino" prefHeight="25.0" prefWidth="57.0" text="Buscar" textFill="#7d9453">
                      <VBox.margin>
                         <Insets left="6.0" top="6.0" />
                      </VBox.margin>
@@ -99,24 +99,24 @@
                   </Label>
                   <Separator prefWidth="200.0" />
                   <Label text="Peso:" />
-                  <TextField prefHeight="25.0" prefWidth="100.0">
+                  <TextField fx:id="txtPeso" prefHeight="25.0" prefWidth="100.0">
                      <VBox.margin>
                         <Insets left="4.0" right="18.0" />
                      </VBox.margin>
                   </TextField>
                   <Label text="Volumen:" />
-                  <TextField prefHeight="24.0" prefWidth="204.0">
+                  <TextField fx:id="txtVolumen" prefHeight="24.0" prefWidth="204.0">
                      <VBox.margin>
                         <Insets left="4.0" right="18.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label text="Condicion:" />
-                  <ComboBox prefWidth="150.0">
+                  <Label text="Condicion Especial:" />
+                  <ComboBox fx:id="cbxCondicion" prefWidth="150.0">
                      <VBox.margin>
                         <Insets left="4.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Button mnemonicParsing="false" text="Ingresar">
+                  <Button mnemonicParsing="false" onAction="#onIngresar" text="Ingresar" textFill="#7d9453">
                      <VBox.margin>
                         <Insets left="4.0" top="6.0" />
                      </VBox.margin>
@@ -128,9 +128,9 @@
             </VBox>
          </children>
       </VBox>
-      <VBox layoutX="300.0" layoutY="288.0" prefHeight="121.0" prefWidth="269.0" style="-fx-border-color: black;">
+      <VBox layoutX="300.0" layoutY="288.0" prefHeight="121.0" prefWidth="269.0" style="-fx-border-color: a5c36e;">
          <children>
-            <Button mnemonicParsing="false" text="Calcular Tarifa">
+            <Button mnemonicParsing="false" onAction="#onCalcularTarifa" text="Calcular Tarifa" textFill="#7d9453">
                <VBox.margin>
                   <Insets left="6.0" top="10.0" />
                </VBox.margin>
@@ -143,18 +143,18 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label text="\$">
+            <Label fx:id="lblPrecio" prefHeight="17.0" prefWidth="34.0" style="-fx-font-weight: bold;" text="\$0.00">
                <VBox.margin>
                   <Insets left="40.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <Label text="pesos">
+            <Label>
                <VBox.margin>
                   <Insets left="35.0" />
                </VBox.margin>
             </Label>
          </children>
       </VBox>
-      <Button fx:id="btnRegresar" layoutX="22.0" layoutY="19.0" mnemonicParsing="false" onAction="#onRegresar" text="Regresar" />
+      <Button fx:id="btnRegresar" layoutX="22.0" layoutY="19.0" mnemonicParsing="false" onAction="#onRegresar" text="Regresar" textFill="#7d9453" />
    </children>
 </AnchorPane>

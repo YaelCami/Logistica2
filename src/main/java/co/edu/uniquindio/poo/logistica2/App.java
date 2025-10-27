@@ -77,7 +77,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openUsuario() {
+    public void openUsuario() {//Necesito pasarle un usuario para que pueda mostrar su nombre
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("Usuario.fxml"));
@@ -96,7 +96,26 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openHistorialEnvios() {
+    public void openAdministrador(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("Administrador.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            AdministradorViewController viewController = loader.getController();
+            AdministradorController controller = new AdministradorController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void openHistorialEnvios() {//Agregarle el usuario, necesita un usuario para ver su hustorial
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("HistorialEnvios.fxml"));
@@ -115,6 +134,83 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+    public void openAgregarDireccion(){//Agregarle el usuario, necesita un usuario al cual agregarle la direccion
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("AgregarDireccion.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            AgregarDireccionViewController viewController = loader.getController();
+            AgregarDireccionController controller = new AgregarDireccionController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void openSolicitarPedido(){//Pasarle usuario para que registre pedido con su id y direcciones
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("SolicitarPedido.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            SolicitarPedidoViewController viewController = loader.getController();
+            SolicitarPedidoController controller = new SolicitarPedidoController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void openCrearPaquete(){//Creeria yo que tambien hay que pasarle al usuario
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("CrearPaquete.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            CrearPaqueteViewController viewController = loader.getController();
+            CrearPaqueteController controller = new CrearPaqueteController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void openGestionRepartidor(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("GestionRepartidor.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            GestionRepartidorViewController viewController = loader.getController();
+            GestionRepartidorController controller = new GestionRepartidorController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 
 
     public static void main(String[] args) {

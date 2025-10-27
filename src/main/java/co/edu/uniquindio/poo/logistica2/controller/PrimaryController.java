@@ -16,6 +16,9 @@ public class PrimaryController {
     public void irAlRastreo(){
         app.openRastrearPedido();
     }
+    public void irAUsuario(){
+        app.openUsuario();
+    }
 
 
 }
