@@ -5,6 +5,9 @@ import co.edu.uniquindio.poo.logistica2.App;
 public class AdministradorController {
     private App app;
 
+    public void irAActualizarEstadoEnvio(){
+        app.openActualizarEnvio();
+    }
     public void irAGestionRepartidor(){
         app.openGestionRepartidor();
     }

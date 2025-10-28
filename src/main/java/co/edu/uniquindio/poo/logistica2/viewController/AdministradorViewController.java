@@ -9,6 +9,10 @@ public class AdministradorViewController {
     private AdministradorController controller;
 
     @FXML
+    public void onActualizarEnvio(){
+        controller.irAActualizarEstadoEnvio();
+    }
+    @FXML
     public void onRegresar(){
         controller.irAlInicio();
     }
