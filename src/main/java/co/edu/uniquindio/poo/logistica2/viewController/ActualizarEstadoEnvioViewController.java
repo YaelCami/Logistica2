@@ -12,7 +12,9 @@ public class ActualizarEstadoEnvioViewController {
     @FXML
     public ComboBox<String> cbxEstado, cbxRepartidor;//CAMBIAR
     @FXML
-    public void onRegresar(){}
+    public void onRegresar(){
+        controller.volver();
+    }
     @FXML
     public void onActualizar(){}
     @FXML

@@ -15,7 +15,9 @@ public class GestionRepartidorViewController {
     @FXML
     public ComboBox<String> cbxEstado, cbxCiudades;//CAMBIAR
     @FXML
-    public void onRegresar(){}
+    public void onRegresar(){
+        controller.volver();
+    }
     @FXML
     public void onRegistrar(){}
     @FXML

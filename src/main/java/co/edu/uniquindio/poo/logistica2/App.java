@@ -210,8 +210,44 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+    public void openActualizarEnvio(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("ActualizarEstadoEnvio.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            ActualizarEstadoEnvioViewController viewController = loader.getController();
+            ActualizarEstadoEnvioController controller = new ActualizarEstadoEnvioController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
 
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void openAsignarPedido(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("AsignarEnvio.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            AsignarEnvioViewController viewController = loader.getController();
+            AsignarPedidoController controller = new AsignarPedidoController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
 
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         launch();

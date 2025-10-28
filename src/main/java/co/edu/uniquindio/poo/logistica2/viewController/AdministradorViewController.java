@@ -21,7 +21,9 @@ public class AdministradorViewController {
         controller.irAGestionRepartidor();
     }
     @FXML
-    public void onAsignarEnvio(){}
+    public void onAsignarEnvio(){
+        controller.irAAsignarPedido();
+    }
     public void setApp(App app) {
         this.app = app;
     }

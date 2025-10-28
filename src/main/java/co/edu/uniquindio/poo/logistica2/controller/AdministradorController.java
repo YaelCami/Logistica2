@@ -8,6 +8,9 @@ public class AdministradorController {
     public void irAActualizarEstadoEnvio(){
         app.openActualizarEnvio();
     }
+    public void irAAsignarPedido(){
+        app.openAsignarPedido();
+    }
     public void irAGestionRepartidor(){
         app.openGestionRepartidor();
     }
