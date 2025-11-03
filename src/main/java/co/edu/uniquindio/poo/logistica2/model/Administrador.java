@@ -14,12 +14,51 @@ public class Administrador extends Persona{
 
     public Administrador(Builder builder, double salario) {
         super(builder);
-        this.salario = salario;
-        this.listUsuarios = new ArrayList<>();
-        this.listRepartidores = new ArrayList<>();
-        this.listEnvios = new ArrayList<>();
-        this.listRutas = new ArrayList<>();
+        this.salario = builder.salario;
+        this.listUsuarios = builder.listUsuarios;
+        this.listRepartidores = builder.listRepartidores;
+        this.listEnvios = builder.listEnvios;
+        this.listRutas = builder.listRutas;
+
+
     }
+
+    public static class Builder extends Persona.Builder {
+        private double salario;
+        private List<Usuario> listUsuarios = new ArrayList<>();
+        private List<Repartidor> listRepartidores = new ArrayList<>();
+        private List<Envio> listEnvios = new ArrayList<>();
+        private List<Ruta> listRutas = new ArrayList<>();
+
+        @Override
+        public Administrador build() {
+            return new Administrador(this, salario);
+        }
+
+        public Builder salario(double salario) {
+            this.salario = salario;
+            return this;
+        }
+        public Builder listUsuarios(List<Usuario> listUsuarios){
+            this.listUsuarios = listUsuarios;
+            return this;
+        }
+
+        public Builder listRepartidores(List<Repartidor> listRepartidores){
+            this.listRepartidores = listRepartidores;
+            return this;
+        }
+        public Builder listEnvios(List<Envio> listEnvios){
+            this.listEnvios = listEnvios;
+            return this;
+        }
+        public Builder listRutas(List<Ruta> listRutas){
+            this.listRutas = listRutas;
+            return this;
+        }
+    }
+
+
 
     public boolean agregarPersona(Persona persona){
         return empresaLogistica.agregarPersona(persona);

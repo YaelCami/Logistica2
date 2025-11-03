@@ -10,6 +10,11 @@ public class Paquete implements IProducto{
     private List<IProducto> hijos;
 
     public Paquete(Builder builder){
+        this.id= builder.id;
+        this.peso= builder.peso;
+        this.volumen= builder.volumen;
+        this.listproductos = builder.listproductos;
+        this.hijos= builder.hijos;
 
     }
 
@@ -41,15 +46,69 @@ public class Paquete implements IProducto{
             return this;
         }
 
-        public Builder agregarProductos(Producto producto){
-            this.listproductos.add(producto);
-            return this;
-        }
-        public Builder agregarHijos(IProducto hijo){
-            this.hijos.add(hijo);
-            return this;
-        }
 
+    }
+
+    public void agregarIProducto(IProducto hijo){
+        hijos.add(hijo);
+    }
+    public boolean agregarProductos(Producto producto) {
+        boolean centinela = false;
+        for (Producto p : listproductos) {
+            if (!verificarProducto(p.getId())) {
+                listproductos.add(p);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+    public boolean verificarProducto(String id) {
+        boolean centinela = false;
+        for (Producto p : listproductos) {
+            if (p.getId().equals(id)) {
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean eliminarProducto(String id) {
+        boolean centinela = false;
+        for (Producto p : listproductos) {
+            if (p.getId().equals(id)) {
+                listproductos.remove(p);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean actualizarProducto(String id, Producto actualizado) {
+        boolean centinela = false;
+        for (Producto p : listproductos) {
+            if (p.getId().equals(id)) {
+                p.setId(actualizado.getId());
+                p.setNombre(actualizado.getNombre());
+                p.setMarca(actualizado.getMarca());
+                p.setPeso(actualizado.getPeso());
+                p.setCantidad(actualizado.getCantidad());
+                p.setCategoria(actualizado.getCategoria());
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+    public Producto buscarProducto(String id) {
+        for (Producto p: listproductos) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     public String getId() {
@@ -92,14 +151,5 @@ public class Paquete implements IProducto{
         this.hijos = hijos;
     }
 
-    public boolean verificarProducto(String id) {
-        boolean centinela = false;
-        for (Producto p : listproductos) {
-            if (p.getId().equals(id)) {
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
+
 }
