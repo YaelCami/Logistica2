@@ -28,6 +28,7 @@ public class Envio implements ITarifa {
 
     @Override
     public double calcularCostoEnvio() {
+        return costo;
 
     }
 
