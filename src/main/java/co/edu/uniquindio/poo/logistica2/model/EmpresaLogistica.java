@@ -1,15 +1,16 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class EmpresaLogistica {
     private String nombre;
     private String eslogan;
-    private List<Repartidor> listRepartidores;
-    private List<Administrador> listAdministradores;
-    private List<Usuario> listUsuarios;
-    private List<Envio> listEnvios;
-    private List<Persona> listPersonas;
+    private List<Repartidor> listRepartidores = new ArrayList<>();
+    private List<Administrador> listAdministradores= new ArrayList<>();
+    private List<Usuario> listUsuarios = new ArrayList<>();
+    private List<Envio> listEnvios =  new ArrayList<>();
+    private List<Persona> listPersonas = new ArrayList<>();
     private static EmpresaLogistica instance;
 
     private EmpresaLogistica(String nombre, String eslogan) {
@@ -18,9 +19,9 @@ public final class EmpresaLogistica {
 
     }
 
-    public static EmpresaLogistica getInstance(String nombre, String eslogan) {
+    public static EmpresaLogistica getInstance() {
         if (instance == null) {
-            instance = new EmpresaLogistica(nombre, eslogan);
+            instance = new EmpresaLogistica("Servientrega" , "Super rápidos");
         }
         return instance;
     }
@@ -246,13 +247,7 @@ public final class EmpresaLogistica {
         this.listEnvios = listEnvios;
     }
 
-    public static EmpresaLogistica getInstance() {
-        return instance;
-    }
 
-    public static void setInstance(EmpresaLogistica instance) {
-        EmpresaLogistica.instance = instance;
-    }
 
     public String getNombre() {
         return nombre;
