@@ -2,11 +2,11 @@ package co.edu.uniquindio.poo.logistica2.model;
 
 public class Ruta {
     private String id;
-    private String ciudadOrigen;
-    private String ciudadDestino;
+    private Ciudad ciudadOrigen;
+    private Ciudad ciudadDestino;
     private double distancia;
 
-    public Ruta(String id, String ciudadOrigen, String ciudadDestino, double distancia) {
+    public Ruta(String id, Ciudad ciudadOrigen, Ciudad ciudadDestino, double distancia) {
         this.id = id;
         this.ciudadOrigen = ciudadOrigen;
         this.ciudadDestino = ciudadDestino;
@@ -21,19 +21,19 @@ public class Ruta {
         this.id = id;
     }
 
-    public String getCiudadOrigen() {
+    public Ciudad getCiudadOrigen() {
         return ciudadOrigen;
     }
 
-    public void setCiudadOrigen(String ciudadOrigen) {
+    public void setCiudadOrigen(Ciudad ciudadOrigen) {
         this.ciudadOrigen = ciudadOrigen;
     }
 
-    public String getCiudadDestino() {
+    public Ciudad getCiudadDestino() {
         return ciudadDestino;
     }
 
-    public void setCiudadDestino(String ciudadDestino) {
+    public void setCiudadDestino(Ciudad ciudadDestino) {
         this.ciudadDestino = ciudadDestino;
     }
 

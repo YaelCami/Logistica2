@@ -4,10 +4,10 @@ public class Direccion {
     private String id;
     private String alias;
     private String calle;
-    private String ciudad;
+    private Ciudad  ciudad;
     private String coordenadas;
 
-    public Direccion(String id, String alias, String calle, String ciudad, String coordenadas) {
+    public Direccion(String id, String alias, String calle, Ciudad ciudad, String coordenadas) {
         this.id = id;
         this.alias = alias;
         this.calle = calle;
@@ -39,11 +39,11 @@ public class Direccion {
         this.calle = calle;
     }
 
-    public String getCiudad() {
+    public Ciudad getCiudad() {
         return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
+    public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
 
