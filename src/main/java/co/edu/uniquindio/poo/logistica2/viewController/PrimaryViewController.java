@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class PrimaryViewController {
     private App app;
     private PrimaryController controller;
@@ -19,13 +22,20 @@ public class PrimaryViewController {
     public Button btnIngresarId, btnCotizarTarifa, btnRastrearPedido;
     @FXML
     public TextField txtIngresarId;
+
     @FXML
-    private void onAdmi(){
-        controller.irALAdmi();//PROVISIONAL
+    private ResourceBundle resources;
+    @FXML
+    private URL location;
+
+    @FXML
+    private void onRegistrarse(){
+        controller.irAlRegistro();
     }
     @FXML
     private void onIngresar(){
-        controller.irAUsuario();//PROVISIONAL
+        String id = txtIngresarId.getText();
+        controller.redireccionar(id);
     }
     @FXML
     private void onCotizar(){

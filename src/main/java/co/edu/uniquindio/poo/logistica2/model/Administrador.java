@@ -20,7 +20,6 @@ public class Administrador extends Persona{
         this.listEnvios = builder.listEnvios;
         this.listRutas = builder.listRutas;
 
-
     }
 
     public static class Builder extends Persona.Builder {

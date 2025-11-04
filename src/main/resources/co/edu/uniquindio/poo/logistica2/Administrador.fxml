@@ -11,13 +11,13 @@
          <font>
             <Font size="24.0" />
          </font></Label>
-      <Label layoutX="285.0" layoutY="83.0" style="-fx-font-weight: bold;" text="Administrador">
+      <Label fx:id="lblNombre" layoutX="285.0" layoutY="83.0" style="-fx-font-weight: bold;" text="Administrador">
          <font>
             <Font size="24.0" />
          </font></Label>
-      <Button layoutX="167.0" layoutY="175.0" mnemonicParsing="false" text="Gestionar Usuario" />
-      <Button layoutX="237.0" layoutY="250.0" mnemonicParsing="false" onAction="#onGestionRepartidor" text="Gestionar Repartidor" textFill="#7d9453" />
-      <Button layoutX="325.0" layoutY="209.0" mnemonicParsing="false" onAction="#onAsignarEnvio" text="Asignar Envío" textFill="#7d9453" />
-      <Button layoutX="141.0" layoutY="304.0" mnemonicParsing="false" onAction="#onActualizarEnvio" text="Actualizar envío" textFill="#7d9453" />
+      <Button layoutX="154.0" layoutY="188.0" mnemonicParsing="false" onAction="#onGestionUsuario" text="Gestionar Usuario" textFill="#7d9453" />
+      <Button layoutX="323.0" layoutY="250.0" mnemonicParsing="false" onAction="#onGestionRepartidor" text="Gestionar Repartidor" textFill="#7d9453" />
+      <Button layoutX="331.0" layoutY="188.0" mnemonicParsing="false" onAction="#onAsignarEnvio" text="Asignar Envío" textFill="#7d9453" />
+      <Button layoutX="160.0" layoutY="250.0" mnemonicParsing="false" onAction="#onActualizarEnvio" text="Actualizar envío" textFill="#7d9453" />
    </children>
 </AnchorPane>

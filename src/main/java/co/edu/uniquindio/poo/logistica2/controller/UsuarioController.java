@@ -1,12 +1,14 @@
 package co.edu.uniquindio.poo.logistica2.controller;
 
 import co.edu.uniquindio.poo.logistica2.App;
+import co.edu.uniquindio.poo.logistica2.model.Usuario;
 
 public class UsuarioController {
     private App app;
+    private Usuario usuario;
 
     public void irAgregarDireccion(){
-        app.openAgregarDireccion();
+        app.openAgregarDireccion(usuario);
     }
     public void irAlHistorial(){
         app.openHistorialEnvios();

@@ -1,6 +1,10 @@
 package co.edu.uniquindio.poo.logistica2;
 
 import co.edu.uniquindio.poo.logistica2.controller.*;
+import co.edu.uniquindio.poo.logistica2.model.Administrador;
+import co.edu.uniquindio.poo.logistica2.model.EmpresaLogistica;
+import co.edu.uniquindio.poo.logistica2.model.Persona;
+import co.edu.uniquindio.poo.logistica2.model.Usuario;
 import co.edu.uniquindio.poo.logistica2.viewController.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +16,7 @@ import java.io.IOException;
 
 public class App extends Application {
     private Stage primaryStage;
+    private EmpresaLogistica empresa = EmpresaLogistica.getInstance();
     @Override
     public void start(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
@@ -38,6 +43,9 @@ public class App extends Application {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    public static void main(String[] args) {
+        launch();
     }
     public void openCotizarTarifa() {
         try{
@@ -77,7 +85,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openUsuario() {//Necesito pasarle un usuario para que pueda mostrar su nombre
+    public void openUsuario(Usuario u) {//Necesito pasarle un usuario para que pueda mostrar su nombre
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("Usuario.fxml"));
@@ -87,6 +95,7 @@ public class App extends Application {
             controller.setApp(this);
             viewController.setController(controller);
             viewController.setApp(this);
+            viewController.setUsuario(u);
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -96,7 +105,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openAdministrador(){
+    public void openAdministrador(Administrador a){
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("Administrador.fxml"));
@@ -104,8 +113,10 @@ public class App extends Application {
             AdministradorViewController viewController = loader.getController();
             AdministradorController controller = new AdministradorController();
             controller.setApp(this);
+            controller.setAdministrador(a);
             viewController.setController(controller);
             viewController.setApp(this);
+            viewController.setAdministrador(a);
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -134,14 +145,15 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openAgregarDireccion(){//Agregarle el usuario, necesita un usuario al cual agregarle la direccion
+    public void openAgregarDireccion(Usuario u){//Agregarle el usuario, necesita un usuario al cual agregarle la direccion
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("AgregarDireccion.fxml"));
             AnchorPane rootLayout = (AnchorPane) loader.load();
             AgregarDireccionViewController viewController = loader.getController();
-            AgregarDireccionController controller = new AgregarDireccionController();
+            AgregarDireccionController controller = new AgregarDireccionController(u);
             controller.setApp(this);
+            controller.setUsuario(u);
             viewController.setController(controller);
             viewController.setApp(this);
 
@@ -248,10 +260,54 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+    public void openRegistrarse(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("Registrarse.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            RegistrarseViewController viewController = loader.getController();
+            RegistrarseController controller = new RegistrarseController();
+            controller.setApp(this);
+            viewController.setController(controller);
+            viewController.setApp(this);
 
-    public static void main(String[] args) {
-        launch();
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public void inicializarData() {}
+    public void openGestionarUsuario(Administrador a){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("GestionarUsuario.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            GestionarUsuarioViewController viewController = loader.getController();
+            GestionarUsuarioController controller = new GestionarUsuarioController();
+            controller.setApp(this);
+            controller.setAdministrador(a);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void inicializarData() {
+        Persona usuario1 = new Usuario.Builder().id("1230").nombre("Raul").telefono("322470").build();
+        Persona administrador1 = new Administrador.Builder().id("0321").nombre("Susana").correo("Susana@gmail.com").build();
+        empresa.agregarPersona(usuario1);
+        empresa.agregarPersona(administrador1);
+        System.out.println("DEBUG - Lista de administradores en la empresa:");
+        for (Administrador s : empresa.getListAdministradores()) {
+            System.out.println(" -> " + s.getId() + " - " + s.getNombre());
+        }
+    }
 
 }
