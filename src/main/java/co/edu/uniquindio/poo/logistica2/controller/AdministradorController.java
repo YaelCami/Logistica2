@@ -31,5 +31,11 @@ public class AdministradorController {
     public void irAlInicio() {
         app.openViewPrincipal();
     }
+    public void irAGestionCiudad() {
+        app.openGestionarCiudad(administrador);
+    }
+    public void irAGestionRuta(){
+        app.openGestionarRuta(administrador);
+    }
 
 }

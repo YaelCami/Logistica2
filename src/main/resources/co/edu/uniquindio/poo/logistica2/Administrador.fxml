@@ -17,7 +17,9 @@
          </font></Label>
       <Button layoutX="154.0" layoutY="188.0" mnemonicParsing="false" onAction="#onGestionUsuario" text="Gestionar Usuario" textFill="#7d9453" />
       <Button layoutX="323.0" layoutY="250.0" mnemonicParsing="false" onAction="#onGestionRepartidor" text="Gestionar Repartidor" textFill="#7d9453" />
-      <Button layoutX="331.0" layoutY="188.0" mnemonicParsing="false" onAction="#onAsignarEnvio" text="Asignar Envío" textFill="#7d9453" />
+      <Button layoutX="342.0" layoutY="188.0" mnemonicParsing="false" onAction="#onAsignarEnvio" text="Asignar Envío" textFill="#7d9453" />
       <Button layoutX="160.0" layoutY="250.0" mnemonicParsing="false" onAction="#onActualizarEnvio" text="Actualizar envío" textFill="#7d9453" />
+      <Button layoutX="163.0" layoutY="304.0" mnemonicParsing="false" onAction="#onGestionarRuta" text="Gestionar Ruta" textFill="#7d9453" />
+      <Button layoutX="332.0" layoutY="304.0" mnemonicParsing="false" onAction="#onGestionarCiudad" text="Gestionar Ciudad" textFill="#7d9453" />
    </children>
 </AnchorPane>

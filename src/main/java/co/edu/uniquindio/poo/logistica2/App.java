@@ -1,10 +1,7 @@
 package co.edu.uniquindio.poo.logistica2;
 
 import co.edu.uniquindio.poo.logistica2.controller.*;
-import co.edu.uniquindio.poo.logistica2.model.Administrador;
-import co.edu.uniquindio.poo.logistica2.model.EmpresaLogistica;
-import co.edu.uniquindio.poo.logistica2.model.Persona;
-import co.edu.uniquindio.poo.logistica2.model.Usuario;
+import co.edu.uniquindio.poo.logistica2.model.*;
 import co.edu.uniquindio.poo.logistica2.viewController.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -297,13 +294,57 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+    public void openGestionarCiudad(Administrador a){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("GestionarCiudad.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            GestionarCiudadViewController viewController = loader.getController();
+            GestionarCiudadController controller = new GestionarCiudadController();
+            controller.setApp(this);
+            controller.setAdministrador(a);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void openGestionarRuta(Administrador a){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("GestionarRuta.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            GestionarRutaViewController viewController = loader.getController();
+            GestionarRutaController controller = new GestionarRutaController();
+            controller.setApp(this);
+            controller.setAdministrador(a);
+            viewController.setController(controller);
+            viewController.setApp(this);
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
     public void inicializarData() {
         Persona usuario1 = new Usuario.Builder().id("1230").nombre("Raul").telefono("322470").build();
         Persona administrador1 = new Administrador.Builder().id("0321").nombre("Susana").correo("Susana@gmail.com").build();
+        Ciudad ciudad1 = new Ciudad("2233", "Quimbaya", 32175);
+        Ciudad ciudad2 = new Ciudad("3322", "Armenia", 309474);
+        Ruta ruta1 = new Ruta("0000", ciudad1, ciudad2, 22.2);
         empresa.agregarPersona(usuario1);
         empresa.agregarPersona(administrador1);
+        empresa.agregarCiudad(ciudad1);
+        empresa.agregarCiudad(ciudad2);
+        empresa.agregarRuta(ruta1);
         System.out.println("DEBUG - Lista de administradores en la empresa:");
         for (Administrador s : empresa.getListAdministradores()) {
             System.out.println(" -> " + s.getId() + " - " + s.getNombre());

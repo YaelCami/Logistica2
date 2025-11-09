@@ -50,6 +50,14 @@ public class AdministradorViewController {
     public void onAsignarEnvio(){
         controller.irAAsignarPedido();
     }
+    @FXML
+    public void onGestionarCiudad(){
+        controller.irAGestionCiudad();
+    }
+    @FXML
+    public void onGestionarRuta(){
+        controller.irAGestionRuta();
+    }
 
 
 }

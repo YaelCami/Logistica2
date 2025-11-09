@@ -21,7 +21,7 @@
       <TextField fx:id="txtNombre" layoutX="169.0" layoutY="142.0" />
       <TextField fx:id="txtTelefono" layoutX="169.0" layoutY="188.0" prefHeight="25.0" prefWidth="149.0" />
       <ComboBox fx:id="cbxEstado" layoutX="172.0" layoutY="234.0" prefWidth="150.0" />
-      <TableView layoutX="182.0" layoutY="284.0" prefHeight="149.0" prefWidth="120.0">
+      <TableView fx:id="tbvCiudad" layoutX="182.0" layoutY="284.0" prefHeight="149.0" prefWidth="120.0">
         <columns>
           <TableColumn fx:id="tbcCiudades" prefWidth="119.0" text="Ciudad" />
         </columns>
