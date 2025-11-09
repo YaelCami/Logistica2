@@ -3,7 +3,7 @@ package co.edu.uniquindio.poo.logistica2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario extends Persona{
+public class Usuario extends Persona implements IObservador{
     private List<Direccion> listDirecciones;
     private List<Pago> listPagos ;
     private List<Pedido> listPedidos;
@@ -39,6 +39,12 @@ public class Usuario extends Persona{
             this.listPedidos = listPedidos;
             return this;
         }
+    }
+
+    @Override
+    public String actualizar(Envio envio, String mensaje) {
+        return "🔔 Notificación para "  + ": " + mensaje;
+
     }
 
     public boolean agregarDireccion(Direccion direccion) {

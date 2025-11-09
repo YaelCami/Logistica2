@@ -4,31 +4,57 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Envio implements ITarifa {
+public class Envio implements ITarifa, ISujeto {
     private String id;
     private LocalDate fechaInicio;
     private LocalDate fechaEstimadaEntrega;
     private LocalDate fechaEntrega;
     private double costo;
-    private Estado estado;
     private Ruta ruta;
     private Repartidor repartidor;
     private List<Pedido> listPedidos;
+    private List<IObservador> listObservadores;
+    private IEstadoEnvio estadoEnvio;
 
     public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Estado estado, Ruta ruta, Repartidor repartidor) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.costo = costo;
-        this.estado = estado;
         this.ruta = ruta;
         this.repartidor = repartidor;
         this.listPedidos = new ArrayList<>();
+        this.listObservadores = new ArrayList<>();
+        this.estadoEnvio = new Solicitado();
     }
 
     @Override
     public double calcularCostoEnvio() {
         return costo;
+
+    }
+    public String ejecutarAccion(String accion) {
+        String mensaje = estadoEnvio.ejecutarAccion(this, accion);
+        notificarObservador(mensaje);
+        return mensaje;
+    }
+
+
+    @Override
+    public void agregarObservador(IObservador observador) {
+       listObservadores.add(observador);
+    }
+
+    @Override
+    public void eliminarObservador(IObservador observador) {
+       listObservadores.remove(observador);
+    }
+
+    @Override
+    public void notificarObservador(String mensaje) {
+        for (IObservador o : listObservadores) {
+            o.actualizar(this, mensaje);
+        }
 
     }
 
@@ -94,6 +120,21 @@ public class Envio implements ITarifa {
         return null;
     }
 
+    public List<IObservador> getListObservadores() {
+        return listObservadores;
+    }
+
+    public void setListObservadores(List<IObservador> listObservadores) {
+        this.listObservadores = listObservadores;
+    }
+
+    public IEstadoEnvio getEstadoEnvio() {
+        return estadoEnvio;
+    }
+
+    public void setEstadoEnvio(IEstadoEnvio estadoEnvio) {
+        this.estadoEnvio = estadoEnvio;
+    }
 
     public double getCosto() {
         return costo;
@@ -135,13 +176,7 @@ public class Envio implements ITarifa {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
 
     public Ruta getRuta() {
         return ruta;
