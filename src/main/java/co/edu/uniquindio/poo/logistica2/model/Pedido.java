@@ -29,6 +29,11 @@ public class Pedido {
         this.pago = pago;
     }
 
+    public void realizarAccion(String accion) {
+        String resultado = envio.ejecutarAccion(accion);
+        System.out.println("📦 Pedido " + id + ": " + resultado);
+    }
+
     public boolean agregarPaquete(Paquete paquete){
         boolean centinela = false;
         for (Paquete p: listpaquetes) {

@@ -3,7 +3,7 @@ package co.edu.uniquindio.poo.logistica2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Administrador extends Persona{
+public class Administrador extends Persona {
 
     private EmpresaLogistica empresaLogistica;
     private double salario;
@@ -11,6 +11,7 @@ public class Administrador extends Persona{
     private List<Repartidor> listRepartidores;
     private List<Envio> listEnvios;
     private List<Ruta> listRutas;
+    private List<Ciudad> listCiudades;
 
     public Administrador(Builder builder, double salario) {
         super(builder);
@@ -19,7 +20,7 @@ public class Administrador extends Persona{
         this.listRepartidores = builder.listRepartidores;
         this.listEnvios = builder.listEnvios;
         this.listRutas = builder.listRutas;
-
+        this.listCiudades = builder.listCiudades;
 
     }
 
@@ -29,6 +30,7 @@ public class Administrador extends Persona{
         private List<Repartidor> listRepartidores = new ArrayList<>();
         private List<Envio> listEnvios = new ArrayList<>();
         private List<Ruta> listRutas = new ArrayList<>();
+        private List<Ciudad> listCiudades = new ArrayList<>();
 
         @Override
         public Administrador build() {
@@ -39,36 +41,44 @@ public class Administrador extends Persona{
             this.salario = salario;
             return this;
         }
-        public Builder listUsuarios(List<Usuario> listUsuarios){
+
+        public Builder listUsuarios(List<Usuario> listUsuarios) {
             this.listUsuarios = listUsuarios;
             return this;
         }
 
-        public Builder listRepartidores(List<Repartidor> listRepartidores){
+        public Builder listRepartidores(List<Repartidor> listRepartidores) {
             this.listRepartidores = listRepartidores;
             return this;
         }
-        public Builder listEnvios(List<Envio> listEnvios){
+
+        public Builder listEnvios(List<Envio> listEnvios) {
             this.listEnvios = listEnvios;
             return this;
         }
-        public Builder listRutas(List<Ruta> listRutas){
+
+        public Builder listRutas(List<Ruta> listRutas) {
             this.listRutas = listRutas;
+            return this;
+        }
+
+        public Builder listCiudades(List<Ciudad> listCiudades) {
+            this.listCiudades = listCiudades;
             return this;
         }
     }
 
 
-
-    public boolean agregarPersona(Persona persona){
+    public boolean agregarPersona(Persona persona) {
         return empresaLogistica.agregarPersona(persona);
 
     }
-    public boolean agregarEnvio(Envio envio){
+
+    public boolean agregarEnvio(Envio envio) {
         return empresaLogistica.agregarEnvio(envio);
     }
 
-    public boolean agregarRuta(Ruta ruta){
+    public boolean agregarRuta(Ruta ruta) {
         boolean centinela = false;
         for (Ruta r : listRutas) {
             if (!verificarRuta(r.getId())) {
@@ -80,10 +90,33 @@ public class Administrador extends Persona{
         return centinela;
     }
 
+    public boolean agregarCiudad(Ciudad ciudad) {
+        boolean centinela = false;
+        for (Ciudad c : listCiudades) {
+            if (!verificarCiudad(c.getId())) {
+                listCiudades.add(c);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
     public boolean verificarRuta(String id) {
         boolean centinela = false;
         for (Ruta ruta : listRutas) {
             if (ruta.getId().equals(id)) {
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean verificarCiudad(String id) {
+        boolean centinela = false;
+        for (Ciudad c : listCiudades) {
+            if (c.getId().equals(id)) {
                 centinela = true;
                 break;
             }
@@ -104,6 +137,18 @@ public class Administrador extends Persona{
         for (Ruta ruta : listRutas) {
             if (ruta.getId().equals(id)) {
                 listRutas.remove(ruta);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean eliminarCiudad(String id) {
+        boolean centinela = false;
+        for (Ciudad c : listCiudades) {
+            if (c.getId().equals(id)) {
+                listCiudades.remove(c);
                 centinela = true;
                 break;
             }
@@ -133,10 +178,33 @@ public class Administrador extends Persona{
         return centinela;
     }
 
+    public boolean actualizarCiudad(String id, Ciudad actualizado) {
+        boolean centinela = false;
+        for (Ciudad c: listCiudades) {
+            if (c.getId().equals(id)) {
+                c.setId(actualizado.getId());
+                c.setNombre(actualizado.getNombre());
+                c.setHabitantes(actualizado.getHabitantes());
+                centinela = true;
+                break;
+            }
+        }
+        return  centinela;
+    }
+
     public Ruta buscarRuta(String id) {
         for (Ruta r: listRutas) {
             if (r.getId().equals(id)) {
                 return r;
+            }
+        }
+        return null;
+    }
+
+    public Ciudad buscarCiudad(String id) {
+        for (Ciudad c: listCiudades) {
+            if (c.getId().equals(id)) {
+                return c;
             }
         }
         return null;
