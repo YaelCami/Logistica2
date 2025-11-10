@@ -82,7 +82,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openUsuario(Usuario u) {//Necesito pasarle un usuario para que pueda mostrar su nombre
+    public void openUsuario(Usuario u) {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("Usuario.fxml"));
@@ -90,6 +90,7 @@ public class App extends Application {
             UsuarioViewController viewController = loader.getController();
             UsuarioController controller = new UsuarioController();
             controller.setApp(this);
+            controller.setUsuario(u);
             viewController.setController(controller);
             viewController.setApp(this);
             viewController.setUsuario(u);
@@ -142,7 +143,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openAgregarDireccion(Usuario u){//Agregarle el usuario, necesita un usuario al cual agregarle la direccion
+    public void openAgregarDireccion(Usuario u){
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("AgregarDireccion.fxml"));
@@ -151,8 +152,10 @@ public class App extends Application {
             AgregarDireccionController controller = new AgregarDireccionController(u);
             controller.setApp(this);
             controller.setUsuario(u);
+            viewController.setUsuario(u);
             viewController.setController(controller);
             viewController.setApp(this);
+
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -181,14 +184,16 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openCrearPaquete(){//Creeria yo que tambien hay que pasarle al usuario
+    public void openCrearPaquete(Usuario u){
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("CrearPaquete.fxml"));
             AnchorPane rootLayout = (AnchorPane) loader.load();
             CrearPaqueteViewController viewController = loader.getController();
-            CrearPaqueteController controller = new CrearPaqueteController();
+            CrearPaqueteController controller = new CrearPaqueteController(u);
             controller.setApp(this);
+            controller.setUsuario(u);
+            viewController.setUsuario(u);
             viewController.setController(controller);
             viewController.setApp(this);
 
@@ -348,6 +353,9 @@ public class App extends Application {
         System.out.println("DEBUG - Lista de administradores en la empresa:");
         for (Administrador s : empresa.getListAdministradores()) {
             System.out.println(" -> " + s.getId() + " - " + s.getNombre());
+        }
+        for(Usuario u : empresa.getListUsuarios()){
+            System.out.println(" -> " + u.getId() + " - " + u.getNombre());
         }
     }
 

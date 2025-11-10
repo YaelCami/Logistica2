@@ -29,7 +29,7 @@ public class PrimaryController {
                 Usuario u = (Usuario) p;
                 app.openUsuario(u);
             }
-            if(p instanceof Administrador){
+             else if(p instanceof Administrador){
                 Administrador a = (Administrador) p;
                 app.openAdministrador(a);
             } else {

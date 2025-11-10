@@ -5,15 +5,16 @@ import java.util.List;
 
 public class Usuario extends Persona implements IObservador{
     private List<Direccion> listDirecciones;
-    private List<Pago> listPagos ;
+    private List<Pago> listPagos;
     private List<Pedido> listPedidos;
+    private List<Paquete> listPaquetes;
 
     public Usuario(Builder builder){
         super(builder);
         this.listDirecciones = builder.listDirecciones;
         this.listPagos = builder.listPagos;
         this.listPedidos = builder.listPedidos;
-
+        this.listPaquetes = builder.listPaquetes;
     }
 
 
@@ -21,6 +22,7 @@ public class Usuario extends Persona implements IObservador{
         private List<Direccion> listDirecciones = new ArrayList<>();
         private List<Pago> listPagos =  new ArrayList<>();
         private List<Pedido> listPedidos = new ArrayList<>();
+        private List<Paquete> listPaquetes = new ArrayList<>();
 
         @Override
         public Usuario build() {
@@ -39,6 +41,10 @@ public class Usuario extends Persona implements IObservador{
             this.listPedidos = listPedidos;
             return this;
         }
+        public Builder listPaquetes(List<Paquete> listPaquetes){
+            this.listPaquetes = listPaquetes;
+            return this;
+        }
     }
 
     @Override
@@ -49,36 +55,34 @@ public class Usuario extends Persona implements IObservador{
 
     public boolean agregarDireccion(Direccion direccion) {
         boolean centinela = false;
-        for (Direccion d: listDirecciones) {
-            if (!verificarDireccion(d.getId())) {
-                listDirecciones.add(d);
-                centinela = true;
-                break;
-            }
+        if (!verificarDireccion(direccion.getId())) {
+            listDirecciones.add(direccion);
+            centinela = true;
         }
         return centinela;
     }
 
-
     public boolean agregarPago(Pago pago) {
         boolean centinela = false;
-        for (Pago p: listPagos) {
-            if (!verificarPago(p.getId())) {
-                listPagos.add(p);
-                centinela = true;
-                break;
-            }
+        if (!verificarPago(pago.getId())) {
+            listPagos.add(pago);
+            centinela = true;
+        }
+        return centinela;
+    }
+    public boolean agregarPaquete(Paquete paquete) {
+        boolean centinela = false;
+        if(!verificarPaquete(paquete.getId())) {
+            listPaquetes.add(paquete);
+            centinela = true;
         }
         return centinela;
     }
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
-        for (Pedido p: listPedidos) {
-            if (!verificarPedido(p.getId())) {
-                listPedidos.add(p);
-                centinela = true;
-                break;
-            }
+        if (!verificarPedido(pedido.getId())) {
+            listPedidos.add(pedido);
+            centinela = true;
         }
         return centinela;
     }
@@ -105,6 +109,16 @@ public class Usuario extends Persona implements IObservador{
     public boolean verificarPedido(String id) {
         boolean centinela = false;
         for (Pedido p: listPedidos) {
+            if (p.getId().equals(id)) {
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+    public boolean verificarPaquete(String id) {
+        boolean centinela = false;
+        for (Paquete p: listPaquetes) {
             if (p.getId().equals(id)) {
                 centinela = true;
                 break;
@@ -238,5 +252,13 @@ public class Usuario extends Persona implements IObservador{
 
     public void setListPagos(List<Pago> listPagos) {
         this.listPagos = listPagos;
+    }
+
+    public List<Paquete> getListPaquetes() {
+        return listPaquetes;
+    }
+
+    public void setListPaquetes(List<Paquete> listPaquetes) {
+        this.listPaquetes = listPaquetes;
     }
 }

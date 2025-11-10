@@ -7,9 +7,17 @@ public class UsuarioController {
     private App app;
     private Usuario usuario;
 
-    public void irAgregarDireccion(){
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    public void irAgregarDireccion() {
+        if (usuario == null) {
+            System.out.println("Error: usuario es null en UsuarioController");
+            return;
+        }
         app.openAgregarDireccion(usuario);
     }
+
     public void irAlHistorial(){
         app.openHistorialEnvios();
     }
@@ -17,7 +25,7 @@ public class UsuarioController {
         app.openSolicitarPedido();
     }
     public void irACrearPaquete(){
-        app.openCrearPaquete();
+        app.openCrearPaquete(usuario);
     }
     public void irAlInicio(){
         app.openViewPrincipal();

@@ -201,4 +201,5 @@ public class Envio implements ITarifa, ISujeto {
     public void setListPedidos(List<Pedido> listPedidos) {
         this.listPedidos = listPedidos;
     }
+
 }

@@ -4,6 +4,7 @@ import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.controller.AgregarDireccionController;
 import co.edu.uniquindio.poo.logistica2.model.Ciudad;
 import co.edu.uniquindio.poo.logistica2.model.Direccion;
+import co.edu.uniquindio.poo.logistica2.model.Usuario;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 public class AgregarDireccionViewController {
     private AgregarDireccionController controller;
     private App app;
+    private Usuario usuario;
     ObservableList<Direccion> listDirecciones = FXCollections.observableArrayList();
     Direccion selectedDireccion;
     @FXML
@@ -80,9 +82,8 @@ public class AgregarDireccionViewController {
             Direccion direccion = buildDireccion();
             if (direccion == null) {
                 mostrarAlerta("Error", "Completa todos los campos");
-                return;
             }
-            if (controller.agregarDireccion(direccion)) {
+            else if (controller.agregarDireccion(direccion)) {
                 listDirecciones.add(direccion);
                 limpiarCampos();
             } else {
@@ -115,10 +116,10 @@ public class AgregarDireccionViewController {
         cbxCiudad.getItems().clear();
         cbxCiudad.getItems().addAll(controller.obtenerCiudades());
         cbxCiudad.setConverter(new StringConverter<Ciudad>() {
-            @Override
             public String toString(Ciudad ciudad) {
-                return ciudad.getNombre();
+                return ciudad != null ? ciudad.getNombre() : "";
             }
+
             @Override
             public Ciudad fromString(String string) {
                 return null;
@@ -150,6 +151,9 @@ public class AgregarDireccionViewController {
         this.controller = controller;
         cargarCiudad();
         obtenerDirecciones();
+    }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     public void obtenerDirecciones(){
         List<Direccion> direcciones = controller.obtenerDirecciones();

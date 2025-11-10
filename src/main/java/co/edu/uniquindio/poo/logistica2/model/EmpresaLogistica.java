@@ -14,6 +14,8 @@ public final class EmpresaLogistica {
     private List<Usuario> listUsuarios = new ArrayList<>();
     private List<Envio> listEnvios =  new ArrayList<>();
     private List<Persona> listPersonas = new ArrayList<>();
+    private List<Ciudad> listCiudades = new ArrayList<>();
+    private List<Ruta> listRutas = new ArrayList<>();
     private static EmpresaLogistica instance;
 
     private EmpresaLogistica(String nombre, String eslogan) {
@@ -62,6 +64,23 @@ public final class EmpresaLogistica {
         }
         return centinela;
     }
+    public boolean agregarRuta(Ruta ruta) {
+        boolean centinela = false;
+        if (!verificarRuta(ruta.getId())) {
+            listRutas.add(ruta);
+            centinela = true;
+        }
+        return centinela;
+    }
+
+    public boolean agregarCiudad(Ciudad ciudad) {
+        boolean centinela = false;
+        if (!verificarCiudad(ciudad.getId())) {
+            listCiudades.add(ciudad);
+            centinela = true;
+        }
+        return centinela;
+    }
     public boolean verificarPersona(String id) {
         boolean centinela = false;
         for (Administrador a : listAdministradores) {
@@ -87,6 +106,27 @@ public final class EmpresaLogistica {
         boolean centinela = false;
         for (Envio e : listEnvios) {
             if (e.getId().equals(id)) {
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+    public boolean verificarRuta(String id) {
+        boolean centinela = false;
+        for (Ruta ruta : listRutas) {
+            if (ruta.getId().equals(id)) {
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean verificarCiudad(String id) {
+        boolean centinela = false;
+        for (Ciudad c : listCiudades) {
+            if (c.getId().equals(id)) {
                 centinela = true;
                 break;
             }
@@ -134,6 +174,29 @@ public final class EmpresaLogistica {
         return centinela;
     }
 
+    public boolean eliminarRuta(String id) {
+        boolean centinela = false;
+        for (Ruta ruta : listRutas) {
+            if (ruta.getId().equals(id)) {
+                listRutas.remove(ruta);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean eliminarCiudad(String id) {
+        boolean centinela = false;
+        for (Ciudad c : listCiudades) {
+            if (c.getId().equals(id)) {
+                listCiudades.remove(c);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
 
     public boolean actualizarPersona(String id, Persona actualizado) {
         boolean centinela = false;
@@ -176,9 +239,36 @@ public final class EmpresaLogistica {
                 e.setFechaEstimadaEntrega(actualizado.getFechaEstimadaEntrega());
                 e.setFechaEntrega(actualizado.getFechaEntrega());
                 e.setCosto(actualizado.getCosto());
-                e.setEstado(actualizado.getEstado());
+                e.setEstadoEnvio(actualizado.getEstadoEnvio());
                 e.setRuta(actualizado.getRuta());
                 e.setRepartidor(actualizado.getRepartidor());
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+    public boolean actualizarCiudad(String id, Ciudad actualizado) {
+        boolean centinela = false;
+        for (Ciudad c: listCiudades) {
+            if (c.getId().equals(id)) {
+                c.setId(actualizado.getId());
+                c.setNombre(actualizado.getNombre());
+                c.setHabitantes(actualizado.getHabitantes());
+                centinela = true;
+                break;
+            }
+        }
+        return  centinela;
+    }
+    public boolean actualizarRuta(String id, Ruta actualizado) {
+        boolean centinela = false;
+        for (Ruta ruta : listRutas) {
+            if (ruta.getId().equals(id)) {
+                ruta.setId(actualizado.getId());
+                ruta.setCiudadOrigen(actualizado.getCiudadOrigen());
+                ruta.setCiudadDestino(actualizado.getCiudadDestino());
+                ruta.setDistancia(actualizado.getDistancia());
                 centinela = true;
                 break;
             }
@@ -213,6 +303,24 @@ public final class EmpresaLogistica {
         return null;
     }
 
+
+    public Ruta buscarRuta(String id) {
+        for (Ruta r: listRutas) {
+            if (r.getId().equals(id)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public Ciudad buscarCiudad(String id) {
+        for (Ciudad c: listCiudades) {
+            if (c.getId().equals(id)) {
+                return c;
+            }
+        }
+        return null;
+    }
 
 
 
@@ -266,5 +374,21 @@ public final class EmpresaLogistica {
 
     public void setEslogan(String eslogan) {
         this.eslogan = eslogan;
+    }
+
+    public List<Ciudad> getListCiudades() {
+        return listCiudades;
+    }
+
+    public void setListCiudades(List<Ciudad> listCiudades) {
+        this.listCiudades = listCiudades;
+    }
+
+    public List<Ruta> getListRutas() {
+        return listRutas;
+    }
+
+    public void setListRutas(List<Ruta> listRutas) {
+        this.listRutas = listRutas;
     }
 }

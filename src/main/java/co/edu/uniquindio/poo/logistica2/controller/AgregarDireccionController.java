@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.logistica2.controller;
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.model.Ciudad;
 import co.edu.uniquindio.poo.logistica2.model.Direccion;
+import co.edu.uniquindio.poo.logistica2.model.EmpresaLogistica;
 import co.edu.uniquindio.poo.logistica2.model.Usuario;
 import javafx.application.Application;
 
@@ -12,16 +13,16 @@ import java.util.List;
 public class AgregarDireccionController {
     private App app;
     private Usuario usuario;
+    private EmpresaLogistica empresaLogistica = EmpresaLogistica.getInstance();
 
     public AgregarDireccionController(Usuario usuario){
         this.usuario = usuario;
     }
-    public List<Direccion> obtenerDirecciones(){
+    public List<Direccion> obtenerDirecciones() {
         return usuario.getListDirecciones();
     }
     public List<Ciudad> obtenerCiudades(){
-        List<Ciudad> ciudades = new ArrayList<>();
-        return ciudades;//PROVISIONAL, NO SE QUIEN CREA CIUDADES
+        return empresaLogistica.getListCiudades();
     }
     public boolean actualizarDireccion(String id, Direccion actualizada){
         return usuario.actualizarDireccion(id, actualizada);
