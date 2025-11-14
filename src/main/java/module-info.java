@@ -5,4 +5,6 @@ module co.edu.uniquindio.poo.logistica2 {
 
     opens co.edu.uniquindio.poo.logistica2 to javafx.fxml;
     exports co.edu.uniquindio.poo.logistica2;
+    exports co.edu.uniquindio.poo.logistica2.viewController;
+    opens co.edu.uniquindio.poo.logistica2.viewController to javafx.fxml;
 }

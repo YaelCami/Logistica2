@@ -42,12 +42,12 @@ public class Envio implements ITarifa, ISujeto {
 
     @Override
     public void agregarObservador(IObservador observador) {
-        listObservadores.add(observador);
+       listObservadores.add(observador);
     }
 
     @Override
     public void eliminarObservador(IObservador observador) {
-        listObservadores.remove(observador);
+       listObservadores.remove(observador);
     }
 
     @Override
@@ -201,5 +201,4 @@ public class Envio implements ITarifa, ISujeto {
     public void setListPedidos(List<Pedido> listPedidos) {
         this.listPedidos = listPedidos;
     }
-
 }

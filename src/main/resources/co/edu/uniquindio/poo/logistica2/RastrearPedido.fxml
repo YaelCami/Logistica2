@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="550.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.logistica2.viewController.RastrearPedidoViewController">
+   <children>
+      <Label layoutX="93.0" layoutY="18.0" prefHeight="35.0" prefWidth="185.0" style="-fx-font-weight: bold;" text="Rastrear Pedido">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <VBox layoutX="70.0" layoutY="66.0" prefHeight="100.0" prefWidth="231.0" style="-fx-border-color: #7d9453;">
+         <children>
+            <Label alignment="CENTER" prefHeight="20.0" prefWidth="228.0" text="Ingrese el id del pedido:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="2.0" top="6.0" />
+               </VBox.margin>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <TextField fx:id="txtIdPedido">
+               <VBox.margin>
+                  <Insets left="4.0" right="4.0" top="4.0" />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#onBuscarPedido" text="Buscar" textFill="#7d9453">
+               <VBox.margin>
+                  <Insets left="4.0" top="6.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <TextArea fx:id="txaInfoPedido" layoutX="32.0" layoutY="196.0" prefHeight="312.0" prefWidth="307.0" />
+      <Separator layoutX="40.0" layoutY="178.0" prefHeight="3.0" prefWidth="291.0" />
+      <Button layoutX="32.0" layoutY="517.0" mnemonicParsing="false" onAction="#onLimpiar" text="Limpiar" textFill="#7d9453" />
+      <Button fx:id="btnRegresar" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRegresar" text="Regresar" textFill="#7d9453">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

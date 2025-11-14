@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="366.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.logistica2.viewController.UsuarioViewController">
+   <children>
+      <Button layoutX="199.0" layoutY="275.0" mnemonicParsing="false" onAction="#onSolicitarPedido" text="Solicitar Pedido" textFill="#7d9453" />
+      <Button layoutX="265.0" layoutY="170.0" mnemonicParsing="false" onAction="#onVisualizarHistorial" text="Visualizar Historial" textFill="#7d9453" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRegresar" text="Regresar" textFill="#7d9453" />
+      <Label layoutX="154.0" layoutY="60.0" prefHeight="40.0" prefWidth="63.0" style="-fx-font-weight: bold;" text="Hola">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Label layoutX="170.0" layoutY="116.0" text="¿Qúe deseas hacer?">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label fx:id="lblNombreUsuario" layoutX="265.0" layoutY="62.0" style="-fx-font-weight: bold;" text="Usuario">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="97.0" layoutY="171.0" mnemonicParsing="false" onAction="#onGestionDireccion" text="Gestionar Dirección" textFill="#7d9453" />
+      <Button layoutX="203.0" layoutY="227.0" mnemonicParsing="false" onAction="#onCrearPaquete" text="Crear Paquete" textFill="#7d9453" />
+   </children>
+</AnchorPane>

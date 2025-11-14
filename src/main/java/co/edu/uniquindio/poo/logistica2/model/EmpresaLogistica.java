@@ -3,6 +3,9 @@ package co.edu.uniquindio.poo.logistica2.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class EmpresaLogistica {
     private String nombre;
     private String eslogan;
