@@ -14,6 +14,7 @@ public class Pedido {
     private Ruta ruta;
     private Usuario usuario;
     private Pago pago;
+    private Envio envio;
     private List<Paquete> listpaquetes;
 
     public Pedido(String id, LocalDate fechaCreacion, Ruta ruta, Usuario usuario){

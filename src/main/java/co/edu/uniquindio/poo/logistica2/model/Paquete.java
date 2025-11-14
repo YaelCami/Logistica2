@@ -45,7 +45,9 @@ public class Paquete implements IProducto{
             this.hijos = hijos;
             return this;
         }
-
+        public Paquete build(){
+            return new Paquete(this);
+        }
 
     }
 

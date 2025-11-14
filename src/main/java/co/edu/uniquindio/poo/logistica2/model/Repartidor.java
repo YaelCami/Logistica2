@@ -196,7 +196,7 @@ public class Repartidor extends Persona {
                 e.setFechaEstimadaEntrega(actualizado.getFechaEstimadaEntrega());
                 e.setFechaEntrega(actualizado.getFechaEntrega());
                 e.setCosto(actualizado.getCosto());
-                e.setEstado(actualizado.getEstado());
+                e.setEstadoEnvio(actualizado.getEstadoEnvio());
                 e.setRuta(actualizado.getRuta());
                 e.setRepartidor(actualizado.getRepartidor());
                 centinela = true;
