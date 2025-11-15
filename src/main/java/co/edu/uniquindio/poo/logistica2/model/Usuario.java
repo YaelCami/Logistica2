@@ -160,6 +160,17 @@ public class Usuario extends Persona implements IObservador{
         }
         return centinela;
     }
+    public boolean eliminarPaquete(String id) {
+        boolean centinela = false;
+        for (Paquete p: listPaquetes) {
+            if (p.getId().equals(id)) {
+                listPaquetes.remove(p);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
     public boolean actualizarDireccion(String id, Direccion actualizado) {
         boolean centinela = false;
         for (Direccion d:listDirecciones) {
@@ -211,6 +222,20 @@ public class Usuario extends Persona implements IObservador{
         }
         return centinela;
     }
+    public boolean actualizarPaquete(String id, Paquete actualizado) {
+        boolean centinela = false;
+        for (Paquete p: listPaquetes) {
+            if (p.getId().equals(id)) {
+                p.setId(actualizado.getId());
+                p.setPeso(actualizado.getPeso());
+                p.setVolumen(actualizado.getVolumen());
+                p.setListproductos(actualizado.getListproductos());
+               centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
 
     public Direccion buscarDireccion(String id) {
         for (Direccion d: listDirecciones) {
@@ -231,6 +256,14 @@ public class Usuario extends Persona implements IObservador{
 
     public Pedido buscarPedido(String id) {
         for (Pedido p: listPedidos) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
+    public Paquete buscarPaquete(String id) {
+        for (Paquete p: listPaquetes) {
             if (p.getId().equals(id)) {
                 return p;
             }

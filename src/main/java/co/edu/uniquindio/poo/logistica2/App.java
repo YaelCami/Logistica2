@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class App extends Application {
     private Stage primaryStage;
@@ -205,7 +206,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openGestionRepartidor(){
+    public void openGestionRepartidor(Administrador a){
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("GestionRepartidor.fxml"));
@@ -214,6 +215,7 @@ public class App extends Application {
             GestionRepartidorController controller = new GestionRepartidorController();
             controller.setApp(this);
             viewController.setController(controller);
+            controller.setAdministrador(a);
             viewController.setApp(this);
 
             Scene scene = new Scene(rootLayout);
@@ -345,15 +347,23 @@ public class App extends Application {
         Ciudad ciudad1 = new Ciudad("2233", "Quimbaya", 32175);
         Ciudad ciudad2 = new Ciudad("3322", "Armenia", 309474);
         Ruta ruta1 = new Ruta("0000", ciudad1, ciudad2, 22.2);
+        Repartidor repartidor1 = new Repartidor.Builder().id("0304").nombre("Lucia").correo("@lucia").documento("0909").disponibilidad(Disponibilidad.ACTIVO).build();
+        if (repartidor1 != null) {
+            repartidor1.agregarRuta(ruta1);
+        } else {
+            System.out.println("Error: El objeto no es un Repartidor.");
+        }
         empresa.agregarPersona(usuario1);
         empresa.agregarPersona(administrador1);
         empresa.agregarCiudad(ciudad1);
         empresa.agregarCiudad(ciudad2);
         empresa.agregarRuta(ruta1);
+        empresa.agregarPersona(repartidor1);
         System.out.println("DEBUG - Lista de administradores en la empresa:");
         for (Administrador s : empresa.getListAdministradores()) {
             System.out.println(" -> " + s.getId() + " - " + s.getNombre());
         }
+        System.out.println("DEBUG - Lista de usuarios en la empresa:");
         for(Usuario u : empresa.getListUsuarios()){
             System.out.println(" -> " + u.getId() + " - " + u.getNombre());
         }

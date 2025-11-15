@@ -65,13 +65,8 @@ public class Repartidor extends Persona {
         }
         return centinela;
     }
-    public boolean agregarRuta(Ruta  ruta){
-        boolean centinela = false;
-        if (!verificarRuta(ruta.getId())) {
-            zonaCobertura.add(ruta);
-            centinela = true;
-        }
-        return centinela;
+    public void agregarRuta(Ruta ruta) {
+        zonaCobertura.add(ruta);
     }
     public boolean agregarEnvio(Envio envio) {
         boolean centinela = false;

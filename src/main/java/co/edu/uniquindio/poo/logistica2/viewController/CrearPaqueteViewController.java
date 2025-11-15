@@ -2,10 +2,7 @@ package co.edu.uniquindio.poo.logistica2.viewController;
 
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.controller.CrearPaqueteController;
-import co.edu.uniquindio.poo.logistica2.model.Categoria;
-import co.edu.uniquindio.poo.logistica2.model.Paquete;
-import co.edu.uniquindio.poo.logistica2.model.Producto;
-import co.edu.uniquindio.poo.logistica2.model.Usuario;
+import co.edu.uniquindio.poo.logistica2.model.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -47,16 +44,20 @@ public class CrearPaqueteViewController {
     @FXML
     private void onAgregarProductoAlPaquete() {
         try {
-            // Construye el producto desde los campos (txtIdProducto, etc.)
-            Producto producto = buildProducto();  // Implementa este método para crear un Producto
+            Producto producto = buildProducto();
+            Paquete paquete = buildPaquete();
             if (producto != null) {
-                productosDelPaquete.add(producto);
-                tbvProductos.setItems(productosDelPaquete);
-                // Recalcula peso total (peso del producto * cantidad)
-                double pesoAgregado = producto.getPeso() * producto.getCantidad();
-                pesoTotalPaquete += pesoAgregado;
-                lblPesoTotal.setText(String.format("%.2f kg", pesoTotalPaquete));
-                limpiarCamposProducto();  // Limpia los campos de producto
+                if(controller.agregarProductoAlPaquete(paquete, producto)){
+                    productosDelPaquete.add(producto);
+                    tbvProductos.setItems(productosDelPaquete);
+
+                    double pesoAgregado = producto.getPeso() * producto.getCantidad();
+                    pesoTotalPaquete += pesoAgregado;
+                    lblPesoTotal.setText(String.format("%.2f kg", pesoTotalPaquete));
+                    limpiarCamposProducto();
+                } else {
+                    mostrarAlerta("Error", "No se pudo agregar producto al paquete");
+                }
             }
         } catch (Exception e) {
             mostrarAlerta("Error", "Datos inválidos: " + e.getMessage());
@@ -65,21 +66,12 @@ public class CrearPaqueteViewController {
     @FXML
     private void onAgregarPaquete() {
         try {
-            String idPaquete = txtIdPaquete.getText();
-            double volumen = Double.parseDouble(txtVolumen.getText());
-            // Crea el paquete con la lista de productos y peso total
-            Paquete paquete = new Paquete.Builder()
-                    .id(idPaquete)
-                    .listproductos(new ArrayList<>(productosDelPaquete))  // Copia de la lista temporal
-                    .peso(pesoTotalPaquete)
-                    .volumen(volumen)
-                    .build();
-            if (controller.agregarPaquete(paquete)) {  // Asumiendo que tienes este método en el controller
-                // Agrega a la TableView de paquetes
+            Paquete paquete = buildPaquete();
+            if (controller.agregarPaquete(paquete)) {
                 list.add(paquete);
-                // Resetea la lista temporal y peso
                 productosDelPaquete.clear();
                 limpiarCamposPaquete();
+                limpiarCamposProducto();
             } else{
                 mostrarAlerta("Error", "No se pudo agregar el paquete");
             }
@@ -88,14 +80,81 @@ public class CrearPaqueteViewController {
         }
     }
 
+
     @FXML
-    public void onActualizarProducto(){}
+    public void onActualizarProducto(){
+        try {
+            if (selectedPaquete == null) {
+                mostrarAlerta("Error", "Selecciona un paquete primero.");
+                return;
+            }
+            Producto actualizado = buildProducto();
+            if (actualizado != null) {
+                if (controller.actualizarProductoEnPaquete(selectedPaquete.getId(), selectedProducto.getId(), actualizado)) {
+                    mostrarAlerta("Éxito", "Producto actualizado.");
+                    limpiarCamposProducto();
+                } else {
+                    mostrarAlerta("Error", "No se pudo actualizar el producto.");
+                }
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Datos inválidos: " + e.getMessage());
+        }
+    }
     @FXML
-    public void onEliminarProducto(){}
+    public void onEliminarProducto(){
+        try {
+            if (selectedPaquete == null || selectedProducto == null) {
+                mostrarAlerta("Error", "Selecciona un paquete y un producto.");
+                return;
+            }
+            if (controller.eliminarProductoDePaquete(selectedPaquete.getId(), selectedProducto.getId())) {
+                mostrarAlerta("Éxito", "Producto eliminado.");
+                limpiarCamposProducto();
+            } else {
+                mostrarAlerta("Error", "No se pudo eliminar el producto.");
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Datos inválidos: " + e.getMessage());
+        }
+    }
     @FXML
-    public void onActualizarPaquete(){}
+    public void onActualizarPaquete(){
+        if(selectedPaquete != null){
+            try{
+                Paquete nuevo = buildPaquete();
+                nuevo.setListproductos(selectedPaquete.getListproductos());
+                boolean actualizado = controller.actualizarPaquete(selectedPaquete.getId(), nuevo);
+                if(actualizado){
+                    int index = list.indexOf(selectedPaquete);
+                    list.set(index, nuevo);
+                    limpiarCamposPaquete();
+                    mostrarAlerta("Exito", "Paquete actualizado correctamente");
+                } else{
+                    mostrarAlerta("Error", "No se pudo actualizar correctamente.");
+                }
+            } catch (Exception e){
+                mostrarAlerta("Error", "Datos invalidos:"+ e.getMessage());
+            }
+        }else {
+            mostrarAlerta("Error", "Por favor completa todos los campos.");
+        }
+    }
     @FXML
-    public void onEliminarPaquete(){}
+    public void onEliminarPaquete(){
+        if(selectedPaquete != null){
+            boolean eliminado = controller.eliminarPaquete(selectedPaquete.getId());
+            if(eliminado){
+                list.remove(selectedPaquete);
+                limpiarCamposPaquete();
+                mostrarAlerta("Exito", "Paquete eliminado correctamente");
+            } else {
+                mostrarAlerta("Error", "No se pudo eliminar correctamente.");
+            }
+        } else{
+            mostrarAlerta("Atencion", "Selecciona un paquete para eliminar");
+        }
+    }
     @FXML
     public void onRegresar(){
         controller.regresar();
@@ -116,7 +175,7 @@ public class CrearPaqueteViewController {
         tbcPesoPaquete.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getPeso()));
         tbcNombreProducto.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getNombre()));  // Asume que Producto tiene getNombre()
+                new SimpleStringProperty(cellData.getValue().getNombre()));
         tbcCantidadP.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getCantidad()));
         cbxCategoriaP.getItems().addAll(Categoria.values());
@@ -137,6 +196,16 @@ public class CrearPaqueteViewController {
             return null;
         }
         return producto;
+    }
+    private Paquete buildPaquete() {
+        String id = txtIdPaquete.getText();
+        Double volumen = Double.valueOf(txtVolumen.getText());
+        return new Paquete.Builder()
+                .id(id)
+                .listproductos(new ArrayList<>(productosDelPaquete))
+                .peso(pesoTotalPaquete)
+                .volumen(volumen)
+                .build();
     }
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -185,7 +254,6 @@ public class CrearPaqueteViewController {
             txtVolumen.setText(Double.toString(paquete.getVolumen()));
             lblPesoTotal.setText(Double.toString(paquete.getPeso()));
             tbvProductos.setItems(FXCollections.observableArrayList(paquete.getListproductos()));
-
         }
     }
     private void mostrarInformacionProducto(Producto producto) {

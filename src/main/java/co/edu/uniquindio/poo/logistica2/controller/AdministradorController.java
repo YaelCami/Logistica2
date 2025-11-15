@@ -26,7 +26,7 @@ public class AdministradorController {
         app.openAsignarPedido();
     }
     public void irAGestionRepartidor(){
-        app.openGestionRepartidor();
+        app.openGestionRepartidor(administrador);
     }
     public void irAlInicio() {
         app.openViewPrincipal();

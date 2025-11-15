@@ -50,18 +50,14 @@ public class Paquete implements IProducto{
         }
 
     }
-
     public void agregarIProducto(IProducto hijo){
         hijos.add(hijo);
     }
     public boolean agregarProductos(Producto producto) {
         boolean centinela = false;
-        for (Producto p : listproductos) {
-            if (!verificarProducto(p.getId())) {
-                listproductos.add(p);
-                centinela = true;
-                break;
-            }
+        if (!verificarProducto(producto.getId())) {
+            listproductos.add(producto);
+            centinela = true;
         }
         return centinela;
     }
