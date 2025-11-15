@@ -49,37 +49,34 @@ public class Usuario extends Persona implements IObservador{
 
     public boolean agregarDireccion(Direccion direccion) {
         boolean centinela = false;
-        for (Direccion d: listDirecciones) {
-            if (!verificarDireccion(d.getId())) {
-                listDirecciones.add(d);
+        if (!verificarDireccion(direccion.getId())) {
+                listDirecciones.add(direccion);
                 centinela = true;
-                break;
-            }
+
         }
+
         return centinela;
     }
 
 
     public boolean agregarPago(Pago pago) {
         boolean centinela = false;
-        for (Pago p: listPagos) {
-            if (!verificarPago(p.getId())) {
-                listPagos.add(p);
+        if (!verificarPago(pago.getId())) {
+                listPagos.add(pago);
                 centinela = true;
-                break;
-            }
+
         }
+
         return centinela;
     }
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
-        for (Pedido p: listPedidos) {
-            if (!verificarPedido(p.getId())) {
-                listPedidos.add(p);
+        if (!verificarPedido(pedido.getId())) {
+                listPedidos.add(pedido);
                 centinela = true;
-                break;
-            }
+
         }
+
         return centinela;
     }
     public boolean verificarDireccion(String id) {

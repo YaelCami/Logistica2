@@ -60,13 +60,12 @@ public class Envio implements ITarifa, ISujeto {
 
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
-        for (Pedido p:  listPedidos) {
-            if (!verificarPedido(p.getId())) {
-                listPedidos.add(p);
+        if (!verificarPedido(pedido.getId())) {
+                listPedidos.add(pedido);
                 centinela = true;
-                break;
-            }
+
         }
+
         return centinela;
     }
 

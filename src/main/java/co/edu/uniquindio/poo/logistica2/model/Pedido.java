@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pedido {
+public class Pedido implements IPedido{
     private String id;
     private double costo;
+    private String descripcion;
     private LocalDate fechaCreacion;
     private LocalDate fechaEntrega;
     private LocalDate fechaEstimadaEntrega;
@@ -29,6 +30,10 @@ public class Pedido {
         this.listpaquetes = new ArrayList<>();
         this.pago = pago;
     }
+    @Override
+    public String getDescripcion() {
+        return "Paquete normal";
+    }
 
     public void realizarAccion(String accion) {
         String resultado = envio.ejecutarAccion(accion);
@@ -37,24 +42,22 @@ public class Pedido {
 
     public boolean agregarPaquete(Paquete paquete){
         boolean centinela = false;
-        for (Paquete p: listpaquetes) {
-            if (!verificarPaquete(p.getId())) {
-                listpaquetes.add(p);
+        if (!verificarPaquete(paquete.getId())) {
+                listpaquetes.add(paquete);
                 centinela = true;
-                break;
-            }
+
         }
+
         return centinela;
     }
     public boolean agregarDireccion(Direccion direccion){
         boolean centinela = false;
-        for (Direccion d: listDirecciones) {
-            if (!verificarDireccion(d.getId())) {
-                listDirecciones.add(d);
+        if (!verificarDireccion(direccion.getId())) {
+                listDirecciones.add(direccion);
                 centinela = true;
-                break;
-            }
+
         }
+
         return centinela;
     }
 
