@@ -9,4 +9,8 @@ public class PedidoPrioridad extends PedidoDecorator{
     public String getDescripcion() {
         return pedido.getDescripcion() + " |PRIORIDAD";
     }
+    @Override
+    public double getExtras() {
+        return pedido.getExtras() +10000.0;
+    }
 }

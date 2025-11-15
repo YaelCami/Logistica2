@@ -16,7 +16,7 @@ public class Envio implements ITarifa, ISujeto {
     private List<IObservador> listObservadores;
     private IEstadoEnvio estadoEnvio;
 
-    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Estado estado, Ruta ruta, Repartidor repartidor) {
+    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Ruta ruta, Repartidor repartidor) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
@@ -29,15 +29,22 @@ public class Envio implements ITarifa, ISujeto {
     }
 
     @Override
-    public double calcularCostoEnvio() {
-        return costo;
+    public double calcularCosto() {
+        return ruta.getDistancia() * 2000;
+    }
 
+    public void cambiarEstado(IEstadoEnvio nuevoEstado) {
+        this.estadoEnvio = nuevoEstado;
+        notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
     }
-    public String ejecutarAccion(String accion) {
-        String mensaje = estadoEnvio.ejecutarAccion(this, accion);
-        notificarObservador(mensaje);
-        return mensaje;
-    }
+
+    // Métodos de estado
+    public void solicitar() { estadoEnvio.solicitar(this); }
+    public void asignar() { estadoEnvio.asignar(this); }
+    public void enRuta() { estadoEnvio.EnRuta(this); }
+    public void entregar() { estadoEnvio.entregar(this); }
+    public void reportarIncidencia() { estadoEnvio.reportarIncidencia(this); }
+
 
 
     @Override
@@ -53,7 +60,7 @@ public class Envio implements ITarifa, ISujeto {
     @Override
     public void notificarObservador(String mensaje) {
         for (IObservador o : listObservadores) {
-            o.actualizar(this, mensaje);
+            o.actualizar(mensaje);
         }
 
     }

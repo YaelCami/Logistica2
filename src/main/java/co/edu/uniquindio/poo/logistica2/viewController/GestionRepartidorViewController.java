@@ -3,7 +3,6 @@ package co.edu.uniquindio.poo.logistica2.viewController;
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.controller.GestionRepartidorController;
 import co.edu.uniquindio.poo.logistica2.model.Ciudad;
-import co.edu.uniquindio.poo.logistica2.model.Estado;
 import co.edu.uniquindio.poo.logistica2.model.Repartidor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,6 +1,7 @@
 module co.edu.uniquindio.poo.logistica2 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens co.edu.uniquindio.poo.logistica2 to javafx.fxml;

@@ -42,8 +42,8 @@ public class Usuario extends Persona implements IObservador{
     }
 
     @Override
-    public String actualizar(Envio envio, String mensaje) {
-        return "🔔 Notificación para "  + ": " + mensaje;
+    public void actualizar(String mensaje) {
+        System.out.println("🔔 Notificación para "  + ": " + mensaje) ;
 
     }
 
@@ -166,7 +166,6 @@ public class Usuario extends Persona implements IObservador{
                 p.setId(actualizado.getId());
                 p.setMonto(actualizado.getMonto());
                 p.setFecha(actualizado.getFecha());
-                p.setMetodoPago(actualizado.getMetodoPago());
                 p.setPedido(actualizado.getPedido());
                 centinela = true;
                 break;

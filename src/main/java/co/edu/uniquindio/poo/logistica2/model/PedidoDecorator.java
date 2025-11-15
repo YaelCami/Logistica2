@@ -9,4 +9,8 @@ public class PedidoDecorator implements IPedido {
     public String getDescripcion() {
         return pedido.getDescripcion();
     }
+    @Override
+    public double getExtras() {
+        return pedido.getExtras();
+    }
 }

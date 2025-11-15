@@ -9,4 +9,8 @@ public class PedidoSeguro extends PedidoDecorator{
     public String getDescripcion() {
         return pedido.getDescripcion() +" |SEGURO";
     }
+    @Override
+    public double getExtras() {
+        return pedido.getExtras() +2000.0;
+    }
 }

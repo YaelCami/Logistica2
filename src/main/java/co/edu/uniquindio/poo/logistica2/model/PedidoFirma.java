@@ -9,4 +9,8 @@ public class PedidoFirma extends PedidoDecorator{
     public String getDescripcion() {
         return pedido.getDescripcion() + " |FIRMA";
     }
+    @Override
+    public double getExtras() {
+        return pedido.getExtras() +5000.0;
+    }
 }

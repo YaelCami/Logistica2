@@ -9,4 +9,8 @@ public class PedidoFragil extends PedidoDecorator {
     public String getDescripcion() {
         return pedido.getDescripcion() + " |FRÁGIL";
     }
+    @Override
+    public double getExtras() {
+        return pedido.getExtras() +8000.0;
+    }
 }

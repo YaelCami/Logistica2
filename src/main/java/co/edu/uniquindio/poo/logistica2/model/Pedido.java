@@ -7,6 +7,7 @@ import java.util.List;
 public class Pedido implements IPedido{
     private String id;
     private double costo;
+    private double extra;
     private String descripcion;
     private LocalDate fechaCreacion;
     private LocalDate fechaEntrega;
@@ -16,6 +17,7 @@ public class Pedido implements IPedido{
     private Usuario usuario;
     private Pago pago;
     private Envio envio;
+    private IPedido iPedido;
     private List<Paquete> listpaquetes;
 
     public Pedido(String id, LocalDate fechaCreacion, Ruta ruta, Usuario usuario){
@@ -24,6 +26,8 @@ public class Pedido implements IPedido{
         this.ruta = ruta;
         this.usuario = usuario;
         this.costo = costo;
+        this.extra = extra;
+        this.descripcion = descripcion;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.fechaEntrega = fechaEntrega;
         this.listDirecciones = new ArrayList<>();
@@ -33,6 +37,26 @@ public class Pedido implements IPedido{
     @Override
     public String getDescripcion() {
         return "Paquete normal";
+    }
+    @Override
+    public double getExtras() {
+        return 0.0;
+    }
+
+    public double calcularCostoPedido(){
+        // 1. Costo por distancia
+        double distancia = ruta.getDistancia();
+        if(distancia > 100) {
+            costo += 8000;
+        } // Ejemplo: extra por larga distancia
+        else {
+            costo += 4000;
+        }
+
+        // 2. Extra por el decorator
+        costo += iPedido.getExtras();
+
+        return costo;
     }
 
     public void realizarAccion(String accion) {
