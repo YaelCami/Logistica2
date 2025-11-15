@@ -2,7 +2,6 @@ package co.edu.uniquindio.poo.logistica2.model;
 
 import java.util.List;
 
-
 public class Paquete implements IProducto{
     private String id;
     private double peso;
@@ -67,8 +66,8 @@ public class Paquete implements IProducto{
     public boolean agregarProductos(Producto producto) {
         boolean centinela = false;
         if (!verificarProducto(producto.getId())) {
-            listproductos.add(producto);
-            centinela = true;
+                listproductos.add(producto);
+                centinela = true;
 
         }
 

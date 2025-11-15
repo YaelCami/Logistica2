@@ -50,8 +50,8 @@ public class Usuario extends Persona implements IObservador{
     public boolean agregarDireccion(Direccion direccion) {
         boolean centinela = false;
         if (!verificarDireccion(direccion.getId())) {
-            listDirecciones.add(direccion);
-            centinela = true;
+                listDirecciones.add(direccion);
+                centinela = true;
 
         }
 
@@ -62,8 +62,8 @@ public class Usuario extends Persona implements IObservador{
     public boolean agregarPago(Pago pago) {
         boolean centinela = false;
         if (!verificarPago(pago.getId())) {
-            listPagos.add(pago);
-            centinela = true;
+                listPagos.add(pago);
+                centinela = true;
 
         }
 
@@ -72,8 +72,8 @@ public class Usuario extends Persona implements IObservador{
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
         if (!verificarPedido(pedido.getId())) {
-            listPedidos.add(pedido);
-            centinela = true;
+                listPedidos.add(pedido);
+                centinela = true;
 
         }
 

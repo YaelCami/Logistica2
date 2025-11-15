@@ -6,15 +6,19 @@ public class Pago {
     private String id;
     private double monto;
     private LocalDate fecha;
-    private MetodoPago metodoPago;
     private Pedido pedido;
+    private IMetodoPago metodoPago;
 
-    public Pago(String id, double monto, LocalDate fecha, MetodoPago metodoPago, Pedido pedido) {
+    public Pago(String id, double monto, LocalDate fecha, Pedido pedido,  IMetodoPago metodoPago) {
         this.id = id;
         this.monto = monto;
         this.fecha = fecha;
-        this.metodoPago = metodoPago;
         this.pedido = pedido;
+        this.metodoPago = metodoPago;
+    }
+
+    public String ejecutarPago(){
+        return metodoPago.pagar(monto);
     }
 
     public String getId() {
@@ -41,13 +45,6 @@ public class Pago {
         this.fecha = fecha;
     }
 
-    public MetodoPago getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(MetodoPago metodoPago) {
-        this.metodoPago = metodoPago;
-    }
 
     public Pedido getPedido() {
         return pedido;

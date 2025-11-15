@@ -3,39 +3,32 @@ package co.edu.uniquindio.poo.logistica2.model;
 public class EnRuta implements IEstadoEnvio {
 
     @Override
-    public String solicitar(Envio envio) {
-        return "El envío ya fue solicitado y está actualmente en ruta.";
+    public void solicitar(Envio envio) {
+        System.out.println("El envío ya fue solicitado y está actualmente en ruta.");
     }
 
     @Override
-    public String asignar(Envio envio) {
-        return "El envío ya está en ruta, no se puede volver a asignar.";
+    public void asignar(Envio envio) {
+        System.out.println("El envío ya está en ruta, no se puede volver a asignar.");
     }
 
     @Override
-    public String EnRuta(Envio envio) {
-        return "El envío ya está en ruta hacia su destino.";
+    public void EnRuta(Envio envio) {
+        System.out.println("El envío ya está en ruta hacia su destino.");
     }
 
     @Override
-    public String entregar(Envio envio) {
-        envio.setEstadoEnvio(new Entregado());
-        return "El paquete ha sido entregado exitosamente.";
+    public void entregar(Envio envio) {
+        envio.cambiarEstado(new Entregado());
+        System.out.println("El paquete ha sido entregado exitosamente.");
     }
 
     @Override
-    public String reportarIncidencia(Envio envio) {
-        envio.setEstadoEnvio(new Incidencia());
-        return "Se ha reportado una incidencia durante el trayecto.";
+    public void reportarIncidencia(Envio envio) {
+        envio.cambiarEstado(new Incidencia());
+        System.out.println("Se ha reportado una incidencia durante el trayecto.");
     }
-    @Override
-    public String ejecutarAccion(Envio envio, String accion) {
-        switch (accion.toLowerCase()) {
-            case "entregar" -> { return entregar(envio); }
-            case "incidencia" -> { return reportarIncidencia(envio); }
-            default -> { return "⚠️ No puedes ejecutar esa acción en estado EN RUTA."; }
-        }
-    }
+
 
     @Override
     public String getNombre() {

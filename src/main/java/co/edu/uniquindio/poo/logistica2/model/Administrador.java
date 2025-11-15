@@ -166,3 +166,4 @@ public class Administrador extends Persona {
         this.listCiudades = listCiudades;
     }
 }
+
