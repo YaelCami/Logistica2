@@ -1,9 +1,7 @@
 package co.edu.uniquindio.poo.logistica2.controller;
 
 import co.edu.uniquindio.poo.logistica2.App;
-import co.edu.uniquindio.poo.logistica2.model.Administrador;
-import co.edu.uniquindio.poo.logistica2.model.EmpresaLogistica;
-import co.edu.uniquindio.poo.logistica2.model.Usuario;
+import co.edu.uniquindio.poo.logistica2.model.*;
 
 import java.util.List;
 
@@ -11,6 +9,7 @@ public class GestionarUsuarioController {
     private App app;
     private Administrador administrador;
     private EmpresaLogistica empresa;
+    private CreatorUsuario creator = new CreatorUsuario();
 
     public GestionarUsuarioController() {
         this.empresa = EmpresaLogistica.getInstance();
@@ -21,9 +20,12 @@ public class GestionarUsuarioController {
     public List<Usuario> obtenerListaUsuarios(){
         return empresa.getListUsuarios();
     }
-    public boolean agregarUsuario(Usuario usuario){
-        administrador.agregarPersona(usuario);
-        return true;
+    public Usuario agregarUsuario(UsuarioDTO dto){
+        Usuario usuario = (Usuario) creator.crearPersona(dto);
+        if (administrador.agregarPersona(usuario)){
+            return usuario;
+        }
+        return null;
     }
     public boolean actualizar(String id, Usuario actualizado){
         return administrador.actualizarPersona(id, actualizado);

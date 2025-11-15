@@ -4,36 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Repartidor extends Persona {
-
     private String documento;
     private Disponibilidad disponibilidad;
-    private Ciudad zonaCobertura;
     private List<Camion> listCamiones;
-    private List<Ruta> listRutas;
+    private List<Ruta> zonaCobertura;
     private List<Envio> listEnvios;
 
-    public Repartidor(Builder builder, String documento, Disponibilidad disponibilidad, Ciudad zonaCobertura) {
+    public Repartidor(Builder builder) {
         super(builder);
         this.documento = builder.documento;
         this.disponibilidad = builder.disponibilidad;
         this.zonaCobertura = builder.zonaCobertura;
         this.listCamiones = builder.listCamiones;
-        this.listRutas = builder.listRutas;
         this.listEnvios = builder.listEnvios;
 
     }
-    public static class Builder extends Persona.Builder {
+    public static class Builder extends Persona.Builder<Builder> {
         private String documento;
         private Disponibilidad disponibilidad;
-        private Ciudad zonaCobertura;
         private List<Camion> listCamiones = new ArrayList<>();
-        private List<Ruta> listRutas = new ArrayList<>();
+        private List<Ruta> zonaCobertura = new ArrayList<>();
         private List<Envio> listEnvios =  new ArrayList<>();
 
-        @Override
-        public Repartidor build() {
-            return new Repartidor(this, documento,  disponibilidad, zonaCobertura);
-        }
 
         public Builder documento(String documento) {
             this.documento = documento;
@@ -43,7 +35,7 @@ public class Repartidor extends Persona {
             this.disponibilidad = disponibilidad;
             return this;
         }
-        public Builder zonaCobertura(Ciudad zonaCobertura) {
+        public Builder zonaCobertura(List<Ruta> zonaCobertura) {
             this.zonaCobertura = zonaCobertura;
             return this;
         }
@@ -51,13 +43,14 @@ public class Repartidor extends Persona {
             this.listCamiones = listCamiones;
             return this;
         }
-        public Builder listRutas(List<Ruta> listRutas) {
-            this.listRutas = listRutas;
-            return this;
-        }
         public Builder listEnvios(List<Envio> listEnvios) {
             this.listEnvios = listEnvios;
             return this;
+        }
+
+        @Override
+        public Repartidor build() {
+            return new Repartidor(this);
         }
     }
 
@@ -74,12 +67,9 @@ public class Repartidor extends Persona {
     }
     public boolean agregarRuta(Ruta  ruta){
         boolean centinela = false;
-        for (Ruta  r: listRutas) {
-            if (!verificarRuta(r.getId())) {
-                listRutas.add(r);
-                centinela = true;
-                break;
-            }
+        if (!verificarRuta(ruta.getId())) {
+            zonaCobertura.add(ruta);
+            centinela = true;
         }
         return centinela;
     }
@@ -106,7 +96,7 @@ public class Repartidor extends Persona {
     }
     public boolean verificarRuta(String id) {
         boolean centinela = false;
-        for (Ruta r: listRutas) {
+        for (Ruta r: zonaCobertura) {
             if (r.getId().equals(id)) {
                 centinela = true;
                 break;
@@ -138,9 +128,9 @@ public class Repartidor extends Persona {
 
     public boolean eliminarRuta(String id) {
         boolean centinela = false;
-        for (Ruta r: listRutas) {
+        for (Ruta r: zonaCobertura) {
             if (r.getId().equals(id)) {
-                listRutas.remove(r);
+                zonaCobertura.remove(r);
                 centinela = true;
                 break;
             }
@@ -175,7 +165,7 @@ public class Repartidor extends Persona {
     }
     public boolean actualizarRuta(String id, Ruta actualizado) {
         boolean centinela = false;
-        for (Ruta r: listRutas) {
+        for (Ruta r: zonaCobertura) {
             if (r.getId().equals(id)) {
                 r.setId(actualizado.getId());
                 r.setCiudadOrigen(actualizado.getCiudadOrigen());
@@ -215,7 +205,7 @@ public class Repartidor extends Persona {
         return null;
     }
     public Ruta buscarRuta(String id) {
-        for (Ruta r: listRutas) {
+        for (Ruta r: zonaCobertura) {
             if (r.getId().equals(id)) {
                 return r;
             }
@@ -256,11 +246,11 @@ public class Repartidor extends Persona {
         this.listCamiones = listCamiones;
     }
 
-    public List<Ruta> getListRutas() {
-        return listRutas;
+    public List<Ruta> getZonaCobertura() {
+        return zonaCobertura;
     }
 
-    public void setListRutas(List<Ruta> listRutas) {
-        this.listRutas = listRutas;
+    public void setZonaCobertura(List<Ruta> zonaCobertura) {
+        this.zonaCobertura = zonaCobertura;
     }
 }

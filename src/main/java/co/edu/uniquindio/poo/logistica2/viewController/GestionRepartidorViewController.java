@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.logistica2.controller.GestionRepartidorController;
 import co.edu.uniquindio.poo.logistica2.model.Ciudad;
 import co.edu.uniquindio.poo.logistica2.model.Estado;
 import co.edu.uniquindio.poo.logistica2.model.Repartidor;
+import co.edu.uniquindio.poo.logistica2.model.Ruta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +19,7 @@ public class GestionRepartidorViewController {
     private App app;
     private GestionRepartidorController controller;
     ObservableList<Repartidor> list = FXCollections.observableArrayList();
-    ObservableList<Ciudad> listaCiudades = FXCollections.observableArrayList();
+    ObservableList<Ruta> listaRutas= FXCollections.observableArrayList();
     Repartidor selectedRepartidor;
 
     @FXML
@@ -26,11 +27,13 @@ public class GestionRepartidorViewController {
     @FXML
     public ComboBox<Estado> cbxEstado;
     @FXML
-    public ComboBox<Ciudad> cbxCiudades;
+    public ComboBox<Ruta> cbxZona;
     @FXML
-    public TableView<Ciudad> tbvCiudad;
+    public TableView<Ruta> tbvRuta;
     @FXML
-    public TableColumn<Ciudad, String> tbcCiudades;
+    public TableColumn<Ruta, String> tbcIdRuta;
+    @FXML
+    public TableColumn<Ruta, Ciudad> tbcOrigen, tbcDestino;
     @FXML
     public void onRegresar(){
         controller.volver();
@@ -49,6 +52,7 @@ public class GestionRepartidorViewController {
     public void setController(GestionRepartidorController controller) {
         this.controller = controller;
     }
+    
     private void mostrarInformacion(Repartidor repartidor) {
         if(repartidor != null){
             txtNombre.setText(repartidor.getNombre());
@@ -56,17 +60,17 @@ public class GestionRepartidorViewController {
             txtId.setText(repartidor.getId());
         }
     }
-    private void cargarCiudades() {
-        cbxCiudades.getItems().clear();
-        cbxCiudades.getItems().addAll(controller.obtenerListaCiudades());
-        cbxCiudades.setConverter(new StringConverter<Ciudad>() {
+    private void cargarRutas() {
+        cbxZona.getItems().clear();
+        cbxZona.getItems().addAll(controller.obtenerListaRutas());
+        cbxZona.setConverter(new StringConverter<Ruta>() {
             @Override
-            public String toString(Ciudad ciudad) {
-                return ciudad != null ? ciudad.getNombre() : "";
+            public String toString(Ruta ruta) {
+                return ruta != null ? ruta.getCiudadOrigen().getNombre() + " - " + ruta.getCiudadDestino().getNombre() : "";
             }
 
             @Override
-            public Ciudad fromString(String string) {
+            public Ruta fromString(String string) {
                 return null;
             }
         });

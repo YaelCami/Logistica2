@@ -1,10 +1,7 @@
 package co.edu.uniquindio.poo.logistica2.controller;
 
 import co.edu.uniquindio.poo.logistica2.App;
-import co.edu.uniquindio.poo.logistica2.model.Administrador;
-import co.edu.uniquindio.poo.logistica2.model.Ciudad;
-import co.edu.uniquindio.poo.logistica2.model.EmpresaLogistica;
-import co.edu.uniquindio.poo.logistica2.model.Repartidor;
+import co.edu.uniquindio.poo.logistica2.model.*;
 
 import java.util.List;
 
@@ -28,8 +25,8 @@ public class GestionRepartidorController {
     public List<Repartidor> obtenerListaRepartidores() {
         return empresa.getListRepartidores();
     }
-    public List<Ciudad> obtenerListaCiudades() {
-        return empresa.getListCiudades();
+    public List<Ruta> obtenerListaRutas() {
+        return empresa.getListRutas();
     }
     public boolean agregarRepartidor(Repartidor repartidor) {
         administrador.agregarPersona(repartidor);

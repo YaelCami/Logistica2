@@ -18,7 +18,7 @@ public class Usuario extends Persona implements IObservador{
     }
 
 
-    public static class Builder extends Persona.Builder {
+    public static class Builder extends Persona.Builder<Builder> {
         private List<Direccion> listDirecciones = new ArrayList<>();
         private List<Pago> listPagos =  new ArrayList<>();
         private List<Pedido> listPedidos = new ArrayList<>();
