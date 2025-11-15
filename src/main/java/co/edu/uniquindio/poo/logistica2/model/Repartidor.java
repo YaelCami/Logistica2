@@ -4,28 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Repartidor extends Persona {
+
     private String documento;
     private Disponibilidad disponibilidad;
-    private List<Camion> listCamiones;
-    private List<Ruta> zonaCobertura;
+    private Ciudad zonaCobertura;
+    private List<Ruta> listRutas;
     private List<Envio> listEnvios;
 
-    public Repartidor(Builder builder) {
+    public Repartidor(Builder builder, String documento, Disponibilidad disponibilidad, Ciudad zonaCobertura) {
         super(builder);
         this.documento = builder.documento;
         this.disponibilidad = builder.disponibilidad;
         this.zonaCobertura = builder.zonaCobertura;
-        this.listCamiones = builder.listCamiones;
+        this.listRutas = builder.listRutas;
         this.listEnvios = builder.listEnvios;
 
     }
-    public static class Builder extends Persona.Builder<Builder> {
+    public static class Builder extends Persona.Builder {
         private String documento;
         private Disponibilidad disponibilidad;
-        private List<Camion> listCamiones = new ArrayList<>();
-        private List<Ruta> zonaCobertura = new ArrayList<>();
+        private Ciudad zonaCobertura;
+        private List<Ruta> listRutas = new ArrayList<>();
         private List<Envio> listEnvios =  new ArrayList<>();
 
+        @Override
+        public Repartidor build() {
+            return new Repartidor(this, documento,  disponibilidad, zonaCobertura);
+        }
 
         public Builder documento(String documento) {
             this.documento = documento;
@@ -35,38 +40,31 @@ public class Repartidor extends Persona {
             this.disponibilidad = disponibilidad;
             return this;
         }
-        public Builder zonaCobertura(List<Ruta> zonaCobertura) {
+        public Builder zonaCobertura(Ciudad zonaCobertura) {
             this.zonaCobertura = zonaCobertura;
             return this;
         }
-        public Builder listCamiones(List<Camion> listCamiones) {
-            this.listCamiones = listCamiones;
+        public Builder listRutas(List<Ruta> listRutas) {
+            this.listRutas = listRutas;
             return this;
         }
         public Builder listEnvios(List<Envio> listEnvios) {
             this.listEnvios = listEnvios;
             return this;
         }
-
-        @Override
-        public Repartidor build() {
-            return new Repartidor(this);
-        }
     }
 
-    public boolean agregarCamion(Camion camion){
+
+    public boolean agregarRuta(Ruta  ruta){
         boolean centinela = false;
-        for (Camion c: listCamiones) {
-            if (!verificarCamion(c.getPlaca())) {
-                listCamiones.add(c);
+        for (Ruta  r: listRutas) {
+            if (!verificarRuta(r.getId())) {
+                listRutas.add(r);
                 centinela = true;
                 break;
             }
         }
         return centinela;
-    }
-    public void agregarRuta(Ruta ruta) {
-        zonaCobertura.add(ruta);
     }
     public boolean agregarEnvio(Envio envio) {
         boolean centinela = false;
@@ -79,19 +77,10 @@ public class Repartidor extends Persona {
         }
         return centinela;
     }
-    public boolean verificarCamion(String placa) {
-        boolean centinela = false;
-        for (Camion c: listCamiones) {
-            if (c.getPlaca().equals(placa)) {
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
+
     public boolean verificarRuta(String id) {
         boolean centinela = false;
-        for (Ruta r: zonaCobertura) {
+        for (Ruta r: listRutas) {
             if (r.getId().equals(id)) {
                 centinela = true;
                 break;
@@ -109,23 +98,12 @@ public class Repartidor extends Persona {
         }
         return centinela;
     }
-    public boolean eliminarCamion(String placa) {
-        boolean centinela = false;
-        for (Camion c: listCamiones) {
-            if (c.getPlaca().equals(placa)) {
-                listCamiones.remove(c);
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
 
     public boolean eliminarRuta(String id) {
         boolean centinela = false;
-        for (Ruta r: zonaCobertura) {
+        for (Ruta r: listRutas) {
             if (r.getId().equals(id)) {
-                zonaCobertura.remove(r);
+                listRutas.remove(r);
                 centinela = true;
                 break;
             }
@@ -144,23 +122,9 @@ public class Repartidor extends Persona {
         return centinela;
     }
 
-    public boolean actualizarCamion(String placa, Camion actualizado) {
-        boolean centinela = false;
-        for (Camion c: listCamiones) {
-            if (c.getPlaca().equals(placa)) {
-                c.setCapacidad(actualizado.getCapacidad());
-                c.setPlaca(actualizado.getPlaca());
-                c.setModelo(actualizado.getModelo());
-
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
     public boolean actualizarRuta(String id, Ruta actualizado) {
         boolean centinela = false;
-        for (Ruta r: zonaCobertura) {
+        for (Ruta r: listRutas) {
             if (r.getId().equals(id)) {
                 r.setId(actualizado.getId());
                 r.setCiudadOrigen(actualizado.getCiudadOrigen());
@@ -191,16 +155,9 @@ public class Repartidor extends Persona {
         return centinela;
     }
 
-    public Camion buscarCamion(String placa) {
-        for (Camion  c: listCamiones) {
-            if (c.getPlaca().equals(placa)) {
-                return c;
-            }
-        }
-        return null;
-    }
+
     public Ruta buscarRuta(String id) {
-        for (Ruta r: zonaCobertura) {
+        for (Ruta r: listRutas) {
             if (r.getId().equals(id)) {
                 return r;
             }
@@ -233,19 +190,13 @@ public class Repartidor extends Persona {
         this.disponibilidad = disponibilidad;
     }
 
-    public List<Camion> getListCamiones() {
-        return listCamiones;
+
+
+    public List<Ruta> getListRutas() {
+        return listRutas;
     }
 
-    public void setListCamiones(List<Camion> listCamiones) {
-        this.listCamiones = listCamiones;
-    }
-
-    public List<Ruta> getZonaCobertura() {
-        return zonaCobertura;
-    }
-
-    public void setZonaCobertura(List<Ruta> zonaCobertura) {
-        this.zonaCobertura = zonaCobertura;
+    public void setListRutas(List<Ruta> listRutas) {
+        this.listRutas = listRutas;
     }
 }

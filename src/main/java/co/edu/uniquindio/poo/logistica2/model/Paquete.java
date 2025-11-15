@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.logistica2.model;
 
 import java.util.List;
 
+
 public class Paquete implements IProducto{
     private String id;
     private double peso;
@@ -50,6 +51,16 @@ public class Paquete implements IProducto{
         }
 
     }
+
+    @Override
+    public void mostrarDetalles() {
+        System.out.println("Paquete: " + id);
+        for(IProducto hijo : hijos){
+            hijo.mostrarDetalles();
+        }
+
+    }
+
     public void agregarIProducto(IProducto hijo){
         hijos.add(hijo);
     }
@@ -58,7 +69,9 @@ public class Paquete implements IProducto{
         if (!verificarProducto(producto.getId())) {
             listproductos.add(producto);
             centinela = true;
+
         }
+
         return centinela;
     }
     public boolean verificarProducto(String id) {
