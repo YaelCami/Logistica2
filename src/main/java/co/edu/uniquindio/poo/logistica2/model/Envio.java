@@ -16,7 +16,7 @@ public class Envio implements ITarifa, ISujeto {
     private List<IObservador> listObservadores;
     private IEstadoEnvio estadoEnvio;
 
-    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Estado estado, Ruta ruta, Repartidor repartidor) {
+    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega,Ruta ruta, Repartidor repartidor) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
