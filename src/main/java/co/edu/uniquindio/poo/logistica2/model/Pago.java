@@ -21,6 +21,14 @@ public class Pago {
         return metodoPago.pagar(monto);
     }
 
+    public IMetodoPago getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(IMetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
     public String getId() {
         return id;
     }
