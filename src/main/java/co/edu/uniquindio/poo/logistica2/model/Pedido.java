@@ -77,16 +77,17 @@ public class Pedido implements IPedido{
 
     public LocalDate calcularFechaEstimadaEntrega(Ruta ruta){
         double distancia = ruta.getDistancia();
-        if(distancia >0 && distancia < 50) {
-            fechaEstimadaEntrega.plusDays(5);
+        int diasAdicionales = 0;
+        if (distancia > 0 && distancia < 50) {
+            diasAdicionales = 5;
+        } else if (distancia >= 50 && distancia < 100) {
+            diasAdicionales = 10;
+        } else {
+            diasAdicionales = 15;
         }
-        else if(distancia > 50 && distancia < 100) {
-           fechaEstimadaEntrega.plusDays(10);
-        }
-        else{
-            fechaEstimadaEntrega.plusDays(15);
-        }
-        return fechaEstimadaEntrega;
+        LocalDate fechaCalculada = fechaCreacion.plusDays(diasAdicionales);
+        this.fechaEstimadaEntrega = fechaCalculada;
+        return fechaCalculada;
     }
 
     public Pago getPago() {
