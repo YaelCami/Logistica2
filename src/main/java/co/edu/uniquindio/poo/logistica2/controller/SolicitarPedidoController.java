@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.logistica2.controller;
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.model.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class SolicitarPedidoController {
@@ -23,6 +24,19 @@ public class SolicitarPedidoController {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    public boolean realizarPedido(Pedido pedido) {
+        usuario.solicitarPedido(pedido);
+        return true;
+    }
+    public LocalDate calcularFechaEstimadaEntrega(Pedido pedido,Direccion origen, Direccion destino, LocalDate fecha) {
+        Ruta ruta = pedido.puedePedir(origen, destino);
+        return pedido.calcularFechaEstimadaEntrega(ruta);
+    }
+
+    public double calcularCostoPedido(Pedido pedido) {
+        return pedido.calcularCostoPedido();
+    }
+
     public List<Pedido> obtenerPedidos() {
         return usuario.getListPedidos();
     }

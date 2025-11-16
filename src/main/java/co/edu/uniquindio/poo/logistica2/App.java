@@ -175,6 +175,7 @@ public class App extends Application {
             SolicitarPedidoController controller = new SolicitarPedidoController();
             controller.setApp(this);
             controller.setUsuario(u);
+            viewController.setUsuario(u);
             viewController.setController(controller);
             viewController.setApp(this);
 

@@ -2,18 +2,17 @@ package co.edu.uniquindio.poo.logistica2.viewController;
 
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.controller.SolicitarPedidoController;
-import co.edu.uniquindio.poo.logistica2.model.Direccion;
-import co.edu.uniquindio.poo.logistica2.model.Paquete;
-import co.edu.uniquindio.poo.logistica2.model.Pedido;
-import co.edu.uniquindio.poo.logistica2.model.Usuario;
+import co.edu.uniquindio.poo.logistica2.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class SolicitarPedidoViewController {
     private App app;
@@ -39,7 +38,32 @@ public class SolicitarPedidoViewController {
     @FXML
     public TableColumn<Pedido, String> tbcIdPedido, tbcEstadoPedido;
     @FXML
-    public void onRealizarPedido(){}
+    public void onRealizarPedido() {
+        try {
+            Pedido pedido = buildPedido();
+            LocalDate fechaEstimadaEntrega = controller.calcularFechaEstimadaEntrega(
+                    pedido,
+                    pedido.getOrigen(),
+                    pedido.getDestino(),
+                    pedido.getFechaCreacion()
+            );
+            lblFechaEstimadaEntrega.setText(fechaEstimadaEntrega.toString());
+            pedido.setFechaEstimadaEntrega(fechaEstimadaEntrega);
+            double costo = controller.calcularCostoPedido(pedido);
+            lblTotal.setText("Total: $" + costo);
+            pedido.setCosto(costo);
+            if (controller.realizarPedido(pedido)) {
+                list.add(pedido);
+                limpiarCampos();
+            } else {
+                mostrarAlerta("Error", "No se pudo agregar el pedido");
+            }
+
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Datos inválidos: " + e.getMessage());
+        }
+    }
+
     @FXML
     public void onActualizar(){}
     @FXML
@@ -66,13 +90,42 @@ public class SolicitarPedidoViewController {
         cargarPaquetes();
         cargarPedidos();
     }
+
+    public void initialize() {
+
+        cbxDireccionOrigen.valueProperty().addListener((obs, oldV, newV) -> calcularFechaAutomatica());
+        cbxDireccionDestino.valueProperty().addListener((obs, oldV, newV) -> calcularFechaAutomatica());
+        dtpFecha.valueProperty().addListener((obs, oldV, newV) -> calcularFechaAutomatica());
+    }
+
+    private void calcularFechaAutomatica() {
+        try {
+            Direccion origen = cbxDireccionOrigen.getValue();
+            Direccion destino = cbxDireccionDestino.getValue();
+            LocalDate fecha = dtpFecha.getValue();
+            Pedido pedido = buildPedido();
+            if (origen == null || destino == null || fecha == null) {
+                lblFechaEstimadaEntrega.setText("Fecha");
+                return;
+            }
+
+            LocalDate fechaEntrega = controller.calcularFechaEstimadaEntrega(pedido,origen, destino, fecha);
+
+            lblFechaEstimadaEntrega.setText(fechaEntrega.toString());
+
+        } catch (Exception e) {
+            lblFechaEstimadaEntrega.setText("Error");
+        }
+    }
+
     private Pedido buildPedido() {
         String id = lblIdPedido.getText();
         LocalDate fecha = dtpFecha.getValue();
         Direccion origen = cbxDireccionOrigen.getSelectionModel().getSelectedItem();
         Direccion destino = cbxDireccionDestino.getSelectionModel().getSelectedItem();
         Paquete paquete = cbxIdPaquete.getSelectionModel().getSelectedItem();
-        return new Pedido(id,fecha,origen,destino, usuario);
+        LocalDate fechaEstimadaEntrega = LocalDate.parse(lblFechaEstimadaEntrega.getText());
+        return new Pedido(id,fecha,origen,destino, usuario, fechaEstimadaEntrega,paquete);
     }
     private void listenerSelection(){
         tbvPedidos.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
@@ -141,5 +194,14 @@ public class SolicitarPedidoViewController {
         } else {
             tbvPedidos.getItems().clear();
         }
+    }
+    private void limpiarCampos(){
+        lblIdPedido.setText("");
+        lblFechaEstimadaEntrega.setText("");
+        lblTotal.setText("");
+        cbxDireccionOrigen.getSelectionModel().clearSelection();
+        cbxDireccionDestino.getSelectionModel().clearSelection();
+        cbxIdPaquete.getSelectionModel().clearSelection();
+        dtpFecha.setValue(null);
     }
 }

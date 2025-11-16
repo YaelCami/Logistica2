@@ -8,6 +8,7 @@ public class Usuario extends Persona implements IObservador{
     private List<Pago> listPagos ;
     private List<Pedido> listPedidos;
     private List<Paquete> listPaquetes;
+    private Administrador administrador;
 
     public Usuario(Builder builder){
         super(builder);
@@ -47,6 +48,20 @@ public class Usuario extends Persona implements IObservador{
         }
 
     }
+    public void solicitarPedido(Pedido p){
+        agregarPedido(p);
+        administrador.getListPedidos().add(p);
+    }
+
+    public String rastrearPedido(String id) {
+        String rastrear = "";
+        for (Pedido p : listPedidos) {
+            if (p.getId().equals(id)) {
+                rastrear = "El envío está actualmente en estado: " + p.getEnvio().getEstadoEnvio().getNombre();
+            }
+        }
+        return rastrear;
+    }
 
     @Override
     public void actualizar(String mensaje) {
@@ -72,15 +87,17 @@ public class Usuario extends Persona implements IObservador{
                 centinela = true;
 
         }
-
         return centinela;
     }
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
         if (!verificarPedido(pedido.getId())) {
+            if(pedido.puedePedir(pedido.getOrigen(), pedido.getDestino()) != null){
                 listPedidos.add(pedido);
                 centinela = true;
-
+            } else {
+                System.out.println("No se encuentra ruta para esas direcciones");
+            }
         }
         return centinela;
     }
@@ -226,7 +243,6 @@ public class Usuario extends Persona implements IObservador{
                 centinela = true;
                 break;
             }
-
         }
         return centinela;
     }

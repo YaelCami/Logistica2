@@ -23,7 +23,7 @@ public class Pedido implements IPedido{
     private Paquete paquete;
 
 
-    public Pedido(String id, LocalDate fechaCreacion, Direccion origen, Direccion destino, Usuario usuario){
+    public Pedido(String id, LocalDate fechaCreacion, Direccion origen, Direccion destino, Usuario usuario, LocalDate fechaEstimadaEntrega, Paquete paquete) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.ruta = ruta;
@@ -56,7 +56,6 @@ public class Pedido implements IPedido{
         else {
             costo += 4000;
         }
-
         // 2. Extra por el decorator
         costo += iPedido.getExtras();
 
