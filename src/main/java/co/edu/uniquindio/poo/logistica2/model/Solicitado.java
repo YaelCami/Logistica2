@@ -2,39 +2,31 @@ package co.edu.uniquindio.poo.logistica2.model;
 
 public class Solicitado implements IEstadoEnvio{
     @Override
-    public String solicitar(Envio envio) {
-        return "El envío ya fue solictado";
+    public void solicitar(Envio envio) {
+        System.out.println("El envío ya fue solictado");
     }
     @Override
-    public String asignar(Envio envio) {
-        envio.setEstadoEnvio(new Asignado());
-        return "El envío ha sido asignado a un repartidor.";
-    }
-
-    @Override
-    public String EnRuta(Envio envio) {
-        return "No se puede poner en ruta sin asignar primero.";
+    public void asignar(Envio envio) {
+        envio.cambiarEstado(new Asignado());
+        System.out.println("El envío ha sido asignado a un repartidor.");
     }
 
     @Override
-    public String entregar(Envio envio) {
-        return "No se puede entregar sin estar en ruta.";
+    public void EnRuta(Envio envio) {
+        System.out.println("No se puede poner en ruta sin asignar primero.");
     }
 
     @Override
-    public String reportarIncidencia(Envio envio) {
+    public void entregar(Envio envio) {
+        System.out.println("No se puede entregar sin estar en ruta.");
+    }
+
+    @Override
+    public void reportarIncidencia(Envio envio) {
         envio.setEstadoEnvio(new Incidencia());
-        return "Se ha reportado una incidencia en el envío.";
+        System.out.println("Se ha reportado una incidencia en el envío.");
     }
-    @Override
-    public String ejecutarAccion(Envio envio, String accion) {
-        switch (accion.toLowerCase()) {
-            case "asignar" -> { return asignar(envio); }
-            case "solicitar" -> { return solicitar(envio); }
-            case "incidencia" -> { return reportarIncidencia(envio); }
-            default -> { return "⚠️ Acción no válida en estado SOLICITADO."; }
-        }
-    }
+
 
     @Override
     public String getNombre() {

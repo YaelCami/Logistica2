@@ -20,8 +20,8 @@ public class Persona {
         private String telefono;
 
         public Builder id(String id) {
-                this.id = id;
-                return this;
+            this.id = id;
+            return this;
         }
         public Builder nombre(String nombre) {
             this.nombre = nombre;

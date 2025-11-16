@@ -19,24 +19,23 @@ public class Ciudad {
     }
     public boolean agregarRuta(Ruta ruta) {
         boolean centinela = false;
-        for (Ruta r : listRutas) {
-            if (!verificarRuta(r.getId())) {
-                listRutas.add(r);
-                centinela = true;
-                break;
-            }
+        if (!verificarRuta(ruta.getId())) {
+            listRutas.add(ruta);
+            centinela = true;
+
         }
+
         return centinela;
     }
     public boolean agregarDireccion(Direccion direccion) {
         boolean centinela = false;
-        for (Direccion d: listDirecciones) {
-            if (!verificarDireccion(d.getId())) {
-                listDirecciones.add(d);
-                centinela = true;
-                break;
-            }
+
+        if (!verificarDireccion(direccion.getId())) {
+            listDirecciones.add(direccion);
+            centinela = true;
+
         }
+
         return centinela;
     }
     public boolean verificarDireccion(String id) {

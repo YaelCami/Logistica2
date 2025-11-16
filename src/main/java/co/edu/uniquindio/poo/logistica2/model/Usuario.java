@@ -5,16 +5,33 @@ import java.util.List;
 
 public class Usuario extends Persona implements IObservador{
     private List<Direccion> listDirecciones;
-    private List<Pago> listPagos;
+    private List<Pago> listPagos ;
     private List<Pedido> listPedidos;
-    private List<Paquete> listPaquetes;
+    private Administrador administrador;
 
     public Usuario(Builder builder){
         super(builder);
         this.listDirecciones = builder.listDirecciones;
         this.listPagos = builder.listPagos;
         this.listPedidos = builder.listPedidos;
-        this.listPaquetes = builder.listPaquetes;
+        this.administrador = administrador;
+
+    }
+
+    public void solicitarPedido(Pedido p){
+        agregarPedido(p);
+        administrador.getListPedidos().add(p);
+    }
+
+    public String rastrearPedido(String id){
+        String rastrear = "";
+        for(Pedido p : listPedidos){
+            if(p.getId().equals(id)){
+                rastrear= "El envío está actualmente en estado: " + p.getEnvio().getEstadoEnvio().getNombre();
+            }
+        }
+        return rastrear;
+
     }
 
 
@@ -22,7 +39,7 @@ public class Usuario extends Persona implements IObservador{
         private List<Direccion> listDirecciones = new ArrayList<>();
         private List<Pago> listPagos =  new ArrayList<>();
         private List<Pedido> listPedidos = new ArrayList<>();
-        private List<Paquete> listPaquetes = new ArrayList<>();
+        private Administrador administrador;
 
         @Override
         public Usuario build() {
@@ -41,15 +58,12 @@ public class Usuario extends Persona implements IObservador{
             this.listPedidos = listPedidos;
             return this;
         }
-        public Builder listPaquetes(List<Paquete> listPaquetes){
-            this.listPaquetes = listPaquetes;
-            return this;
-        }
+
     }
 
     @Override
-    public String actualizar(Envio envio, String mensaje) {
-        return "🔔 Notificación para "  + ": " + mensaje;
+    public void actualizar(String mensaje) {
+        System.out.println("🔔 Notificación para "  + ": " + mensaje) ;
 
     }
 
@@ -58,24 +72,21 @@ public class Usuario extends Persona implements IObservador{
         if (!verificarDireccion(direccion.getId())) {
             listDirecciones.add(direccion);
             centinela = true;
+
         }
+
         return centinela;
     }
+
 
     public boolean agregarPago(Pago pago) {
         boolean centinela = false;
         if (!verificarPago(pago.getId())) {
             listPagos.add(pago);
             centinela = true;
+
         }
-        return centinela;
-    }
-    public boolean agregarPaquete(Paquete paquete) {
-        boolean centinela = false;
-        if(!verificarPaquete(paquete.getId())) {
-            listPaquetes.add(paquete);
-            centinela = true;
-        }
+
         return centinela;
     }
     public boolean agregarPedido(Pedido pedido) {
@@ -83,7 +94,9 @@ public class Usuario extends Persona implements IObservador{
         if (!verificarPedido(pedido.getId())) {
             listPedidos.add(pedido);
             centinela = true;
+
         }
+
         return centinela;
     }
     public boolean verificarDireccion(String id) {
@@ -109,16 +122,6 @@ public class Usuario extends Persona implements IObservador{
     public boolean verificarPedido(String id) {
         boolean centinela = false;
         for (Pedido p: listPedidos) {
-            if (p.getId().equals(id)) {
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
-    public boolean verificarPaquete(String id) {
-        boolean centinela = false;
-        for (Paquete p: listPaquetes) {
             if (p.getId().equals(id)) {
                 centinela = true;
                 break;
@@ -183,7 +186,6 @@ public class Usuario extends Persona implements IObservador{
                 p.setId(actualizado.getId());
                 p.setMonto(actualizado.getMonto());
                 p.setFecha(actualizado.getFecha());
-                p.setMetodoPago(actualizado.getMetodoPago());
                 p.setPedido(actualizado.getPedido());
                 centinela = true;
                 break;
@@ -254,11 +256,19 @@ public class Usuario extends Persona implements IObservador{
         this.listPagos = listPagos;
     }
 
-    public List<Paquete> getListPaquetes() {
-        return listPaquetes;
+    public List<Pedido> getListPedidos() {
+        return listPedidos;
     }
 
-    public void setListPaquetes(List<Paquete> listPaquetes) {
-        this.listPaquetes = listPaquetes;
+    public void setListPedidos(List<Pedido> listPedidos) {
+        this.listPedidos = listPedidos;
+    }
+
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
     }
 }

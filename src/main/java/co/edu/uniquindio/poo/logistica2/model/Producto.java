@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
-public class Producto {
+public class Producto implements IProducto{
     private String id;
     private String nombre;
     private String marca;
@@ -53,6 +53,11 @@ public class Producto {
         public Producto build(){
             return new Producto(this);
         }
+    }
+
+    @Override
+    public void mostrarDetalles(){
+        System.out.println("Producto: " + nombre);
     }
 
     public String getId() {
