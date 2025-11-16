@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido implements IPedido{
+    private EmpresaLogistica empresaLogistica = EmpresaLogistica.getInstance();
     private String id;
     private double costo;
     private double extra;
@@ -12,15 +13,17 @@ public class Pedido implements IPedido{
     private LocalDate fechaCreacion;
     private LocalDate fechaEntrega;
     private LocalDate fechaEstimadaEntrega;
-    private List<Direccion> listDirecciones;
+    private Direccion origen;
+    private Direccion destino;
     private Ruta ruta;
     private Usuario usuario;
     private Pago pago;
     private Envio envio;
     private IPedido iPedido;
-    private List<Paquete> listpaquetes;
+    private Paquete paquete;
 
-    public Pedido(String id, LocalDate fechaCreacion, Ruta ruta, Usuario usuario){
+
+    public Pedido(String id, LocalDate fechaCreacion, Direccion origen, Direccion destino, Usuario usuario){
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.ruta = ruta;
@@ -30,8 +33,9 @@ public class Pedido implements IPedido{
         this.descripcion = descripcion;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.fechaEntrega = fechaEntrega;
-        this.listDirecciones = new ArrayList<>();
-        this.listpaquetes = new ArrayList<>();
+        this.origen = origen;
+        this.destino = destino;
+        this.paquete = paquete;
         this.pago = pago;
     }
     @Override
@@ -59,125 +63,30 @@ public class Pedido implements IPedido{
         return costo;
     }
 
-    public void realizarAccion(String accion) {
-        String resultado = envio.ejecutarAccion(accion);
-        System.out.println("📦 Pedido " + id + ": " + resultado);
-    }
-
-    public boolean agregarPaquete(Paquete paquete){
-        boolean centinela = false;
-        if (!verificarPaquete(paquete.getId())) {
-                listpaquetes.add(paquete);
-                centinela = true;
-
-        }
-
-        return centinela;
-    }
-    public boolean agregarDireccion(Direccion direccion){
-        boolean centinela = false;
-        if (!verificarDireccion(direccion.getId())) {
-                listDirecciones.add(direccion);
-                centinela = true;
-
-        }
-
-        return centinela;
-    }
-
-    public boolean verificarPaquete(String id){
-        boolean centinela = false;
-        for (Paquete p: listpaquetes) {
-            if (p.getId().equals(id)) {
-                centinela = true;
+    public Ruta puedePedir(Direccion origen, Direccion destino){
+        Ruta ruta= null;
+        List<Ruta> listaRutas = empresaLogistica.getListRutas();
+        for(Ruta r: listaRutas){
+            if(origen.getCiudad().equals(r.getCiudadOrigen()) && destino.getCiudad().equals(r.getCiudadDestino())){
+                ruta= r;
                 break;
             }
         }
-        return centinela;
-    }
-    public boolean verificarDireccion(String id){
-        boolean centinela = false;
-        for (Direccion d: listDirecciones) {
-            if (d.getId().equals(id)) {
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
+        return ruta;
     }
 
-    public boolean eliminarPaquete(String id){
-        boolean centinela = false;
-        for (Paquete p: listpaquetes) {
-            if (p.getId().equals(id)) {
-                listpaquetes.remove(p);
-                centinela = true;
-                break;
-            }
+    public LocalDate calcularFechaEstimadaEntrega(Ruta ruta){
+        double distancia = ruta.getDistancia();
+        if(distancia >0 && distancia < 50) {
+            fechaEstimadaEntrega.plusDays(5);
         }
-        return centinela;
-    }
-    public boolean eliminarDireccion(String id){
-        boolean centinela = false;
-        for (Direccion d: listDirecciones) {
-            if (d.getId().equals(id)) {
-                listDirecciones.remove(d);
-                centinela = true;
-                break;
-            }
+        else if(distancia > 50 && distancia < 100) {
+           fechaEstimadaEntrega.plusDays(10);
         }
-        return centinela;
-    }
-    public boolean actualizarPaquete(String id, Paquete actualizado){
-        boolean centinela = false;
-        for (Paquete p: listpaquetes) {
-            if (p.getId().equals(id)) {
-                p.setId(actualizado.getId());
-                p.setPeso(actualizado.getPeso());
-                p.setVolumen(actualizado.getVolumen());
-                centinela = true;
-                break;
-            }
+        else{
+            fechaEstimadaEntrega.plusDays(15);
         }
-        return centinela;
-    }
-    public boolean actualizarDireecion(String id, Direccion actualizado){
-        boolean centinela = false;
-        for (Direccion d: listDirecciones) {
-            if (d.getId().equals(id)) {
-                d.setId(actualizado.getId());
-                d.setAlias(actualizado.getAlias());
-                d.setCalle(actualizado.getCalle());
-                d.setCalle(actualizado.getCalle());
-                d.setCiudad(actualizado.getCiudad());
-                d.setCoordenadas(actualizado.getCoordenadas());
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
-
-
-    public Paquete buscarPaquete(String id){
-        for (Paquete p: listpaquetes) {
-            if (p.getId().equals(id)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    public double calcularCosto(){
-        return costo;
-    }
-
-    public List<Paquete> getListpaquetes() {
-        return listpaquetes;
-    }
-
-    public void setListpaquetes(List<Paquete> listpaquetes) {
-        this.listpaquetes = listpaquetes;
+        return fechaEstimadaEntrega;
     }
 
     public Pago getPago() {
@@ -202,14 +111,6 @@ public class Pedido implements IPedido{
 
     public void setRuta(Ruta ruta) {
         this.ruta = ruta;
-    }
-
-    public List<Direccion> getListDirecciones() {
-        return listDirecciones;
-    }
-
-    public void setListDirecciones(List<Direccion> listDirecciones) {
-        this.listDirecciones = listDirecciones;
     }
 
     public LocalDate getFechaEstimadaEntrega() {
@@ -250,5 +151,57 @@ public class Pedido implements IPedido{
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public double getExtra() {
+        return extra;
+    }
+
+    public void setExtra(double extra) {
+        this.extra = extra;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Envio getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(Envio envio) {
+        this.envio = envio;
+    }
+
+    public IPedido getiPedido() {
+        return iPedido;
+    }
+
+    public void setiPedido(IPedido iPedido) {
+        this.iPedido = iPedido;
+    }
+
+    public Direccion getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(Direccion origen) {
+        this.origen = origen;
+    }
+
+    public Direccion getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Direccion destino) {
+        this.destino = destino;
+    }
+
+    public Paquete getPaquete() {
+        return paquete;
+    }
+
+    public void setPaquete(Paquete paquete) {
+        this.paquete = paquete;
     }
 }

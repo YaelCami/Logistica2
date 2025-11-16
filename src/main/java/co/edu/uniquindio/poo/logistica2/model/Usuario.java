@@ -7,12 +7,30 @@ public class Usuario extends Persona implements IObservador{
     private List<Direccion> listDirecciones;
     private List<Pago> listPagos ;
     private List<Pedido> listPedidos;
+    private Administrador administrador;
 
     public Usuario(Builder builder){
         super(builder);
         this.listDirecciones = builder.listDirecciones;
         this.listPagos = builder.listPagos;
         this.listPedidos = builder.listPedidos;
+        this.administrador = administrador;
+
+    }
+
+    public void solicitarPedido(Pedido p){
+        agregarPedido(p);
+        administrador.getListPedidos().add(p);
+    }
+
+    public String rastrearPedido(String id){
+        String rastrear = "";
+        for(Pedido p : listPedidos){
+            if(p.getId().equals(id)){
+                rastrear= "El envío está actualmente en estado: " + p.getEnvio().getEstadoEnvio().getNombre();
+            }
+        }
+        return rastrear;
 
     }
 
@@ -21,6 +39,7 @@ public class Usuario extends Persona implements IObservador{
         private List<Direccion> listDirecciones = new ArrayList<>();
         private List<Pago> listPagos =  new ArrayList<>();
         private List<Pedido> listPedidos = new ArrayList<>();
+        private Administrador administrador;
 
         @Override
         public Usuario build() {
@@ -39,6 +58,7 @@ public class Usuario extends Persona implements IObservador{
             this.listPedidos = listPedidos;
             return this;
         }
+
     }
 
     @Override
@@ -234,5 +254,21 @@ public class Usuario extends Persona implements IObservador{
 
     public void setListPagos(List<Pago> listPagos) {
         this.listPagos = listPagos;
+    }
+
+    public List<Pedido> getListPedidos() {
+        return listPedidos;
+    }
+
+    public void setListPedidos(List<Pedido> listPedidos) {
+        this.listPedidos = listPedidos;
+    }
+
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
     }
 }
