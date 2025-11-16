@@ -16,7 +16,7 @@ public class Envio implements ITarifa, ISujeto {
     private List<IObservador> listObservadores;
     private IEstadoEnvio estadoEnvio;
 
-    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Ruta ruta, Repartidor repartidor) {
+    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Estado estado, Ruta ruta, Repartidor repartidor) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
@@ -29,22 +29,15 @@ public class Envio implements ITarifa, ISujeto {
     }
 
     @Override
-    public double calcularCosto() {
-        return ruta.getDistancia() * 2000;
+    public double calcularCostoEnvio() {
+        return costo;
+
     }
-
-    public void cambiarEstado(IEstadoEnvio nuevoEstado) {
-        this.estadoEnvio = nuevoEstado;
-        notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
+    public String ejecutarAccion(String accion) {
+        String mensaje = estadoEnvio.ejecutarAccion(this, accion);
+        notificarObservador(mensaje);
+        return mensaje;
     }
-
-    // Métodos de estado
-    public void solicitar() { estadoEnvio.solicitar(this); }
-    public void asignar() { estadoEnvio.asignar(this); }
-    public void enRuta() { estadoEnvio.EnRuta(this); }
-    public void entregar() { estadoEnvio.entregar(this); }
-    public void reportarIncidencia() { estadoEnvio.reportarIncidencia(this); }
-
 
 
     @Override
@@ -60,19 +53,20 @@ public class Envio implements ITarifa, ISujeto {
     @Override
     public void notificarObservador(String mensaje) {
         for (IObservador o : listObservadores) {
-            o.actualizar(mensaje);
+            o.actualizar(this, mensaje);
         }
 
     }
 
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
-        if (!verificarPedido(pedido.getId())) {
-            listPedidos.add(pedido);
-            centinela = true;
-
+        for (Pedido p:  listPedidos) {
+            if (!verificarPedido(p.getId())) {
+                listPedidos.add(p);
+                centinela = true;
+                break;
+            }
         }
-
         return centinela;
     }
 
@@ -207,4 +201,5 @@ public class Envio implements ITarifa, ISujeto {
     public void setListPedidos(List<Pedido> listPedidos) {
         this.listPedidos = listPedidos;
     }
+
 }

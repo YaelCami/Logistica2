@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="439.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.logistica2.viewController.CrearPaqueteViewController">
+   <children>
+      <Button layoutX="16.0" layoutY="15.0" mnemonicParsing="false" onAction="#onRegresar" text="Regresar" textFill="#7d9453" />
+      <Label layoutX="282.0" layoutY="23.0" prefHeight="35.0" prefWidth="166.0" style="-fx-font-weight: bold;" text="Crear Paquete">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Label layoutX="65.0" layoutY="74.0" text="Crear Producto" textFill="#7d9453">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="65.0" layoutY="135.0" text="Id:" />
+      <Label layoutX="31.0" layoutY="175.0" text="Nombre:" />
+      <Label layoutX="47.0" layoutY="217.0" text="Marca:" />
+      <Label layoutX="52.0" layoutY="258.0" text="Peso:" />
+      <Label layoutX="29.0" layoutY="295.0" text="Cantidad:" />
+      <Label layoutX="28.0" layoutY="338.0" text="Categoría:" />
+      <TextField fx:id="txtIdProducto" layoutX="98.0" layoutY="131.0" prefHeight="25.0" prefWidth="126.0" />
+      <TextField fx:id="txtNombreP" layoutX="98.0" layoutY="171.0" prefHeight="25.0" prefWidth="126.0" />
+      <TextField fx:id="txtMarcaP" layoutX="98.0" layoutY="213.0" prefHeight="25.0" prefWidth="126.0" />
+      <TextField fx:id="txtPesoP" layoutX="98.0" layoutY="254.0" prefHeight="25.0" prefWidth="126.0" />
+      <TextField fx:id="txtCantidadP" layoutX="98.0" layoutY="291.0" prefHeight="25.0" prefWidth="126.0" />
+      <ComboBox fx:id="cbxCategoriaP" layoutX="98.0" layoutY="334.0" prefHeight="25.0" prefWidth="126.0" />
+      <TableView fx:id="tbvProductos" layoutX="254.0" layoutY="113.0" prefHeight="200.0" prefWidth="154.0">
+        <columns>
+          <TableColumn fx:id="tbcNombreProducto" prefWidth="86.0" text="Nombre" />
+          <TableColumn fx:id="tbcCantidadP" prefWidth="67.0" text="Cantidad" />
+        </columns>
+      </TableView>
+      <Button layoutX="102.0" layoutY="382.0" mnemonicParsing="false" onAction="#onAgregarProductoAlPaquete" style="-fx-font-weight: bold;" text="Agregar al Paquete" textFill="#6c8049" />
+      <Button layoutX="297.0" layoutY="334.0" mnemonicParsing="false" onAction="#onActualizarProducto" text="Actualizar" textFill="#7d9453" />
+      <Button layoutX="302.0" layoutY="382.0" mnemonicParsing="false" onAction="#onEliminarProducto" text="Eliminar" textFill="#7d9453" />
+      <Separator layoutX="433.0" layoutY="84.0" orientation="VERTICAL" prefHeight="339.0" prefWidth="4.0" />
+      <Label layoutX="449.0" layoutY="105.0" text="Id:" />
+      <Label layoutX="448.0" layoutY="135.0" text="Peso:" />
+      <Label layoutX="448.0" layoutY="167.0" text="Volumen:" />
+      <TextField fx:id="txtIdPaquete" layoutX="518.0" layoutY="101.0" prefHeight="25.0" prefWidth="118.0" />
+      <TextField fx:id="txtVolumen" layoutX="518.0" layoutY="163.0" prefHeight="25.0" prefWidth="118.0" />
+      <TableView fx:id="tbvPaquetes" layoutX="458.0" layoutY="204.0" prefHeight="155.0" prefWidth="231.0">
+        <columns>
+          <TableColumn fx:id="tbcIdPaquete" prefWidth="113.0" text="Id" />
+          <TableColumn fx:id="tbcPesoPaquete" prefWidth="117.0" text="Peso" />
+        </columns>
+      </TableView>
+      <Button layoutX="462.0" layoutY="370.0" mnemonicParsing="false" onAction="#onAgregarPaquete" style="-fx-font-weight: bold;" text="Agregar" textFill="#6c8049" />
+      <Button layoutX="540.0" layoutY="370.0" mnemonicParsing="false" onAction="#onActualizarPaquete" text="Actualizar" textFill="#7d9453" />
+      <Button layoutX="627.0" layoutY="370.0" mnemonicParsing="false" onAction="#onEliminarPaquete" text="Eliminar" textFill="#7d9453" />
+      <Label fx:id="lblPesoTotal" layoutX="526.0" layoutY="135.0" text="Peso Total del paquete" />
+   </children>
+</AnchorPane>

@@ -1,11 +1,11 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
 public interface IEstadoEnvio {
-    void solicitar(Envio envio);
-    void asignar(Envio envio);
-    void EnRuta(Envio envio);
-    void entregar(Envio envio);
+    String solicitar(Envio envio);
+    String asignar(Envio envio);
+    String EnRuta(Envio envio);
+    String entregar(Envio envio);
     String getNombre();
-    void reportarIncidencia(Envio envio);
-
+    String reportarIncidencia(Envio envio);
+    String ejecutarAccion(Envio envio, String accion);
 }

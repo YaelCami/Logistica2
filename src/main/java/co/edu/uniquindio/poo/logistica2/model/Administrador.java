@@ -12,7 +12,6 @@ public class Administrador extends Persona {
     private List<Envio> listEnvios;
     private List<Ruta> listRutas;
     private List<Ciudad> listCiudades;
-    private List<Pedido> listPedidos;
 
 
     public Administrador(Builder builder, double salario) {
@@ -23,7 +22,6 @@ public class Administrador extends Persona {
         this.listEnvios = builder.listEnvios;
         this.listRutas = builder.listRutas;
         this.listCiudades = builder.listCiudades;
-        this.listPedidos = builder.listPedidos;
 
     }
 
@@ -34,7 +32,6 @@ public class Administrador extends Persona {
         private List<Envio> listEnvios = new ArrayList<>();
         private List<Ruta> listRutas = new ArrayList<>();
         private List<Ciudad> listCiudades = new ArrayList<>();
-        private List<Pedido> listPedidos = new ArrayList<>();
 
         @Override
         public Administrador build() {
@@ -70,13 +67,7 @@ public class Administrador extends Persona {
             this.listCiudades = listCiudades;
             return this;
         }
-        public Builder listPedidos(List<Pedido> listPedidos) {
-            this.listPedidos = listPedidos;
-            return this;
-        }
     }
-
-
 
     public boolean agregarPersona(Persona persona) {
         return empresaLogistica.agregarPersona(persona);
@@ -84,22 +75,7 @@ public class Administrador extends Persona {
     }
 
     public boolean agregarEnvio(Envio envio) {
-        eliminarPedido(envio);
         return empresaLogistica.agregarEnvio(envio);
-    }
-
-    public boolean eliminarPedido(Envio envio) {
-        boolean centinela = false;
-        List<Pedido> listPedidosEnvio = envio.getListPedidos();
-        for(Pedido pedido : listPedidosEnvio){
-            for(Pedido pedidoAux : listPedidos){
-                if(listPedidos.contains(pedido)){
-                    listPedidosEnvio.remove(pedido);
-                    centinela = true;
-                }
-            }
-        }
-        return centinela;
     }
 
     public boolean agregarRuta(Ruta ruta) {
@@ -189,20 +165,5 @@ public class Administrador extends Persona {
     public void setListCiudades(List<Ciudad> listCiudades) {
         this.listCiudades = listCiudades;
     }
-
-    public EmpresaLogistica getEmpresaLogistica() {
-        return empresaLogistica;
-    }
-
-    public void setEmpresaLogistica(EmpresaLogistica empresaLogistica) {
-        this.empresaLogistica = empresaLogistica;
-    }
-
-    public List<Pedido> getListPedidos() {
-        return listPedidos;
-    }
-
-    public void setListPedidos(List<Pedido> listPedidos) {
-        this.listPedidos = listPedidos;
-    }
 }
+

@@ -3,9 +3,6 @@ package co.edu.uniquindio.poo.logistica2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class EmpresaLogistica {
     private String nombre;
     private String eslogan;
@@ -55,12 +52,13 @@ public final class EmpresaLogistica {
 
     public boolean agregarEnvio(Envio envio) {
         boolean centinela = false;
-        if (!verificarEnvio(envio.getId())) {
-            listEnvios.add(envio);
-            centinela = true;
-
+        for (Envio e : listEnvios) {
+            if (!verificarEnvio(e.getId())) {
+                listEnvios.add(e);
+                centinela = true;
+                break;
+            }
         }
-
         return centinela;
     }
     public boolean agregarRuta(Ruta ruta) {
@@ -156,7 +154,6 @@ public final class EmpresaLogistica {
                 listRepartidores.remove(r);
                 listPersonas.remove(r);
                 centinela = true;
-                break;
             }
         }
         return centinela;
@@ -392,3 +389,7 @@ public final class EmpresaLogistica {
         this.listRutas = listRutas;
     }
 }
+
+
+
+

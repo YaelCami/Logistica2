@@ -1,5 +1,5 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
 public interface ITarifa {
-    public double calcularCosto();
+    public double calcularCostoEnvio();
 }
