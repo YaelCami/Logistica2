@@ -48,7 +48,7 @@
                   <Label layoutX="31.0" layoutY="43.0" text="Id:" />
                   <ComboBox fx:id="cbxIdPaquete" layoutX="66.0" layoutY="39.0" prefHeight="25.0" prefWidth="124.0" />
                   <Label layoutX="4.0" layoutY="79.0" text="Desea agregarle alguna otra especificación?" />
-                  <Button layoutX="75.0" layoutY="102.0" mnemonicParsing="false" text="Especificación" textFill="#7d9453" />
+                  <Button fx:id="btnEspecificacion" layoutX="75.0" layoutY="102.0" mnemonicParsing="false" onAction="#onEspecificacion" text="Especificación" textFill="#7d9453" />
                   <Separator layoutX="20.0" layoutY="24.0" prefWidth="200.0" />
                </children>
             </AnchorPane>

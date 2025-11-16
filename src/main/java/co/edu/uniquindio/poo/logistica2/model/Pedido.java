@@ -36,6 +36,7 @@ public class Pedido implements IPedido{
         this.origen = origen;
         this.destino = destino;
         this.paquete = paquete;
+        this.iPedido = iPedido;
         this.pago = pago;
     }
     @Override
@@ -48,18 +49,17 @@ public class Pedido implements IPedido{
     }
 
     public double calcularCostoPedido(){
-        // 1. Costo por distancia
+        double costoBase = 0;
         double distancia = ruta.getDistancia();
-        if(distancia > 100) {
-            costo += 8000;
-        } // Ejemplo: extra por larga distancia
-        else {
-            costo += 4000;
+        if (distancia > 100) {
+            costoBase = 8000;
+        } else {
+            costoBase = 4000;
         }
-        // 2. Extra por el decorator
-        costo += iPedido.getExtras();
+        // Extras del decorador
+        double extras = getExtras();
 
-        return costo;
+        return costoBase + extras;
     }
 
     public Ruta puedePedir(Direccion origen, Direccion destino){
@@ -74,18 +74,19 @@ public class Pedido implements IPedido{
         return ruta;
     }
 
-    public LocalDate calcularFechaEstimadaEntrega(Ruta ruta){
+    public LocalDate calcularFechaEstimadaEntrega(LocalDate fechaCreacion, Ruta ruta) {
         double distancia = ruta.getDistancia();
-        if(distancia >0 && distancia < 50) {
-            fechaEstimadaEntrega.plusDays(5);
+        int diasAdicionales = 0;
+        if (distancia > 0 && distancia < 50) {
+            diasAdicionales = 5;
+        } else if (distancia >= 50 && distancia < 100) {
+            diasAdicionales = 10;
+        } else {
+            diasAdicionales = 15;
         }
-        else if(distancia > 50 && distancia < 100) {
-           fechaEstimadaEntrega.plusDays(10);
-        }
-        else{
-            fechaEstimadaEntrega.plusDays(15);
-        }
-        return fechaEstimadaEntrega;
+        LocalDate fechaCalculada = fechaCreacion.plusDays(diasAdicionales);
+        this.fechaEstimadaEntrega = fechaCalculada;
+        return fechaCalculada;
     }
 
     public Pago getPago() {
@@ -202,5 +203,11 @@ public class Pedido implements IPedido{
 
     public void setPaquete(Paquete paquete) {
         this.paquete = paquete;
+    }
+    public void setDecorador(IPedido iPedido) {
+        this.iPedido = iPedido;
+    }
+    public void setExtras(Double extras) {
+        this.extra = extras;
     }
 }

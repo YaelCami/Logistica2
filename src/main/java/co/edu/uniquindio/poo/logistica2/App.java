@@ -344,16 +344,30 @@ public class App extends Application {
 
 
     public void inicializarData() {
-        Persona usuario1 = new Usuario.Builder().id("1230").nombre("Raul").telefono("322470").build();
+        Usuario usuario1 = new Usuario.Builder().id("1230").nombre("Raul").telefono("322470").build();
         Persona administrador1 = new Administrador.Builder().id("0321").nombre("Susana").correo("Susana@gmail.com").build();
         Ciudad ciudad1 = new Ciudad("2233", "Quimbaya", 32175);
         Ciudad ciudad2 = new Ciudad("3322", "Armenia", 309474);
         Ruta ruta1 = new Ruta("0000", ciudad1, ciudad2, 22.2);
+        Direccion direccion1 = new Direccion("3333", "Casa", "Cra 60", ciudad1, "2012");
+        Direccion direccion2 = new Direccion("2222", "Oficina", "Cra 4", ciudad2, "2012");
+        Producto producto1 = new Producto.Builder().id("2020").nombre("Pestañina").marca("prosa").peso(4).categoria(Categoria.JUGUETES).cantidad(1).build();
+        Paquete paquete1 = new Paquete.Builder().id("5002").volumen(3).build();
         Repartidor repartidor1 = new Repartidor.Builder().id("0304").nombre("Lucia").correo("@lucia").documento("0909").disponibilidad(Disponibilidad.ACTIVO).build();
         if (repartidor1 != null) {
             repartidor1.agregarRuta(ruta1);
         } else {
             System.out.println("Error: El objeto no es un Repartidor.");
+        }
+        if (paquete1 != null) {
+            paquete1.agregarProductos(producto1);
+        } else {
+            System.out.println("Error: el objeto no es paquete ");
+        }
+        if(usuario1 != null){
+           usuario1.agregarPaquete(paquete1);
+           usuario1.agregarDireccion(direccion1);
+           usuario1.agregarDireccion(direccion2);
         }
         empresa.agregarPersona(usuario1);
         empresa.agregarPersona(administrador1);

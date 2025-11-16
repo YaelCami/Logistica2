@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Paquete implements IProducto{
@@ -22,7 +23,7 @@ public class Paquete implements IProducto{
         private String id;
         private double peso;
         private double volumen;
-        private List<Producto> listproductos;
+        private List<Producto> listproductos = new ArrayList<>();
         private List<IProducto> hijos;
 
         public Builder id(String id){
@@ -68,7 +69,6 @@ public class Paquete implements IProducto{
         if (!verificarProducto(producto.getId())) {
                 listproductos.add(producto);
                 centinela = true;
-
         }
 
         return centinela;

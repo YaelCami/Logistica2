@@ -17,7 +17,7 @@ public class Pago {
         this.metodoPago = metodoPago;
     }
 
-    public String ejecutarPago(){
+    public String ejecutarPago(double monto){
         return metodoPago.pagar(monto);
     }
 

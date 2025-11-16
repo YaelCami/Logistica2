@@ -11,7 +11,9 @@ import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SolicitarPedidoViewController {
@@ -28,6 +30,8 @@ public class SolicitarPedidoViewController {
     @FXML
     public Label lblIdUsuario, lblIdPedido, lblTotal, lblFechaEstimadaEntrega;
     @FXML
+    public Button btnEspecificacion;
+    @FXML
     public DatePicker dtpFecha;
     @FXML
     public ComboBox<Direccion> cbxDireccionOrigen,cbxDireccionDestino ;
@@ -41,17 +45,7 @@ public class SolicitarPedidoViewController {
     public void onRealizarPedido() {
         try {
             Pedido pedido = buildPedido();
-            LocalDate fechaEstimadaEntrega = controller.calcularFechaEstimadaEntrega(
-                    pedido,
-                    pedido.getOrigen(),
-                    pedido.getDestino(),
-                    pedido.getFechaCreacion()
-            );
-            lblFechaEstimadaEntrega.setText(fechaEstimadaEntrega.toString());
-            pedido.setFechaEstimadaEntrega(fechaEstimadaEntrega);
-            double costo = controller.calcularCostoPedido(pedido);
-            lblTotal.setText("Total: $" + costo);
-            pedido.setCosto(costo);
+
             if (controller.realizarPedido(pedido)) {
                 list.add(pedido);
                 limpiarCampos();
@@ -68,6 +62,9 @@ public class SolicitarPedidoViewController {
     public void onActualizar(){}
     @FXML
     public void onDescargarReporte(){}
+    @FXML
+    public void onEspecificacion(){
+    }
     @FXML
     public void onEliminar(){}
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -92,30 +89,62 @@ public class SolicitarPedidoViewController {
     }
 
     public void initialize() {
+        cargarEvento();
+    }
+    public void cargarEvento(){
+        btnEspecificacion.setOnAction(e -> abrirDialogoEspecificacion());
+        cbxIdPaquete.valueProperty().addListener((obs, oldValue, horaSeleccionada) -> {
+            actualizarId();
+        });
+        dtpFecha.valueProperty().addListener((obs, old, newVal) -> calcularFechaEstimada());
+        cbxDireccionOrigen.valueProperty().addListener((obs, old, newVal) -> calcularFechaEstimada());
+        cbxDireccionDestino.valueProperty().addListener((obs, old, newVal) -> calcularFechaEstimada());
+        lblFechaEstimadaEntrega.setText("Fecha");
+    }
+    private void actualizarId() {
+        Paquete seleccionado = cbxIdPaquete.getValue();
+        if (seleccionado != null) {
+            lblIdPedido.setText(seleccionado.getId());
+        } else {
+            lblIdPedido.setText("");
+        }
+    }
+    private void abrirDialogoEspecificacion() {
+        List<String> opciones = Arrays.asList("Ninguna", "Seguro", "Frágil", "Firma", "Prioridad");
 
-        cbxDireccionOrigen.valueProperty().addListener((obs, oldV, newV) -> calcularFechaAutomatica());
-        cbxDireccionDestino.valueProperty().addListener((obs, oldV, newV) -> calcularFechaAutomatica());
-        dtpFecha.valueProperty().addListener((obs, oldV, newV) -> calcularFechaAutomatica());
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Ninguna", opciones);
+        dialog.setTitle("Especificación del Pedido");
+        dialog.setHeaderText("Seleccione una especificación adicional");
+        dialog.setContentText("Opciones:");
+
+        Optional<String> resultado = dialog.showAndWait();
+
+        resultado.ifPresent(opcion -> {
+            controller.guardarEspecificacion(opcion);
+            calcularCosto();
+        });
+    }
+    private void calcularCosto() {
+        Paquete paquete = cbxIdPaquete.getValue();
+        Direccion origen = cbxDireccionOrigen.getValue();
+        Direccion destino = cbxDireccionDestino.getValue();
+
+        if (paquete == null || origen == null || destino == null) {
+            lblTotal.setText("Total: $0");
+            return;
+        }
+
+        double total = controller.calcularCosto(paquete, origen, destino);
+        lblTotal.setText("Total: " + String.valueOf(total));
     }
 
-    private void calcularFechaAutomatica() {
-        try {
-            Direccion origen = cbxDireccionOrigen.getValue();
-            Direccion destino = cbxDireccionDestino.getValue();
-            LocalDate fecha = dtpFecha.getValue();
-            Pedido pedido = buildPedido();
-            if (origen == null || destino == null || fecha == null) {
-                lblFechaEstimadaEntrega.setText("Fecha");
-                return;
-            }
 
-            LocalDate fechaEntrega = controller.calcularFechaEstimadaEntrega(pedido,origen, destino, fecha);
-
-            lblFechaEstimadaEntrega.setText(fechaEntrega.toString());
-
-        } catch (Exception e) {
-            lblFechaEstimadaEntrega.setText("Error");
-        }
+    private void calcularFechaEstimada() {
+        LocalDate fechaSeleccionada = dtpFecha.getValue();
+        Direccion origen = cbxDireccionOrigen.getValue();
+        Direccion destino = cbxDireccionDestino.getValue();
+        String resultado = controller.calcularFechaEstimada( fechaSeleccionada, origen, destino);
+        lblFechaEstimadaEntrega.setText(resultado);
     }
 
     private Pedido buildPedido() {
@@ -197,8 +226,8 @@ public class SolicitarPedidoViewController {
     }
     private void limpiarCampos(){
         lblIdPedido.setText("");
-        lblFechaEstimadaEntrega.setText("");
-        lblTotal.setText("");
+        lblFechaEstimadaEntrega.setText("Fecha");
+        lblTotal.setText("Total: $0");
         cbxDireccionOrigen.getSelectionModel().clearSelection();
         cbxDireccionDestino.getSelectionModel().clearSelection();
         cbxIdPaquete.getSelectionModel().clearSelection();
