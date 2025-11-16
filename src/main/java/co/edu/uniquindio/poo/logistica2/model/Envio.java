@@ -37,7 +37,9 @@ public class Envio implements ITarifa, ISujeto {
         this.estadoEnvio = nuevoEstado;
         notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
     }
-
+    public String ejecutarAccion(String accion){//QUITAR O CORREGIR
+        return "";
+    }
     // Métodos de estado
     public void solicitar() { estadoEnvio.solicitar(this); }
     public void asignar() { estadoEnvio.asignar(this); }

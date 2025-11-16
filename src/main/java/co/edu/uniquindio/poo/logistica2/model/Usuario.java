@@ -7,20 +7,22 @@ public class Usuario extends Persona implements IObservador{
     private List<Direccion> listDirecciones;
     private List<Pago> listPagos ;
     private List<Pedido> listPedidos;
+    private List<Paquete> listPaquetes;
 
     public Usuario(Builder builder){
         super(builder);
         this.listDirecciones = builder.listDirecciones;
         this.listPagos = builder.listPagos;
         this.listPedidos = builder.listPedidos;
-
+        this.listPaquetes = builder.listPaquetes;
     }
 
 
-    public static class Builder extends Persona.Builder {
+    public static class Builder extends Persona.Builder<Builder> {
         private List<Direccion> listDirecciones = new ArrayList<>();
         private List<Pago> listPagos =  new ArrayList<>();
         private List<Pedido> listPedidos = new ArrayList<>();
+        private List<Paquete> listPaquetes = new ArrayList<>();
 
         @Override
         public Usuario build() {
@@ -39,6 +41,11 @@ public class Usuario extends Persona implements IObservador{
             this.listPedidos = listPedidos;
             return this;
         }
+        public Builder listPaquetes(List<Paquete> listPaquetes){
+            this.listPaquetes = listPaquetes;
+            return this;
+        }
+
     }
 
     @Override
@@ -54,7 +61,6 @@ public class Usuario extends Persona implements IObservador{
                 centinela = true;
 
         }
-
         return centinela;
     }
 
@@ -76,9 +82,17 @@ public class Usuario extends Persona implements IObservador{
                 centinela = true;
 
         }
-
         return centinela;
     }
+    public boolean agregarPaquete(Paquete paquete) {
+        boolean centinela = false;
+        if(!verificarPaquete(paquete.getId())) {
+            listPaquetes.add(paquete);
+            centinela = true;
+        }
+        return centinela;
+    }
+
     public boolean verificarDireccion(String id) {
         boolean centinela = false;
         for (Direccion  d: listDirecciones) {
@@ -109,6 +123,17 @@ public class Usuario extends Persona implements IObservador{
         }
         return centinela;
     }
+    public boolean verificarPaquete(String id) {
+        boolean centinela = false;
+        for (Paquete p: listPaquetes) {
+            if (p.getId().equals(id)) {
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
     public boolean eliminarDireccion(String id) {
         boolean centinela = false;
         for (Direccion d: listDirecciones) {
@@ -143,6 +168,18 @@ public class Usuario extends Persona implements IObservador{
         }
         return centinela;
     }
+    public boolean eliminarPaquete(String id) {
+        boolean centinela = false;
+        for (Paquete p: listPaquetes) {
+            if (p.getId().equals(id)) {
+                listPaquetes.remove(p);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
     public boolean actualizarDireccion(String id, Direccion actualizado) {
         boolean centinela = false;
         for (Direccion d:listDirecciones) {
@@ -193,6 +230,20 @@ public class Usuario extends Persona implements IObservador{
         }
         return centinela;
     }
+    public boolean actualizarPaquete(String id, Paquete actualizado) {
+        boolean centinela = false;
+        for (Paquete p: listPaquetes) {
+            if (p.getId().equals(id)) {
+                p.setId(actualizado.getId());
+                p.setPeso(actualizado.getPeso());
+                p.setVolumen(actualizado.getVolumen());
+                p.setListproductos(actualizado.getListproductos());
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
 
     public Direccion buscarDireccion(String id) {
         for (Direccion d: listDirecciones) {
@@ -219,6 +270,14 @@ public class Usuario extends Persona implements IObservador{
         }
         return null;
     }
+    public Paquete buscarPaquete(String id) {
+        for (Paquete p: listPaquetes) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
 
     public List<Direccion> getListDirecciones() {
         return listDirecciones;
@@ -234,5 +293,20 @@ public class Usuario extends Persona implements IObservador{
 
     public void setListPagos(List<Pago> listPagos) {
         this.listPagos = listPagos;
+    }
+    public List<Paquete> getListPaquetes() {
+        return listPaquetes;
+    }
+
+    public void setListPaquetes(List<Paquete> listPaquetes) {
+        this.listPaquetes = listPaquetes;
+    }
+
+    public List<Pedido> getListPedidos() {
+        return listPedidos;
+    }
+
+    public void setListPedidos(List<Pedido> listPedidos) {
+        this.listPedidos = listPedidos;
     }
 }
