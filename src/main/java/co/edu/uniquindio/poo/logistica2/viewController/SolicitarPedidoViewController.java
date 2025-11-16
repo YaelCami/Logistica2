@@ -5,18 +5,27 @@ import co.edu.uniquindio.poo.logistica2.controller.SolicitarPedidoController;
 import co.edu.uniquindio.poo.logistica2.model.Direccion;
 import co.edu.uniquindio.poo.logistica2.model.Paquete;
 import co.edu.uniquindio.poo.logistica2.model.Pedido;
+import co.edu.uniquindio.poo.logistica2.model.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class SolicitarPedidoViewController {
     private App app;
     private SolicitarPedidoController controller;
+    private Usuario usuario;
     ObservableList<Pedido> list = FXCollections.observableArrayList();
     Pedido selectedPedido;
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        lblIdUsuario.setText(usuario.getId());
+    }
     @FXML
     public Label lblIdUsuario, lblIdPedido, lblTotal, lblFechaEstimadaEntrega;
     @FXML
@@ -53,6 +62,17 @@ public class SolicitarPedidoViewController {
     }
     public void setController(SolicitarPedidoController controller) {
         this.controller = controller;
+        cargarDirecciones();
+        cargarPaquetes();
+        cargarPedidos();
+    }
+    private Pedido buildPedido() {
+        String id = lblIdPedido.getText();
+        LocalDate fecha = dtpFecha.getValue();
+        Direccion origen = cbxDireccionOrigen.getSelectionModel().getSelectedItem();
+        Direccion destino = cbxDireccionDestino.getSelectionModel().getSelectedItem();
+        Paquete paquete = cbxIdPaquete.getSelectionModel().getSelectedItem();
+        return new Pedido(id,fecha,origen,destino, usuario);
     }
     private void listenerSelection(){
         tbvPedidos.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
@@ -101,6 +121,25 @@ public class SolicitarPedidoViewController {
     }
     public void cargarPaquetes(){
         cbxIdPaquete.getItems().clear();
-        cbxIdPaquete.getItems().addAll(controller.obte)
+        cbxIdPaquete.getItems().addAll(controller.obtenerPaquetes());
+        cbxIdPaquete.setConverter(new StringConverter<Paquete>() {
+            @Override
+            public String toString(Paquete paquete) {
+                return paquete != null ? paquete.getId() : "";
+            }
+            @Override
+            public Paquete fromString(String s) {
+                return null;
+            }
+        });
+    }
+    public void cargarPedidos(){
+        List<Pedido> pedidos = controller.obtenerPedidos();
+        if(pedidos != null){
+            list.setAll(pedidos);
+            tbvPedidos.setItems(list);
+        } else {
+            tbvPedidos.getItems().clear();
+        }
     }
 }

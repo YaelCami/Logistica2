@@ -166,7 +166,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openSolicitarPedido(){//Pasarle usuario para que registre pedido con su id y direcciones
+    public void openSolicitarPedido(Usuario u){
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("SolicitarPedido.fxml"));
@@ -174,6 +174,7 @@ public class App extends Application {
             SolicitarPedidoViewController viewController = loader.getController();
             SolicitarPedidoController controller = new SolicitarPedidoController();
             controller.setApp(this);
+            controller.setUsuario(u);
             viewController.setController(controller);
             viewController.setApp(this);
 

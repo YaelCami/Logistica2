@@ -22,7 +22,7 @@ public class UsuarioController {
         app.openHistorialEnvios();
     }
     public void irSolicitarPedido(){
-        app.openSolicitarPedido();
+        app.openSolicitarPedido(usuario);
     }
     public void irACrearPaquete(){
         app.openCrearPaquete(usuario);
