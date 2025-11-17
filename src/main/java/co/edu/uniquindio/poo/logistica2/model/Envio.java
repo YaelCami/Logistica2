@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Envio implements ITarifa, ISujeto {
     private String id;
     private LocalDate fechaInicio;

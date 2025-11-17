@@ -1,6 +1,11 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
-public class EnRuta implements IEstado {
+public class EnRuta implements IEstadoEnvio {
+
+    @Override
+    public void solicitar(Envio envio) {
+        System.out.println("El envío ya fue solicitado y está actualmente en ruta.");
+    }
 
     @Override
     public void asignar(Envio envio) {

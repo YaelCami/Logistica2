@@ -17,12 +17,14 @@ public class UsuarioController {
         }
         app.openAgregarDireccion(usuario);
     }
-
+    public void openRastrearPedido() {
+        app.openRastrearPedido(usuario);
+    }
     public void irAlHistorial(){
-        app.openHistorialEnvios();
+        app.openHistorialEnvios(usuario);
     }
     public void irSolicitarPedido(){
-        app.openSolicitarPedido();
+        app.openSolicitarPedido(usuario);
     }
     public void irACrearPaquete(){
         app.openCrearPaquete(usuario);

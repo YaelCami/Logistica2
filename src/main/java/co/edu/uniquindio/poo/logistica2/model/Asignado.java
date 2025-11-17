@@ -1,6 +1,11 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
-public class Asignado implements IEstado {
+public class Asignado implements IEstadoEnvio{
+
+    @Override
+    public void solicitar(Envio envio) {
+        System.out.println("El envío ya fue solicitado y está asignado a un repartidor.");
+    }
 
     @Override
     public void asignar(Envio envio) {

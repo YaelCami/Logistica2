@@ -23,10 +23,10 @@ public class AdministradorController {
         app.openActualizarEnvio();
     }
     public void irAAsignarPedido(){
-        app.openAsignarPedido();
+        app.openAsignarPedido(administrador);
     }
     public void irAGestionRepartidor(){
-        app.openGestionRepartidor();
+        app.openGestionRepartidor(administrador);
     }
     public void irAlInicio() {
         app.openViewPrincipal();

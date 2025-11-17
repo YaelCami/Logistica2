@@ -1,6 +1,5 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,24 +7,39 @@ public class Usuario extends Persona implements IObservador{
     private List<Direccion> listDirecciones;
     private List<Pago> listPagos ;
     private List<Pedido> listPedidos;
-    private List<Paquete> listPaquetes;
     private Administrador administrador;
-    private EmpresaLogistica empresa = EmpresaLogistica.getInstance();
 
     public Usuario(Builder builder){
         super(builder);
         this.listDirecciones = builder.listDirecciones;
         this.listPagos = builder.listPagos;
         this.listPedidos = builder.listPedidos;
-        this.listPaquetes = builder.listPaquetes;
+        this.administrador = administrador;
+
+    }
+
+    public void solicitarPedido(Pedido p){
+        agregarPedido(p);
+        administrador.getListPedidos().add(p);
+    }
+
+    public String rastrearPedido(String id){
+        String rastrear = "";
+        for(Pedido p : listPedidos){
+            if(p.getId().equals(id)){
+                rastrear= "El envío está actualmente en estado: " + p.getEnvio().getEstadoEnvio().getNombre();
+            }
+        }
+        return rastrear;
+
     }
 
 
-    public static class Builder extends Persona.Builder<Builder> {
+    public static class Builder extends Persona.Builder {
         private List<Direccion> listDirecciones = new ArrayList<>();
         private List<Pago> listPagos =  new ArrayList<>();
         private List<Pedido> listPedidos = new ArrayList<>();
-        private List<Paquete> listPaquetes = new ArrayList<>();
+        private Administrador administrador;
 
         @Override
         public Usuario build() {
@@ -44,37 +58,9 @@ public class Usuario extends Persona implements IObservador{
             this.listPedidos = listPedidos;
             return this;
         }
-        public Builder listPaquetes(List<Paquete> listPaquetes){
-            this.listPaquetes = listPaquetes;
-            return this;
-        }
-
-    }
-    public void solicitarPedido(Pedido p){
-        agregarPedido(p);
-        empresa.getListPedidos().add(p);
-    }
-
-    public String rastrearPedido(String id){
-        String rastrear = "Pedido no encontrado";
-        for(Pedido p : listPedidos){
-            if(p.getId().equals(id)){
-                rastrear = "El envío está actualmente en estado: " + p.getEstado();
-            }
-        }
-        return rastrear;
 
     }
 
-    public List<Pedido> historialEstados(IEstado estado, LocalDate fecha){
-        List<Pedido> historialEstados = new ArrayList<>();
-        for(Pedido p : listPedidos){
-            if(p.getEnvio().getEstadoEnvio().equals(estado) && p.getFechaCreacion().equals(fecha)){
-                historialEstados.add(p);
-            }
-        }
-        return historialEstados;
-    }
     @Override
     public void actualizar(String mensaje) {
         System.out.println("🔔 Notificación para "  + ": " + mensaje) ;
@@ -84,10 +70,11 @@ public class Usuario extends Persona implements IObservador{
     public boolean agregarDireccion(Direccion direccion) {
         boolean centinela = false;
         if (!verificarDireccion(direccion.getId())) {
-            listDirecciones.add(direccion);
-            centinela = true;
+                listDirecciones.add(direccion);
+                centinela = true;
 
         }
+
         return centinela;
     }
 
@@ -95,33 +82,23 @@ public class Usuario extends Persona implements IObservador{
     public boolean agregarPago(Pago pago) {
         boolean centinela = false;
         if (!verificarPago(pago.getId())) {
-            listPagos.add(pago);
-            centinela = true;
+                listPagos.add(pago);
+                centinela = true;
 
         }
+
         return centinela;
     }
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
         if (!verificarPedido(pedido.getId())) {
-            if(pedido.puedePedir(pedido.getOrigen(), pedido.getDestino()) != null){
                 listPedidos.add(pedido);
                 centinela = true;
-            } else {
-                System.out.println("No se encuentra ruta para esas direcciones");
-            }
-        }
-        return centinela;
-    }
-    public boolean agregarPaquete(Paquete paquete) {
-        boolean centinela = false;
-        if(!verificarPaquete(paquete.getId())) {
-            listPaquetes.add(paquete);
-            centinela = true;
-        }
-        return centinela;
-    }
 
+        }
+
+        return centinela;
+    }
     public boolean verificarDireccion(String id) {
         boolean centinela = false;
         for (Direccion  d: listDirecciones) {
@@ -152,17 +129,6 @@ public class Usuario extends Persona implements IObservador{
         }
         return centinela;
     }
-    public boolean verificarPaquete(String id) {
-        boolean centinela = false;
-        for (Paquete p: listPaquetes) {
-            if (p.getId().equals(id)) {
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
-
     public boolean eliminarDireccion(String id) {
         boolean centinela = false;
         for (Direccion d: listDirecciones) {
@@ -197,18 +163,6 @@ public class Usuario extends Persona implements IObservador{
         }
         return centinela;
     }
-    public boolean eliminarPaquete(String id) {
-        boolean centinela = false;
-        for (Paquete p: listPaquetes) {
-            if (p.getId().equals(id)) {
-                listPaquetes.remove(p);
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
-    }
-
     public boolean actualizarDireccion(String id, Direccion actualizado) {
         boolean centinela = false;
         for (Direccion d:listDirecciones) {
@@ -255,20 +209,7 @@ public class Usuario extends Persona implements IObservador{
                 centinela = true;
                 break;
             }
-        }
-        return centinela;
-    }
-    public boolean actualizarPaquete(String id, Paquete actualizado) {
-        boolean centinela = false;
-        for (Paquete p: listPaquetes) {
-            if (p.getId().equals(id)) {
-                p.setId(actualizado.getId());
-                p.setPeso(actualizado.getPeso());
-                p.setVolumen(actualizado.getVolumen());
-                p.setListproductos(actualizado.getListproductos());
-                centinela = true;
-                break;
-            }
+
         }
         return centinela;
     }
@@ -298,14 +239,6 @@ public class Usuario extends Persona implements IObservador{
         }
         return null;
     }
-    public Paquete buscarPaquete(String id) {
-        for (Paquete p: listPaquetes) {
-            if (p.getId().equals(id)) {
-                return p;
-            }
-        }
-        return null;
-    }
 
     public List<Direccion> getListDirecciones() {
         return listDirecciones;
@@ -322,13 +255,6 @@ public class Usuario extends Persona implements IObservador{
     public void setListPagos(List<Pago> listPagos) {
         this.listPagos = listPagos;
     }
-    public List<Paquete> getListPaquetes() {
-        return listPaquetes;
-    }
-
-    public void setListPaquetes(List<Paquete> listPaquetes) {
-        this.listPaquetes = listPaquetes;
-    }
 
     public List<Pedido> getListPedidos() {
         return listPedidos;
@@ -336,5 +262,13 @@ public class Usuario extends Persona implements IObservador{
 
     public void setListPedidos(List<Pedido> listPedidos) {
         this.listPedidos = listPedidos;
+    }
+
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
     }
 }

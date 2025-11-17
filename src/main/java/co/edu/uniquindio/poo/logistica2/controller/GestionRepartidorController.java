@@ -1,10 +1,7 @@
 package co.edu.uniquindio.poo.logistica2.controller;
 
 import co.edu.uniquindio.poo.logistica2.App;
-import co.edu.uniquindio.poo.logistica2.model.Administrador;
-import co.edu.uniquindio.poo.logistica2.model.Ciudad;
-import co.edu.uniquindio.poo.logistica2.model.EmpresaLogistica;
-import co.edu.uniquindio.poo.logistica2.model.Repartidor;
+import co.edu.uniquindio.poo.logistica2.model.*;
 
 import java.util.List;
 
@@ -12,6 +9,7 @@ public class GestionRepartidorController {
     private App app;
     private Administrador administrador;
     private EmpresaLogistica empresa;
+    private CreatorRepartidor creator = new CreatorRepartidor();
 
     public GestionRepartidorController() {
         this.empresa= EmpresaLogistica.getInstance();
@@ -28,12 +26,15 @@ public class GestionRepartidorController {
     public List<Repartidor> obtenerListaRepartidores() {
         return empresa.getListRepartidores();
     }
-    public List<Ciudad> obtenerListaCiudades() {
-        return empresa.getListCiudades();
+    public List<Ruta> obtenerListaRutas() {
+        return empresa.getListRutas();
     }
-    public boolean agregarRepartidor(Repartidor repartidor) {
-        administrador.agregarPersona(repartidor);
-        return true;
+    public Repartidor agregarRepartidor(RepartidorDTO dto) {
+        Repartidor repartidor = (Repartidor) creator.crearPersona(dto);
+        if(administrador.agregarPersona(repartidor)){
+            return repartidor;
+        }
+        return null;
     }
     public boolean actualizarRepartidor(String id,Repartidor actualizado) {
         return administrador.actualizarPersona(id, actualizado);
