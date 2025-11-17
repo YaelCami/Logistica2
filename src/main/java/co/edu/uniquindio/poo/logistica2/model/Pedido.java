@@ -13,6 +13,7 @@ public class Pedido implements IPedido{
     private LocalDate fechaCreacion;
     private LocalDate fechaEntrega;
     private LocalDate fechaEstimadaEntrega;
+    private String estado;
     private Direccion origen;
     private Direccion destino;
     private Ruta ruta;
@@ -33,6 +34,7 @@ public class Pedido implements IPedido{
         this.descripcion = descripcion;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.fechaEntrega = fechaEntrega;
+        this.estado = estado;
         this.origen = origen;
         this.destino = destino;
         this.paquete = paquete;
@@ -46,6 +48,14 @@ public class Pedido implements IPedido{
     @Override
     public double getExtras() {
         return 0.0;
+    }
+
+    public String getEstado() {
+        return estado = "Solicitado";
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public double calcularCostoPedido(){

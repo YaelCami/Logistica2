@@ -43,6 +43,14 @@ public class Persona {
 
     }
 
+    public boolean verificarCorreo(String correo){
+        boolean centinela = false;
+        if(correo.contains("@")){
+            centinela = true;
+        }
+        return centinela;
+    }
+
     public String getId() {
         return id;
     }
@@ -64,6 +72,9 @@ public class Persona {
     }
 
     public void setCorreo(String correo) {
+        if (correo == null || !correo.contains("@")) {
+            throw new IllegalArgumentException("El correo debe contener '@'");
+        }
         this.correo = correo;
     }
 

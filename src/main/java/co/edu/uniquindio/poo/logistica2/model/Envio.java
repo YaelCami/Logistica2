@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Envio implements ITarifa, ISujeto {
     private String id;
     private LocalDate fechaInicio;
@@ -14,7 +15,7 @@ public class Envio implements ITarifa, ISujeto {
     private Repartidor repartidor;
     private List<Pedido> listPedidos;
     private List<IObservador> listObservadores;
-    private IEstadoEnvio estadoEnvio;
+    private IEstado estadoEnvio;
 
     public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Ruta ruta, Repartidor repartidor) {
         this.id = id;
@@ -25,7 +26,7 @@ public class Envio implements ITarifa, ISujeto {
         this.repartidor = repartidor;
         this.listPedidos = new ArrayList<>();
         this.listObservadores = new ArrayList<>();
-        this.estadoEnvio = new Solicitado();
+        this.estadoEnvio = new Asignado();
     }
 
     @Override
@@ -33,15 +34,18 @@ public class Envio implements ITarifa, ISujeto {
         return ruta.getDistancia() * 2000;
     }
 
-    public void cambiarEstado(IEstadoEnvio nuevoEstado) {
+    public void cambiarEstado(IEstado nuevoEstado) {
         this.estadoEnvio = nuevoEstado;
-        notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
+        for (Pedido p: listPedidos){
+            p.setEstado(nuevoEstado.getNombre());
+            notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
+        }
     }
     public String ejecutarAccion(String accion){//QUITAR O CORREGIR
         return "";
     }
     // Métodos de estado
-    public void solicitar() { estadoEnvio.solicitar(this); }
+
     public void asignar() { estadoEnvio.asignar(this); }
     public void enRuta() { estadoEnvio.EnRuta(this); }
     public void entregar() { estadoEnvio.entregar(this); }
@@ -66,6 +70,32 @@ public class Envio implements ITarifa, ISujeto {
         }
 
     }
+
+    public LocalDate calcularFechaEstimadaEntrega(Ruta ruta){
+        double distancia = ruta.getDistancia();
+        int diasAdicionales = 0;
+        if (distancia > 0 && distancia < 50) {
+            diasAdicionales = 5;
+        } else if (distancia >= 50 && distancia < 100) {
+            diasAdicionales = 10;
+        } else {
+            diasAdicionales = 15;
+        }
+        LocalDate fechaCalculada = fechaInicio.plusDays(diasAdicionales);
+        this.fechaEstimadaEntrega = fechaCalculada;
+        return fechaCalculada;
+    }
+
+    public boolean revisarFechaInicio(LocalDate fecha){
+        boolean centinela= true;
+        for(Pedido p: listPedidos){
+            if(p.getFechaCreacion().isAfter(fecha)){
+                centinela= false;
+            }
+        }
+        return centinela;
+    }
+
 
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
@@ -136,11 +166,11 @@ public class Envio implements ITarifa, ISujeto {
         this.listObservadores = listObservadores;
     }
 
-    public IEstadoEnvio getEstadoEnvio() {
+    public IEstado getEstadoEnvio() {
         return estadoEnvio;
     }
 
-    public void setEstadoEnvio(IEstadoEnvio estadoEnvio) {
+    public void setEstadoEnvio(IEstado estadoEnvio) {
         this.estadoEnvio = estadoEnvio;
     }
 

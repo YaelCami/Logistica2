@@ -1,10 +1,13 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
+import java.util.List;
+
 public class Ruta {
     private String id;
     private Ciudad ciudadOrigen;
     private Ciudad ciudadDestino;
     private double distancia;
+    private List<Envio> listEnvios;
 
     public Ruta(String id, Ciudad ciudadOrigen, Ciudad ciudadDestino, double distancia) {
         this.id = id;
