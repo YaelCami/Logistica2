@@ -14,9 +14,9 @@ public class Envio implements ITarifa, ISujeto {
     private Repartidor repartidor;
     private List<Pedido> listPedidos;
     private List<IObservador> listObservadores;
-    private IEstadoEnvio estadoEnvio;
+    private IEstado estadoEnvio;
 
-    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega,Ruta ruta, Repartidor repartidor) {
+    public Envio (String id, LocalDate fechaInicio, LocalDate fechaEstimadaEntrega, Ruta ruta, Repartidor repartidor) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
@@ -25,19 +25,31 @@ public class Envio implements ITarifa, ISujeto {
         this.repartidor = repartidor;
         this.listPedidos = new ArrayList<>();
         this.listObservadores = new ArrayList<>();
-        this.estadoEnvio = new Solicitado();
+        this.estadoEnvio = new Asignado();
     }
 
     @Override
-    public double calcularCostoEnvio() {
-        return costo;
+    public double calcularCosto() {
+        return ruta.getDistancia() * 2000;
+    }
 
+    public void cambiarEstado(IEstado nuevoEstado) {
+        this.estadoEnvio = nuevoEstado;
+        for (Pedido p: listPedidos){
+            p.setEstado(nuevoEstado.getNombre());
+            notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
+        }
     }
-    public String ejecutarAccion(String accion) {
-        String mensaje = estadoEnvio.ejecutarAccion(this, accion);
-        notificarObservador(mensaje);
-        return mensaje;
+    public String ejecutarAccion(String accion){//QUITAR O CORREGIR
+        return "";
     }
+    // Métodos de estado
+
+    public void asignar() { estadoEnvio.asignar(this); }
+    public void enRuta() { estadoEnvio.EnRuta(this); }
+    public void entregar() { estadoEnvio.entregar(this); }
+    public void reportarIncidencia() { estadoEnvio.reportarIncidencia(this); }
+
 
 
     @Override
@@ -53,20 +65,45 @@ public class Envio implements ITarifa, ISujeto {
     @Override
     public void notificarObservador(String mensaje) {
         for (IObservador o : listObservadores) {
-            o.actualizar(this, mensaje);
+            o.actualizar(mensaje);
         }
 
     }
 
-    public boolean agregarPedido(Pedido pedido) {
-        boolean centinela = false;
-        for (Pedido p:  listPedidos) {
-            if (!verificarPedido(p.getId())) {
-                listPedidos.add(p);
-                centinela = true;
-                break;
+    public LocalDate calcularFechaEstimadaEntrega(Ruta ruta){
+        double distancia = ruta.getDistancia();
+        int diasAdicionales = 0;
+        if (distancia > 0 && distancia < 50) {
+            diasAdicionales = 5;
+        } else if (distancia >= 50 && distancia < 100) {
+            diasAdicionales = 10;
+        } else {
+            diasAdicionales = 15;
+        }
+        LocalDate fechaCalculada = fechaInicio.plusDays(diasAdicionales);
+        this.fechaEstimadaEntrega = fechaCalculada;
+        return fechaCalculada;
+    }
+
+    public boolean revisarFechaInicio(LocalDate fecha){
+        boolean centinela= true;
+        for(Pedido p: listPedidos){
+            if(p.getFechaCreacion().isAfter(fecha)){
+                centinela= false;
             }
         }
+        return centinela;
+    }
+
+
+    public boolean agregarPedido(Pedido pedido) {
+        boolean centinela = false;
+        if (!verificarPedido(pedido.getId())) {
+            listPedidos.add(pedido);
+            centinela = true;
+
+        }
+
         return centinela;
     }
 
@@ -128,11 +165,11 @@ public class Envio implements ITarifa, ISujeto {
         this.listObservadores = listObservadores;
     }
 
-    public IEstadoEnvio getEstadoEnvio() {
+    public IEstado getEstadoEnvio() {
         return estadoEnvio;
     }
 
-    public void setEstadoEnvio(IEstadoEnvio estadoEnvio) {
+    public void setEstadoEnvio(IEstado estadoEnvio) {
         this.estadoEnvio = estadoEnvio;
     }
 
@@ -201,5 +238,4 @@ public class Envio implements ITarifa, ISujeto {
     public void setListPedidos(List<Pedido> listPedidos) {
         this.listPedidos = listPedidos;
     }
-
 }

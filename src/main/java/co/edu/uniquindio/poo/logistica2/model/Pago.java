@@ -17,8 +17,9 @@ public class Pago {
         this.metodoPago = metodoPago;
     }
 
-    public String ejecutarPago(){
-        return metodoPago.pagar(monto);
+    public String ejecutarPago(double monto){
+        metodoPago.pagar(monto);
+        return "Pago realizado con éxito por el monto de: " + monto ;
     }
 
     public IMetodoPago getMetodoPago() {

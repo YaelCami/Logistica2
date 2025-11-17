@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Paquete implements IProducto{
@@ -22,7 +23,7 @@ public class Paquete implements IProducto{
         private String id;
         private double peso;
         private double volumen;
-        private List<Producto> listproductos;
+        private List<Producto> listproductos = new ArrayList<>();
         private List<IProducto> hijos;
 
         public Builder id(String id){
@@ -51,18 +52,25 @@ public class Paquete implements IProducto{
 
     }
 
+    @Override
+    public void mostrarDetalles() {
+        System.out.println("Paquete: " + id);
+        for(IProducto hijo : hijos){
+            hijo.mostrarDetalles();
+        }
+
+    }
+
     public void agregarIProducto(IProducto hijo){
         hijos.add(hijo);
     }
     public boolean agregarProductos(Producto producto) {
         boolean centinela = false;
-        for (Producto p : listproductos) {
-            if (!verificarProducto(p.getId())) {
-                listproductos.add(p);
-                centinela = true;
-                break;
-            }
+        if (!verificarProducto(producto.getId())) {
+            listproductos.add(producto);
+            centinela = true;
         }
+
         return centinela;
     }
     public boolean verificarProducto(String id) {

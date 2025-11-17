@@ -46,6 +46,7 @@ public class Repartidor extends Persona {
             return new Repartidor(this);
         }
     }
+
     public void agregarRuta(Ruta ruta) {
         zonaCobertura.add(ruta);
     }
@@ -155,6 +156,13 @@ public class Repartidor extends Persona {
         return null;
     }
 
+    public List<Envio> getListEnvios() {
+        return listEnvios;
+    }
+
+    public void setListEnvios(List<Envio> listEnvios) {
+        this.listEnvios = listEnvios;
+    }
 
     public String getDocumento() {
         return documento;

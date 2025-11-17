@@ -12,6 +12,7 @@ public class Administrador extends Persona {
     private List<Envio> listEnvios;
     private List<Ruta> listRutas;
     private List<Ciudad> listCiudades;
+    private List<Pedido> listPedidos;
 
 
     public Administrador(Builder builder, double salario) {
@@ -22,16 +23,18 @@ public class Administrador extends Persona {
         this.listEnvios = builder.listEnvios;
         this.listRutas = builder.listRutas;
         this.listCiudades = builder.listCiudades;
+        this.listPedidos = builder.listPedidos;
 
     }
 
-    public static class Builder extends Persona.Builder {
+    public static class Builder extends Persona.Builder<Builder> {
         private double salario;
         private List<Usuario> listUsuarios = new ArrayList<>();
         private List<Repartidor> listRepartidores = new ArrayList<>();
         private List<Envio> listEnvios = new ArrayList<>();
         private List<Ruta> listRutas = new ArrayList<>();
         private List<Ciudad> listCiudades = new ArrayList<>();
+        private List<Pedido> listPedidos = new ArrayList<>();
 
         @Override
         public Administrador build() {
@@ -67,7 +70,61 @@ public class Administrador extends Persona {
             this.listCiudades = listCiudades;
             return this;
         }
+        public Builder listPedidos(List<Pedido> listPedidos) {
+            this.listPedidos = listPedidos;
+            return this;
+        }
     }
+
+    public List<Repartidor> buscarRepartidorRutaDisponible(Ruta ruta) {
+        List<Repartidor> repartidors = new ArrayList<>();
+        for (Repartidor repartidor : listRepartidores) {
+            List<Ruta> rutas = repartidor.getZonaCobertura();
+            for(Ruta r: rutas ){
+                if(repartidor.getDisponibilidad() == Disponibilidad.ACTIVO && ruta==r){
+                    repartidors.add(repartidor);
+                }
+            }
+        }
+        return repartidors;
+    }
+
+    public void cambiarDisponibilidadEnRuta(Repartidor repartidor){
+        Disponibilidad disponibilidad = repartidor.getDisponibilidad();
+        if(disponibilidad ==  Disponibilidad.ACTIVO){
+            disponibilidad = Disponibilidad.ENRUTA;
+        }
+    }
+
+    public void cambiarDisponibilidadActivo(Repartidor repartidor){
+        Disponibilidad disponibilidad = repartidor.getDisponibilidad();
+        if(disponibilidad ==  Disponibilidad.ENRUTA){
+            disponibilidad = Disponibilidad.ACTIVO;
+        }
+    }
+    public void cambiarDisponibilidadInactivo(Repartidor repartidor){
+        Disponibilidad disponibilidad = repartidor.getDisponibilidad();
+        List<Envio> listEnviosRepartidor = repartidor.getListEnvios();
+        for(Envio envio : listEnviosRepartidor){
+            if(envio.getEstadoEnvio().getNombre().equalsIgnoreCase("Incidencia")){
+                disponibilidad = Disponibilidad.INACTIVO;
+            }
+        }
+    }
+
+    public List<Pedido> buscarPedidosRuta(Ruta ruta) {
+        List<Pedido> pedidosSegunRuta = new ArrayList<>();
+        for (Pedido pedido : listPedidos){
+            if(pedido.puedePedir(pedido.getOrigen(), pedido.getDestino()).equals(ruta)){
+                pedidosSegunRuta.add(pedido);
+            }
+        }
+        return pedidosSegunRuta;
+    }
+
+
+
+
 
     public boolean agregarPersona(Persona persona) {
         return empresaLogistica.agregarPersona(persona);
@@ -75,7 +132,22 @@ public class Administrador extends Persona {
     }
 
     public boolean agregarEnvio(Envio envio) {
+        eliminarPedido(envio);
         return empresaLogistica.agregarEnvio(envio);
+    }
+
+    public boolean eliminarPedido(Envio envio) {
+        boolean centinela = false;
+        List<Pedido> listPedidosEnvio = envio.getListPedidos();
+        for(Pedido pedido : listPedidosEnvio){
+            for(Pedido pedidoAux : listPedidos){
+                if(listPedidos.contains(pedido)){
+                    listPedidosEnvio.remove(pedido);
+                    centinela = true;
+                }
+            }
+        }
+        return centinela;
     }
 
     public boolean agregarRuta(Ruta ruta) {
@@ -165,5 +237,20 @@ public class Administrador extends Persona {
     public void setListCiudades(List<Ciudad> listCiudades) {
         this.listCiudades = listCiudades;
     }
-}
 
+    public EmpresaLogistica getEmpresaLogistica() {
+        return empresaLogistica;
+    }
+
+    public void setEmpresaLogistica(EmpresaLogistica empresaLogistica) {
+        this.empresaLogistica = empresaLogistica;
+    }
+
+    public List<Pedido> getListPedidos() {
+        return empresaLogistica.getListPedidos();
+    }
+
+    public void setListPedidos(List<Pedido> listPedidos) {
+        this.listPedidos = listPedidos;
+    }
+}

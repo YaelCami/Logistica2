@@ -13,6 +13,7 @@ public final class EmpresaLogistica {
     private List<Persona> listPersonas = new ArrayList<>();
     private List<Ciudad> listCiudades = new ArrayList<>();
     private List<Ruta> listRutas = new ArrayList<>();
+    private List<Pedido> listPedidos = new ArrayList<>();
     private static EmpresaLogistica instance;
 
     private EmpresaLogistica(String nombre, String eslogan) {
@@ -52,13 +53,12 @@ public final class EmpresaLogistica {
 
     public boolean agregarEnvio(Envio envio) {
         boolean centinela = false;
-        for (Envio e : listEnvios) {
-            if (!verificarEnvio(e.getId())) {
-                listEnvios.add(e);
-                centinela = true;
-                break;
-            }
+        if (!verificarEnvio(envio.getId())) {
+            listEnvios.add(envio);
+            centinela = true;
+
         }
+
         return centinela;
     }
     public boolean agregarRuta(Ruta ruta) {
@@ -154,6 +154,7 @@ public final class EmpresaLogistica {
                 listRepartidores.remove(r);
                 listPersonas.remove(r);
                 centinela = true;
+                break;
             }
         }
         return centinela;
@@ -388,8 +389,8 @@ public final class EmpresaLogistica {
     public void setListRutas(List<Ruta> listRutas) {
         this.listRutas = listRutas;
     }
+
+    public List<Pedido> getListPedidos() {
+        return listPedidos;
+    }
 }
-
-
-
-

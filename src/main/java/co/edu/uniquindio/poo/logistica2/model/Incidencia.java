@@ -1,11 +1,6 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
-public class Incidencia implements IEstadoEnvio{
-    @Override
-    public void solicitar(Envio envio) {
-        System.out.println("El envío tiene una incidencia y no puede ser solicitado nuevamente.");
-    }
-
+public class Incidencia implements IEstado {
     @Override
     public void asignar(Envio envio) {
         System.out.println("El envío está en estado de incidencia. No se puede asignar un repartidor hasta resolverla.");
