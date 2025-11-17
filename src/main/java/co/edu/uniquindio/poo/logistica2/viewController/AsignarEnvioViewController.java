@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,7 +22,9 @@ public class AsignarEnvioViewController {
     @FXML
     public TableView<Pedido> tbvEnvio;
     @FXML
-    public TableColumn<Pedido, String> tbcPedido, tbcRepartidor, tbcOrigen, tbcDestino;
+    public TableColumn<Pedido, String> tbcRuta;
+    @FXML
+    public TableColumn<Pedido, String> tbcPedido;
     @FXML
     public TextField txtId;
     @FXML
@@ -38,7 +41,14 @@ public class AsignarEnvioViewController {
     }
     @FXML
     public void onAsignar(){
-
+        Pedido seleccionado = cbxPedido.getSelectionModel().getSelectedItem();
+        if(seleccionado != null){
+            pedidosAsignados.add(seleccionado);
+            cbxPedido.setValue(null);
+            tbvEnvio.setItems(pedidosAsignados);
+        } else {
+            mostrarAlerta("Error", "Seleccione un pedido");
+        }
     }
     @FXML
     public void onCrearEnvio(){}
@@ -47,7 +57,9 @@ public class AsignarEnvioViewController {
     }
     public void setController(AsignarPedidoController controller) {
         this.controller = controller;
-        obtenerPedidos();
+        cargarPedidos();
+        cargarRutas();
+        cargarRepartidores();
     }
     public void setAdministrador(Administrador administrador) {
         this.administrador = administrador;
@@ -55,10 +67,9 @@ public class AsignarEnvioViewController {
     public void initialize() {
         tbcPedido.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getId()));
-        tbcDestino.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getDestino().getCiudad().getNombre()));
-        tbcOrigen.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getOrigen().getCiudad().getNombre()));
+        tbcRuta.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getRuta().toString()));
+
         tbvEnvio.setItems(pedidosAsignados);
 
     }
@@ -84,7 +95,49 @@ public class AsignarEnvioViewController {
         cbxPedido.setValue(null);
         cbxRepartidor.setValue(null);
     }
-    public void obtenerPedidos(){
-        List<Pedido> pedidos = controller.obtenerPedidos();
+    public void cargarPedidos(){
+        cbxPedido.getItems().clear();
+        cbxPedido.getItems().addAll(controller.obtenerPedidos());
+        cbxPedido.setConverter(new StringConverter<Pedido>(){
+            @Override
+            public String toString(Pedido p) {
+                return p != null ? p.getId() + " - " + p.getDescripcion(): "";
+            }
+            @Override
+            public Pedido fromString(String s) {
+                return null;
+            }
+        });
     }
+    private void cargarRutas(){
+        cbxRuta.getItems().clear();
+        cbxRuta.getItems().addAll(controller.obtenerRutas());
+        cbxRuta.setConverter(new StringConverter<Ruta>() {
+            @Override
+            public String toString(Ruta ruta) {
+                return ruta != null ? ruta.getCiudadOrigen().getNombre() + " - " + ruta.getCiudadDestino().getNombre() : "";
+            }
+
+            @Override
+            public Ruta fromString(String string) {
+                return null;
+            }
+        });
+    }
+    private void cargarRepartidores(){
+        cbxRepartidor.getItems().clear();
+        cbxRepartidor.getItems().addAll(controller.obtenerRepartidores());
+        cbxRepartidor.setConverter(new StringConverter<Repartidor>() {
+            @Override
+            public String toString(Repartidor repartidor) {
+                return repartidor != null ? repartidor.getNombre() + " - " + repartidor.getId() : "";
+            }
+
+            @Override
+            public Repartidor fromString(String string) {
+                return null;
+            }
+        });
+    }
+
 }

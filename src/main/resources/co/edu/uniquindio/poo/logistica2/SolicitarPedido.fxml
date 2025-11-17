@@ -52,7 +52,7 @@
                   <Separator layoutX="20.0" layoutY="24.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
-            <Label fx:id="lblTotal" layoutX="21.0" layoutY="406.0" prefHeight="25.0" prefWidth="83.0" style="-fx-font-weight: bold;" text="Total: $0.00">
+            <Label fx:id="lblTotal" layoutX="21.0" layoutY="406.0" prefHeight="25.0" prefWidth="152.0" style="-fx-font-weight: bold;" text="Total: $0.00">
                <font>
                   <Font size="14.0" />
                </font>

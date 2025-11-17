@@ -19,9 +19,7 @@ public class PrimaryController {
     public void irACotizar(){
         app.openCotizarTarifa();
     }
-    public void irAlRastreo(){
-        app.openRastrearPedido();
-    }
+
     public void redireccionar(String id){
         Persona p = empresa.buscarPersona(id);
         if(p != null){

@@ -56,7 +56,18 @@ public class Pedido implements IPedido{
         } else {
             costoBase = 4000;
         }
-        // Extras del decorador
+        double peso = paquete.getPeso();
+        if(peso <= 6){
+            costoBase += 2000;
+        } else {
+            costoBase += 5000;
+        }
+        double volumen = paquete.getVolumen();
+        if (volumen <= 50000){
+            costoBase += 3000;
+        } else {
+            costoBase += 7000;
+        }
         double extras = getExtras();
 
         return costoBase + extras;

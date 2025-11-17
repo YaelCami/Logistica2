@@ -17,7 +17,9 @@ public class UsuarioController {
         }
         app.openAgregarDireccion(usuario);
     }
-
+    public void openRastrearPedido() {
+        app.openRastrearPedido(usuario);
+    }
     public void irAlHistorial(){
         app.openHistorialEnvios(usuario);
     }

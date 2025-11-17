@@ -80,7 +80,9 @@ public class SolicitarPedidoController {
     public void guardarEspecificacion(String esp) {
         this.especificacionSeleccionada = esp;
     }
-
+    public String mostrarEspecificacion() {
+        return especificacionSeleccionada;
+    }
 
     public LocalDate calcularFechaEstimada(LocalDate fechaSolicitud, Direccion origen, Direccion destino) {
         Pedido p = new Pedido("0001",LocalDate.of(2025,10,17),origen, destino, usuario,LocalDate.of(2025,10,22),paquete );

@@ -44,4 +44,10 @@ public class Ruta {
     public void setDistancia(double distancia) {
         this.distancia = distancia;
     }
+
+    @Override
+    public String toString() {
+        return ciudadOrigen.getNombre() +
+                " - " + ciudadDestino.getNombre() ;
+    }
 }
