@@ -57,10 +57,10 @@ public final class EmpresaLogistica {
     public boolean agregarEnvio(Envio envio) {
         boolean centinela = false;
         if (!verificarEnvio(envio.getId())) {
-                listEnvios.add(envio);
-                centinela = true;
+            listEnvios.add(envio);
+            centinela = true;
 
-            }
+        }
 
         return centinela;
     }
@@ -397,7 +397,3 @@ public final class EmpresaLogistica {
         return listPedidos;
     }
 }
-
-
-
-

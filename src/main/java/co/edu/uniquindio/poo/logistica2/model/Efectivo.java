@@ -8,7 +8,6 @@ public class Efectivo implements IMetodoPago {
         return "Pago en EFECTIVO realizado por una cantidad: " + monto;
 
     }
-
     @Override
     public String toString() {
         return "Efectivo";
