@@ -76,6 +76,54 @@ public class Administrador extends Persona {
         }
     }
 
+    public List<Repartidor> buscarRepartidorRutaDisponible(Ruta ruta) {
+        List<Repartidor> repartidors = new ArrayList<>();
+        for (Repartidor repartidor : listRepartidores) {
+            List<Ruta> rutas = repartidor.getZonaCobertura();
+            for(Ruta r: rutas ){
+                if(repartidor.getDisponibilidad() == Disponibilidad.ACTIVO && ruta==r){
+                    repartidors.add(repartidor);
+            }
+            }
+        }
+        return repartidors;
+    }
+
+    public void cambiarDisponibilidadEnRuta(Repartidor repartidor){
+        Disponibilidad disponibilidad = repartidor.getDisponibilidad();
+        if(disponibilidad ==  Disponibilidad.ACTIVO){
+            disponibilidad = Disponibilidad.ENRUTA;
+        }
+    }
+
+    public void cambiarDisponibilidadActivo(Repartidor repartidor){
+        Disponibilidad disponibilidad = repartidor.getDisponibilidad();
+        if(disponibilidad ==  Disponibilidad.ENRUTA){
+            disponibilidad = Disponibilidad.ACTIVO;
+        }
+    }
+    public void cambiarDisponibilidadInactivo(Repartidor repartidor){
+        Disponibilidad disponibilidad = repartidor.getDisponibilidad();
+        List<Envio> listEnviosRepartidor = repartidor.getListEnvios();
+        for(Envio envio : listEnviosRepartidor){
+            if(envio.getEstadoEnvio().getNombre().equalsIgnoreCase("Incidencia")){
+                disponibilidad = Disponibilidad.INACTIVO;
+            }
+        }
+    }
+
+    public List<Pedido> buscarPedidosRuta(Ruta ruta) {
+        List<Pedido> pedidosSegunRuta = new ArrayList<>();
+        for (Pedido pedido : listPedidos){
+            if(pedido.puedePedir(pedido.getOrigen(), pedido.getDestino()).equals(ruta)){
+                pedidosSegunRuta.add(pedido);
+            }
+        }
+        return pedidosSegunRuta;
+    }
+
+
+
 
 
     public boolean agregarPersona(Persona persona) {

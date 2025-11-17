@@ -13,6 +13,7 @@ public class Pedido implements IPedido{
     private LocalDate fechaCreacion;
     private LocalDate fechaEntrega;
     private LocalDate fechaEstimadaEntrega;
+    private String estado;
     private Direccion origen;
     private Direccion destino;
     private Ruta ruta;
@@ -33,6 +34,7 @@ public class Pedido implements IPedido{
         this.descripcion = descripcion;
         this.fechaEstimadaEntrega = fechaEstimadaEntrega;
         this.fechaEntrega = fechaEntrega;
+        this.estado = estado;
         this.origen = origen;
         this.destino = destino;
         this.paquete = paquete;
@@ -47,20 +49,37 @@ public class Pedido implements IPedido{
         return 0.0;
     }
 
+    public String getEstado() {
+        return estado = "Solicitado";
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public double calcularCostoPedido(){
-        // 1. Costo por distancia
+        double costoBase = 0;
         double distancia = ruta.getDistancia();
-        if(distancia > 100) {
-            costo += 8000;
-        } // Ejemplo: extra por larga distancia
-        else {
-            costo += 4000;
+        if (distancia > 100) {
+            costoBase = 8000;
+        } else {
+            costoBase = 4000;
         }
+        double peso = paquete.getPeso();
+        if(peso <= 6){
+            costoBase += 2000;
+        } else {
+            costoBase += 5000;
+        }
+        double volumen = paquete.getVolumen();
+        if (volumen <= 50000){
+            costoBase += 3000;
+        } else {
+            costoBase += 7000;
+        }
+        double extras = getExtras();
 
-        // 2. Extra por el decorator
-        costo += iPedido.getExtras();
-
-        return costo;
+        return costoBase + extras;
     }
 
     public Ruta puedePedir(Direccion origen, Direccion destino){

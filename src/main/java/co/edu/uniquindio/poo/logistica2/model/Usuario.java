@@ -24,17 +24,17 @@ public class Usuario extends Persona implements IObservador{
     }
 
     public String rastrearPedido(String id){
-        String rastrear = "";
+        String rastrear = "Pedido no encontrado";
         for(Pedido p : listPedidos){
             if(p.getId().equals(id)){
-                rastrear= "El envío está actualmente en estado: " + p.getEnvio().getEstadoEnvio().getNombre();
+                rastrear = "El envío está actualmente en estado: " + p.getEstado();
             }
         }
         return rastrear;
 
     }
 
-    public List<Pedido> historialEstados(IEstadoEnvio estado, LocalDate fecha){
+    public List<Pedido> historialEstados(IEstado estado, LocalDate fecha){
         List<Pedido> historialEstados = new ArrayList<>();
         for(Pedido p : listPedidos){
             if(p.getEnvio().getEstadoEnvio().equals(estado) && p.getFechaCreacion().equals(fecha)){
