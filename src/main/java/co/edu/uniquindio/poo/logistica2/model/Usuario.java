@@ -9,6 +9,7 @@ public class Usuario extends Persona implements IObservador{
     private List<Pedido> listPedidos;
     private List<Paquete> listPaquetes;
     private Administrador administrador;
+    private EmpresaLogistica empresa = EmpresaLogistica.getInstance();
 
     public Usuario(Builder builder){
         super(builder);
@@ -50,7 +51,7 @@ public class Usuario extends Persona implements IObservador{
     }
     public void solicitarPedido(Pedido p){
         agregarPedido(p);
-        administrador.getListPedidos().add(p);
+        empresa.getListPedidos().add(p);
     }
 
     public String rastrearPedido(String id) {

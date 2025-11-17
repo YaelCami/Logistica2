@@ -2,7 +2,10 @@ package co.edu.uniquindio.poo.logistica2.controller;
 
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.model.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceDialog;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,9 +31,29 @@ public class SolicitarPedidoController {
         this.usuario = usuario;
     }
     public boolean realizarPedido(Pedido pedido) {
+        IMetodoPago efectivo = new Efectivo();
+        IMetodoPago tarjeta = new Tarjeta();
+        IMetodoPago nequi = new Nequi();
+        ChoiceDialog<IMetodoPago> dialog = new ChoiceDialog<>(efectivo,
+                efectivo, tarjeta, nequi);
+        dialog.setTitle("Método de pago");
+        dialog.setHeaderText("Seleccione un método de pago");
+        dialog.setContentText("Método:");
+
+        IMetodoPago elegido = dialog.showAndWait().orElse(efectivo);
+        double costo = calcularCosto(
+                pedido.getPaquete(), pedido.getOrigen(), pedido.getDestino());
+
+        Pago procesador = new Pago(
+                pedido.getId(), costo, pedido.getFechaCreacion(), pedido, elegido);
+
+        String resultado = procesador.ejecutarPago(costo);
+        mostrarAlerta("Resultado del pago", resultado);
+
         usuario.solicitarPedido(pedido);
         return true;
     }
+
     public double calcularCosto(Paquete paquete, Direccion origen, Direccion destino) {
         Pedido pedi = new Pedido("0001",LocalDate.of(2025,10,17),origen, destino, usuario,LocalDate.of(2025,10,22),paquete );
         IPedido p = new Pedido("0001",LocalDate.of(2025,10,17),origen, destino, usuario,LocalDate.of(2025,10,22),paquete );
@@ -59,21 +82,21 @@ public class SolicitarPedidoController {
     }
 
 
-    public String calcularFechaEstimada(LocalDate fechaSolicitud, Direccion origen, Direccion destino) {
+    public LocalDate calcularFechaEstimada(LocalDate fechaSolicitud, Direccion origen, Direccion destino) {
         Pedido p = new Pedido("0001",LocalDate.of(2025,10,17),origen, destino, usuario,LocalDate.of(2025,10,22),paquete );
         //PEDIDO PROVISIONAL
         System.out.println("Iniciando cálculo: fecha=" + fechaSolicitud + ", origen=" + (origen != null ? origen.toString() : "null") + ", destino=" + (destino != null ? destino.toString() : "null"));
 
         if (fechaSolicitud == null || origen == null || destino == null) {
             System.out.println("Validación fallida: algún valor es null");
-            return "Fecha";
+            return null;
         }
         try {
             System.out.println("Llamando a puedePedir...");
             Ruta ruta = p.puedePedir(origen, destino);
             if (ruta == null) {
                 System.out.println("puedePedir retornó null");
-                return "No se puede realizar el pedido para estas direcciones";
+                return null;
             }
             System.out.println("Ruta obtenida: distancia=" + ruta.getDistancia());
 
@@ -81,18 +104,14 @@ public class SolicitarPedidoController {
             LocalDate fechaEstimada = p.calcularFechaEstimadaEntrega(fechaSolicitud, ruta);
             if (fechaEstimada == null) {
                 System.out.println("calcularFechaEstimadaEntrega retornó null");
-                return "Error al calcular fecha";
+                return null;
             }
             System.out.println("Fecha estimada calculada: " + fechaEstimada);
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String resultado = fechaEstimada.format(formatter);
-            System.out.println("Resultado formateado: " + resultado);
-            return resultado;
+            return fechaEstimada;
         } catch (Exception e) {
             System.out.println("Excepción en calcularFechaEstimada: " + e.getMessage());
             e.printStackTrace();
-            return "Error al calcular fecha";
+            return null;
         }
     }
     public List<Pedido> obtenerPedidos() {
@@ -103,5 +122,21 @@ public class SolicitarPedidoController {
     }
     public List<Paquete> obtenerPaquetes() {
         return usuario.getListPaquetes();
+    }
+    public boolean eliminarPedido(String id) {
+        return usuario.eliminarPedido(id);
+    }
+    public boolean actualizarPedido(String id,Pedido actualizado){
+        return usuario.actualizarPedido(id, actualizado);
+    }
+    public void exportarPedido(Pedido pedido, String rutaArchivoTxt) throws IOException {
+        ExportadorArchivo.exportarPedido(pedido, rutaArchivoTxt);
+    }
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

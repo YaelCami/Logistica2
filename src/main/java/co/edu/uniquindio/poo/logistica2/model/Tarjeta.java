@@ -6,4 +6,9 @@ public class Tarjeta implements IMetodoPago{
     public String pagar(double monto) {
         return "Pago en TARJETA realizado por una cantidad: " + monto;
     }
+
+    @Override
+    public String toString() {
+        return "Tarjeta";
+    }
 }

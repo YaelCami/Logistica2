@@ -65,7 +65,7 @@
             <TableView fx:id="tbvPedidos" layoutX="16.0" layoutY="14.0" prefHeight="218.0" prefWidth="221.0">
               <columns>
                 <TableColumn fx:id="tbcIdPedido" prefWidth="107.0" text="Id del pedido" />
-                <TableColumn fx:id="tbcEstadoPedido" prefWidth="113.0" text="Estado" />
+                <TableColumn fx:id="tbcFechaCreacion" prefWidth="113.0" text="Fecha Creacion" />
               </columns>
             </TableView>
             <Button layoutX="25.0" layoutY="261.0" mnemonicParsing="false" onAction="#onActualizar" text="Actualizar" textFill="#7d9453" />

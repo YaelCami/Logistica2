@@ -16,6 +16,7 @@ public final class EmpresaLogistica {
     private List<Persona> listPersonas = new ArrayList<>();
     private List<Ciudad> listCiudades = new ArrayList<>();
     private List<Ruta> listRutas = new ArrayList<>();
+    private List<Pedido> listPedidos = new ArrayList<>();
     private static EmpresaLogistica instance;
 
     private EmpresaLogistica(String nombre, String eslogan) {
@@ -390,6 +391,10 @@ public final class EmpresaLogistica {
 
     public void setListRutas(List<Ruta> listRutas) {
         this.listRutas = listRutas;
+    }
+
+    public List<Pedido> getListPedidos() {
+        return listPedidos;
     }
 }
 

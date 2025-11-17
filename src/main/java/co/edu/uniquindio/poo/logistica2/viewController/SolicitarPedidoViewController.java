@@ -3,14 +3,18 @@ package co.edu.uniquindio.poo.logistica2.viewController;
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.controller.SolicitarPedidoController;
 import co.edu.uniquindio.poo.logistica2.model.*;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +24,7 @@ public class SolicitarPedidoViewController {
     private App app;
     private SolicitarPedidoController controller;
     private Usuario usuario;
+    private LocalDate fechaEstimadaEntrega;
     ObservableList<Pedido> list = FXCollections.observableArrayList();
     Pedido selectedPedido;
 
@@ -40,15 +45,20 @@ public class SolicitarPedidoViewController {
     @FXML
     public TableView<Pedido> tbvPedidos;
     @FXML
-    public TableColumn<Pedido, String> tbcIdPedido, tbcEstadoPedido;
+    public TableColumn<Pedido, String> tbcIdPedido;
+    @FXML
+    public TableColumn<Pedido, LocalDate> tbcFechaCreacion;
     @FXML
     public void onRealizarPedido() {
         try {
             Pedido pedido = buildPedido();
-
+            pedido.setId(lblIdPedido.getText());
+            pedido.setFechaEstimadaEntrega(fechaEstimadaEntrega);
+            pedido.setCosto(Double.parseDouble(lblTotal.getText()));
             if (controller.realizarPedido(pedido)) {
                 list.add(pedido);
                 limpiarCampos();
+
             } else {
                 mostrarAlerta("Error", "No se pudo agregar el pedido");
             }
@@ -58,15 +68,56 @@ public class SolicitarPedidoViewController {
         }
     }
 
+
     @FXML
-    public void onActualizar(){}
+    public void onActualizar(){
+        if (selectedPedido != null) {
+            try{
+                Pedido nuevo = buildPedido();
+                boolean actualizado = controller.actualizarPedido(selectedPedido.getId(), nuevo);
+                if (actualizado) {
+                    int index = list.indexOf(selectedPedido);
+                    list.set(index, nuevo);
+                    limpiarCampos();
+                    mostrarAlerta("Exito", "Datos actualizados correctamente");
+                } else {
+                    mostrarAlerta("Error", "No se pudo actualizar el pedido");
+                }
+            } catch (Exception e) {
+                mostrarAlerta("Error", "Datos invalidos: " + e.getMessage());
+            }
+        }
+    }
     @FXML
-    public void onDescargarReporte(){}
+    public void onDescargarReporte(){
+        if(selectedPedido != null){
+            try {
+                String ruta = "pedidos_exportados/" + selectedPedido.getId() + ".txt";
+                controller.exportarPedido(selectedPedido, ruta);
+                mostrarAlerta("Pedido exportado", "Se generó el archivo: " + ruta);
+            } catch (IOException e) {
+                mostrarAlerta("Exportación fallida", "No se pudo exportar el pedido: " + e.getMessage());
+            }
+        }
+    }
     @FXML
     public void onEspecificacion(){
     }
     @FXML
-    public void onEliminar(){}
+    public void onEliminar(){
+        if (selectedPedido != null) {
+           boolean eliminado = controller.eliminarPedido(selectedPedido.getId());
+           if (eliminado) {
+               list.remove(selectedPedido);
+               limpiarCampos();
+               mostrarAlerta("Exito", "Pedido eliminado");
+           } else {
+               mostrarAlerta("Error", "No se pudo eliminar el pedido");
+           }
+        } else {
+            mostrarAlerta("Atención", "Selecciona un pedido");
+        }
+    }
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
@@ -89,6 +140,12 @@ public class SolicitarPedidoViewController {
     }
 
     public void initialize() {
+        tbcIdPedido.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getId()));
+        tbcFechaCreacion.setCellValueFactory(
+                cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getFechaCreacion()));
+        tbvPedidos.setItems(list);
+        listenerSelection();
         cargarEvento();
     }
     public void cargarEvento(){
@@ -135,7 +192,7 @@ public class SolicitarPedidoViewController {
         }
 
         double total = controller.calcularCosto(paquete, origen, destino);
-        lblTotal.setText("Total: " + String.valueOf(total));
+        lblTotal.setText(String.valueOf(total));
     }
 
 
@@ -143,8 +200,18 @@ public class SolicitarPedidoViewController {
         LocalDate fechaSeleccionada = dtpFecha.getValue();
         Direccion origen = cbxDireccionOrigen.getValue();
         Direccion destino = cbxDireccionDestino.getValue();
-        String resultado = controller.calcularFechaEstimada( fechaSeleccionada, origen, destino);
-        lblFechaEstimadaEntrega.setText(resultado);
+
+        LocalDate fecha = controller.calcularFechaEstimada(fechaSeleccionada, origen, destino);
+
+        if (fecha == null) {
+            lblFechaEstimadaEntrega.setText("Fecha");
+            fechaEstimadaEntrega = null;
+            return;
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        lblFechaEstimadaEntrega.setText(fecha.format(formatter));
+        fechaEstimadaEntrega = fecha;
     }
 
     private Pedido buildPedido() {
