@@ -36,12 +36,12 @@
       </AnchorPane>
       <AnchorPane layoutX="251.0" layoutY="84.0" prefHeight="297.0" prefWidth="366.0" style="-fx-border-color: #7d9453;">
          <children>
-            <TableView layoutX="15.0" layoutY="11.0" prefHeight="238.0" prefWidth="336.0">
+            <TableView fx:id="tbvEnvio" layoutX="15.0" layoutY="11.0" prefHeight="238.0" prefWidth="336.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Origen" />
-                <TableColumn prefWidth="75.0" text="Destino" />
-                  <TableColumn prefWidth="75.0" text="Id Pedido" />
-                  <TableColumn prefWidth="110.0" text="Repartidor" />
+                <TableColumn fx:id="tbcOrigen" prefWidth="75.0" text="Origen" />
+                <TableColumn fx:id="tbcDestino" prefWidth="75.0" text="Destino" />
+                  <TableColumn fx:id="tbcPedido" prefWidth="75.0" text="Id Pedido" />
+                  <TableColumn fx:id="tbcRepartidor" prefWidth="110.0" text="Repartidor" />
               </columns>
             </TableView>
             <Button layoutX="143.0" layoutY="258.0" mnemonicParsing="false" onAction="#onCrearEnvio" style="-fx-font-weight: bold;" text="Crear Envío" textFill="#7d9453" />

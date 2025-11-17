@@ -22,6 +22,13 @@ public class ExportadorArchivo {
         writer.write("            DETALLE DEL PEDIDO\n");
         writer.write("=========================================\n");
         writer.write("ID Pedido: " + pedido.getId() + "\n");
+        writer.write("Fecha de creación: " + pedido.getFechaCreacion() + "\n");
+        writer.write("Fecha estimada de entrega: " + pedido.getFechaEstimadaEntrega() + "\n");
+        writer.write("-----------------------------------------\n");
+        writer.write("INFO DEL USUARIO          \n");
+        writer.write("ID Usuario "+ pedido.getUsuario().getId() +"\n");
+        writer.write("Nombre Usuario "+ pedido.getUsuario().getNombre()   +"\n");
+        writer.write("Correo Usuario "+ pedido.getUsuario().getCorreo() +"\n");
 
         writer.write(String.format("%-25s %8s %12s\n", "Producto", "Cantidad", "Peso"));
         writer.write("-----------------------------------------\n");
@@ -31,8 +38,8 @@ public class ExportadorArchivo {
             Producto d = detalles.get(i);
             String nombre = d.getNombre();
             int cantidad = d.getCantidad();
-            double subtotal = d.getPeso();
-            writer.write(String.format("%-25s %8d %12.2f\n", nombre, cantidad, subtotal));
+            double peso = d.getPeso();
+            writer.write(String.format("%-25s %8d %12.2f\n", nombre, cantidad, peso));
         }
 
         writer.write("-----------------------------------------\n");

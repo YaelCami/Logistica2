@@ -6,7 +6,12 @@ import co.edu.uniquindio.poo.logistica2.model.Administrador;
 public class AsignarPedidoController {
     private App app;
     private Administrador administrador;
-
+    public AsignarPedidoController(Administrador administrador) {
+        this.administrador = administrador;
+    }
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
+    }
     public void volver(){
         app.openAdministrador(administrador);
     }

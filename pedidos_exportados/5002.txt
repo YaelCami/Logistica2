@@ -2,8 +2,15 @@
             DETALLE DEL PEDIDO
 =========================================
 ID Pedido: 5002
+Fecha de creación: 2025-11-11
+Fecha estimada de entrega: 2025-11-16
+-----------------------------------------
+INFO DEL USUARIO           
+ID Usuario1230
+Nombre UsuarioRaul
+Correo Usuarionull
 Producto                  Cantidad         Peso
 -----------------------------------------
 Pestañina                        1         4,00
 -----------------------------------------
-TOTAL: 9000,00
+TOTAL: 6000,00

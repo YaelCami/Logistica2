@@ -247,14 +247,15 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openAsignarPedido(){
+    public void openAsignarPedido(Administrador a){
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("AsignarEnvio.fxml"));
             AnchorPane rootLayout = (AnchorPane) loader.load();
             AsignarEnvioViewController viewController = loader.getController();
-            AsignarPedidoController controller = new AsignarPedidoController();
+            AsignarPedidoController controller = new AsignarPedidoController(a);
             controller.setApp(this);
+            controller.setAdministrador(a);
             viewController.setController(controller);
             viewController.setApp(this);
 
