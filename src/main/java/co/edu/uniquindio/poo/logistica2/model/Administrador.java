@@ -27,7 +27,7 @@ public class Administrador extends Persona {
 
     }
 
-    public static class Builder extends Persona.Builder {
+    public static class Builder extends Persona.Builder<Builder> {
         private double salario;
         private List<Usuario> listUsuarios = new ArrayList<>();
         private List<Repartidor> listRepartidores = new ArrayList<>();
@@ -199,7 +199,7 @@ public class Administrador extends Persona {
     }
 
     public List<Pedido> getListPedidos() {
-        return listPedidos;
+        return empresaLogistica.getListPedidos();
     }
 
     public void setListPedidos(List<Pedido> listPedidos) {

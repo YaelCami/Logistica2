@@ -19,7 +19,7 @@ public class UsuarioController {
     }
 
     public void irAlHistorial(){
-        app.openHistorialEnvios();
+        app.openHistorialEnvios(usuario);
     }
     public void irSolicitarPedido(){
         app.openSolicitarPedido(usuario);

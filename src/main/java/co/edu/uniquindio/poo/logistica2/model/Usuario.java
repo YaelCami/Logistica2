@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,15 @@ public class Usuario extends Persona implements IObservador{
         return rastrear;
     }
 
+    public List<Pedido> historialEstados(LocalDate fecha){
+        List<Pedido> historialEstados = new ArrayList<>();
+        for(Pedido p : listPedidos){
+            if(p.getFechaCreacion().equals(fecha)){
+                historialEstados.add(p);
+            }
+        }
+        return historialEstados;
+    }
     @Override
     public void actualizar(String mensaje) {
         System.out.println("🔔 Notificación para "  + ": " + mensaje) ;
