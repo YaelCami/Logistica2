@@ -2,8 +2,9 @@
             DETALLE DEL PEDIDO
 =========================================
 ID Pedido: 5002
-Fecha de creación: 2025-11-23
-Fecha estimada de entrega: 2025-11-28
+Fecha de creación: 2025-10-28
+Fecha estimada de entrega: 2025-11-02
+Descripcion: Paquete normal
 -----------------------------------------
 INFO DEL USUARIO          
 ID Usuario 1230
@@ -13,4 +14,4 @@ Producto                  Cantidad         Peso
 -----------------------------------------
 Pestañina                        1         4,00
 -----------------------------------------
-TOTAL: 12000,00
+TOTAL: 11000,00

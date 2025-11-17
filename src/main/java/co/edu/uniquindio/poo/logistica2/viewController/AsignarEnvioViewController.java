@@ -101,7 +101,7 @@ public class AsignarEnvioViewController {
         cbxPedido.setConverter(new StringConverter<Pedido>(){
             @Override
             public String toString(Pedido p) {
-                return p != null ? p.getId() + " - " + p.getDescripcion(): "";
+                return p != null ? p.getId() + " - " + p.getCosto(): "";
             }
             @Override
             public Pedido fromString(String s) {

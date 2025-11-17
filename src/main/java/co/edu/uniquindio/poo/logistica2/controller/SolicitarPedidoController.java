@@ -30,6 +30,30 @@ public class SolicitarPedidoController {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    public void aplicarDecorador(Pedido pedidoBase, String especificacion) {
+        String descripcion = pedidoBase.getDescripcion();
+        IPedido p = pedidoBase;  // Asumiendo compatibilidad
+        switch (especificacion) {
+            case "Seguro":
+                descripcion = new PedidoSeguro(p).getDescripcion();
+                break;
+            case "Frágil":
+                descripcion = new PedidoFragil(p).getDescripcion();
+                break;
+            case "Firma":
+                descripcion = new PedidoFirma(p).getDescripcion();
+                break;
+            case "Prioridad":
+                descripcion = new PedidoPrioridad(p).getDescripcion();
+                break;
+            default:
+                // Ninguna, deja como está
+                break;
+        }
+        pedidoBase.setDescripcion(descripcion);
+
+    }
+
     public boolean realizarPedido(Pedido pedido) {
         IMetodoPago efectivo = new Efectivo();
         IMetodoPago tarjeta = new Tarjeta();
@@ -80,9 +104,7 @@ public class SolicitarPedidoController {
     public void guardarEspecificacion(String esp) {
         this.especificacionSeleccionada = esp;
     }
-    public String mostrarEspecificacion() {
-        return especificacionSeleccionada;
-    }
+
 
     public LocalDate calcularFechaEstimada(LocalDate fechaSolicitud, Direccion origen, Direccion destino) {
         Pedido p = new Pedido("0001",LocalDate.of(2025,10,17),origen, destino, usuario,LocalDate.of(2025,10,22),paquete );

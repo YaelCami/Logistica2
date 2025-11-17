@@ -25,6 +25,7 @@ public class SolicitarPedidoViewController {
     private SolicitarPedidoController controller;
     private Usuario usuario;
     private LocalDate fechaEstimadaEntrega;
+    private String especificacionSeleccionada = "ninguna";
     ObservableList<Pedido> list = FXCollections.observableArrayList();
     Pedido selectedPedido;
 
@@ -48,21 +49,25 @@ public class SolicitarPedidoViewController {
     public TableColumn<Pedido, String> tbcIdPedido;
     @FXML
     public TableColumn<Pedido, LocalDate> tbcFechaCreacion;
+    private void setearDescripcionPedido(Pedido pedido) {
+        pedido.setDescripcion(pedido.getDescripcion() + " + " + especificacionSeleccionada);
+    }
+
     @FXML
     public void onRealizarPedido() {
         try {
-            Pedido pedido = buildPedido();
+            Pedido pedido = buildPedido();  // Crea pedido base
             pedido.setId(lblIdPedido.getText());
             pedido.setFechaEstimadaEntrega(fechaEstimadaEntrega);
             pedido.setCosto(Double.parseDouble(lblTotal.getText()));
+            setearDescripcionPedido(pedido);
+            // El decorador se aplica dentro de controller.realizarPedido(pedido)
             if (controller.realizarPedido(pedido)) {
-                list.add(pedido);
+                list.add(pedido);  // Ahora pedido tiene el decorador aplicado
                 limpiarCampos();
-
             } else {
                 mostrarAlerta("Error", "No se pudo agregar el pedido");
             }
-
         } catch (Exception e) {
             mostrarAlerta("Error", "Datos inválidos: " + e.getMessage());
         }
@@ -177,6 +182,7 @@ public class SolicitarPedidoViewController {
         Optional<String> resultado = dialog.showAndWait();
 
         resultado.ifPresent(opcion -> {
+            especificacionSeleccionada = opcion;
             controller.guardarEspecificacion(opcion);
             calcularCosto();
         });

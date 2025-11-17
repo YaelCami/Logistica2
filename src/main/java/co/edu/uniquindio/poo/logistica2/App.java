@@ -362,7 +362,7 @@ public class App extends Application {
         Ciudad ciudad5 = new Ciudad("633001","Montenegro",38460);
         Ruta ruta1 = new Ruta("0000", ciudad1, ciudad2, 22.2);
         Ruta ruta2 = new Ruta("0001", ciudad1, ciudad5, 11);
-        Ruta ruta3 = new Ruta("0002", ciudad3, ciudad1, 26.8);
+        Ruta ruta3 = new Ruta("0002", ciudad3, ciudad1, 26.8); 
         Ruta ruta4 = new Ruta("0003", ciudad3, ciudad2, 12.8);
         Ruta ruta5 = new Ruta("0004", ciudad1, ciudad4, 28.9);
         Direccion direccion1 = new Direccion("3333", "Casa", "Cra 60", ciudad1, "634020");
