@@ -18,12 +18,11 @@
       <Label layoutX="291.0" layoutY="72.0" text="Escoja una fecha:" />
       <TableView fx:id="tbvHistorial" layoutX="58.0" layoutY="148.0" prefHeight="200.0" prefWidth="359.0">
         <columns>
-          <TableColumn fx:id="tbcId" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="tbcEstado" prefWidth="75.0" text="Estado" />
+          <TableColumn fx:id="tbcId" prefWidth="48.0" text="Id" />
+          <TableColumn fx:id="tbcEstado" prefWidth="62.0" text="Estado" />
             <TableColumn fx:id="tbcFechaEstimada" prefWidth="139.0" text="Fecha estimada entrega" />
-            <TableColumn fx:id="tbcDireccion" prefWidth="69.0" text="Direccion" />
+            <TableColumn fx:id="tbcDireccion" prefWidth="109.0" text="Direccion" />
         </columns>
       </TableView>
-      <Button layoutX="173.0" layoutY="368.0" mnemonicParsing="false" onAction="#onDescargar" text="Descargar reporte" textFill="#7d9453" />
    </children>
 </AnchorPane>

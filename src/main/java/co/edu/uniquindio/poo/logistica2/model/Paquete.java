@@ -23,7 +23,7 @@ public class Paquete implements IProducto{
         private String id;
         private double peso;
         private double volumen;
-        private List<Producto> listproductos= new ArrayList<>();
+        private List<Producto> listproductos = new ArrayList<>();
         private List<IProducto> hijos;
 
         public Builder id(String id){
@@ -69,7 +69,6 @@ public class Paquete implements IProducto{
         if (!verificarProducto(producto.getId())) {
                 listproductos.add(producto);
                 centinela = true;
-
         }
 
         return centinela;

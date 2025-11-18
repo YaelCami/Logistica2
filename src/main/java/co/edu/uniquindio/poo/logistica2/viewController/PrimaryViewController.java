@@ -41,8 +41,4 @@ public class PrimaryViewController {
     private void onCotizar(){
         controller.irACotizar();
     }
-    @FXML
-    private void onRastrear(){
-        controller.irAlRastreo();
-    }
 }

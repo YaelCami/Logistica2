@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.logistica2.viewController;
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.controller.GestionarUsuarioController;
 import co.edu.uniquindio.poo.logistica2.model.Usuario;
+import co.edu.uniquindio.poo.logistica2.model.UsuarioDTO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,12 +81,13 @@ public class GestionarUsuarioViewController {
     }
     public void registrar(){
         try {
-            Usuario usuario = buildUsuario();
-            if (usuario == null) {
+            UsuarioDTO dto = buildUsuarioDTO();
+            if (dto == null) {
                 mostrarAlerta("Error", "Completa todos los campos");
                 return;
             }
-            if (controller.agregarUsuario(usuario)) {
+            Usuario usuario = controller.agregarUsuario(dto);
+            if (usuario != null) {
                 list.add(usuario);
                 limpiarCampos();
             } else {
@@ -114,18 +116,27 @@ public class GestionarUsuarioViewController {
         tbvUsuario.setItems(list);
         listenerSelection();
     }
-    private Usuario buildUsuario(){
+    private UsuarioDTO buildUsuarioDTO() {
+        return new UsuarioDTO(
+                txtNombre.getText(),
+                txtId.getText(),
+                txtCorreo.getText(),
+                txtTelefono.getText()
+        );
+    }
+    private Usuario buildUsuario() {
         String nombre = txtNombre.getText();
+        String id = txtId.getText();
         String correo = txtCorreo.getText();
         String telefono = txtTelefono.getText();
-        String id = txtId.getText();
-        return (Usuario)  new Usuario.Builder()
-                .id(id)
+        return (Usuario) new Usuario.Builder()
                 .nombre(nombre)
-                .correo(correo)
                 .telefono(telefono)
+                .correo(correo)
+                .id(id)
                 .build();
     }
+
     public void setController(GestionarUsuarioController controller){
         this.controller = controller;
         obtenerUsuarios();

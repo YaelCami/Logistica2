@@ -1,0 +1,14 @@
+=========================================
+            DETALLE DEL PEDIDO
+=========================================
+ID Pedido: 0202
+Fecha de creación: 2025-11-08
+Fecha estimada de entrega: 2025-11-13
+Direccion Origen : , alias='Casa', calle='Cra 60', ciudad=Quimbaya, coordenadas='634020
+Direccion Destino : , alias='Casa', calle='Cra 9', ciudad=Tebaida, coordenadas='633020
+Estado : Solicitado
+-----------------------------------------
+INFO DEL USUARIO          
+ID Usuario 1230
+Nombre Usuario Raul
+Correo Usuar

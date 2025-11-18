@@ -23,6 +23,10 @@ public class UsuarioViewController {
         controller.irAlHistorial();
     }
     @FXML
+    private void onRastrearPedido(){
+        controller.openRastrearPedido();
+    }
+    @FXML
     private void onSolicitarPedido(){
         controller.irSolicitarPedido();
     }

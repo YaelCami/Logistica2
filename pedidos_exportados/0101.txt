@@ -1,0 +1,14 @@
+=========================================
+            DETALLE DEL PEDIDO
+=========================================
+ID Pedido: 0101
+Fecha de creación: 2025-11-02
+Fecha estimada de entrega: 2025-11-07
+Direccion Origen : , alias='Casa', calle='Cra 60', ciudad=Quimbaya, coordenadas='634020
+Direccion Destino : , alias='Oficina', calle='Cra 4', ciudad=Armenia, coordenadas='630001
+Estado : Solicitado
+-----------------------------------------
+INFO DEL USUARIO          
+ID Usuario 1230
+Nombre Usuario Raul
+Correo Us
