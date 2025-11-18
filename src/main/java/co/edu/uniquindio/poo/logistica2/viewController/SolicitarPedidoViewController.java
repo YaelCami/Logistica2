@@ -76,7 +76,7 @@ public class SolicitarPedidoViewController {
 
     @FXML
     public void onActualizar(){
-        if (selectedPedido != null) {
+        if (selectedPedido != null && selectedPedido.getEstado().equalsIgnoreCase("Solicitado")) {
             try{
                 Pedido nuevo = buildPedido();
                 boolean actualizado = controller.actualizarPedido(selectedPedido.getId(), nuevo);
@@ -91,6 +91,8 @@ public class SolicitarPedidoViewController {
             } catch (Exception e) {
                 mostrarAlerta("Error", "Datos invalidos: " + e.getMessage());
             }
+        } else {
+            mostrarAlerta("Error", "Pedido ya asignado o pedido no seleccionado");
         }
     }
     @FXML
@@ -110,7 +112,7 @@ public class SolicitarPedidoViewController {
     }
     @FXML
     public void onEliminar(){
-        if (selectedPedido != null) {
+        if (selectedPedido != null && selectedPedido.getEstado().equalsIgnoreCase("Solicitado")) {
            boolean eliminado = controller.eliminarPedido(selectedPedido.getId());
            if (eliminado) {
                list.remove(selectedPedido);
@@ -120,7 +122,7 @@ public class SolicitarPedidoViewController {
                mostrarAlerta("Error", "No se pudo eliminar el pedido");
            }
         } else {
-            mostrarAlerta("Atención", "Selecciona un pedido");
+            mostrarAlerta("Atención", "Pedido no seleccionado o pedido ya se asignó ");
         }
     }
     private void mostrarAlerta(String titulo, String mensaje) {

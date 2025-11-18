@@ -56,16 +56,46 @@ public class Usuario extends Persona implements IObservador{
         empresa.getListPedidos().add(p);
     }
 
-    public String rastrearPedido(String id){
-        String rastrear = "Pedido no encontrado";
-        for(Pedido p : listPedidos){
-            if(p.getId().equals(id)){
-                rastrear = "El envío está actualmente en estado: " + p.getEstado();
+    public String rastrearPedido(String id) {
+
+        for (Pedido p : listPedidos) {
+
+            if (p.getId().equals(id)) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("ID Pedido: ").append(p.getId()).append("\n");
+                sb.append("Estado actual: ").append(p.getEstado()).append("\n\n");
+
+                sb.append("-------------      USUARIO      ------------\n");
+                sb.append("ID Usuario: ").append(p.getUsuario().getId()).append("\n");
+                sb.append("Nombre: ").append(p.getUsuario().getNombre()).append("\n\n");
+
+                sb.append("--------------      PAQUETE      -----------\n");
+                sb.append("Peso total: ").append(String.format("%.2f kg", p.getPaquete().getPeso())).append("\n");
+
+                sb.append("Dirección destino: ")
+                        .append(p.getDestino().getCiudad())
+                        .append(" - ")
+                        .append(p.getDestino().getCalle())
+                        .append("\n\n");
+
+                sb.append("--------------- PRODUCTOS ------------------\n");
+                for (Producto prod : p.getPaquete().getListproductos()) {
+                    sb.append("• ")
+                            .append(prod.getNombre())
+                            .append(" | Cant: ").append(prod.getCantidad())
+                            .append(" | Peso: ").append(String.format("%.2f kg", prod.getPeso()))
+                            .append("\n");
+                }
+
+                sb.append("===============================\n");
+
+                return sb.toString();
             }
         }
-        return rastrear;
 
+        return "Pedido no encontrado";
     }
+
 
     public List<Pedido> historialEstados(String estado, LocalDate fecha){
         List<Pedido> historialEstados = new ArrayList<>();
