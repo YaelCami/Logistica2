@@ -9,6 +9,15 @@ public class Pago {
     private Pedido pedido;
     private IMetodoPago metodoPago;
 
+    /**
+     * Crea un nuevo pago con los datos especificados.
+     *
+     * @param id Identificador del pago.
+     * @param monto Monto total del pago.
+     * @param fecha Fecha en que se realizó el pago.
+     * @param pedido Pedido al que pertenece el pago.
+     * @param metodoPago Estrategia utilizada para procesar el pago.
+     */
     public Pago(String id, double monto, LocalDate fecha, Pedido pedido,  IMetodoPago metodoPago) {
         this.id = id;
         this.monto = monto;
@@ -17,6 +26,12 @@ public class Pago {
         this.metodoPago = metodoPago;
     }
 
+    /**
+     * Ejecuta el pago utilizando la estrategia de pago asignada.
+     *
+     * @param monto Cantidad a pagar.
+     * @return Mensaje confirmando la ejecución del pago.
+     */
     public String ejecutarPago(double monto){
         metodoPago.pagar(monto);
         return "Pago realizado con éxito por el monto de: " + monto ;

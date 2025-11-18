@@ -8,6 +8,12 @@ public class Producto implements IProducto{
     private int cantidad;
     private Categoria categoria;
 
+
+    /**
+     * Constructor privado utilizado por el patrón Builder.
+     *
+     * @param builder Objeto Builder que contiene los datos para crear el producto.
+     */
     public Producto(Builder builder) {
         this.id = builder.id;
         this.nombre = builder.nombre;
@@ -17,7 +23,10 @@ public class Producto implements IProducto{
         this.categoria = builder.categoria;
 
     }
-
+    /**
+     * Builder para construir objetos Producto de manera flexible y clara.
+     * Permite asignar selectivamente atributos antes de crear la instancia final.
+     */
     public static class Builder{
         private String id;
         private String nombre;
@@ -50,11 +59,19 @@ public class Producto implements IProducto{
             this.categoria = categoria;
             return this;
         }
+        /**
+         * Construye el producto con los atributos configurados.
+         *
+         * @return Nuevo objeto Producto.
+         */
         public Producto build(){
             return new Producto(this);
         }
     }
-
+    /**
+     * Muestra en consola un detalle simple del producto como parte del patrón Composite.
+     * Útil para visualizar jerarquías de paquetes y productos.
+     */
     @Override
     public void mostrarDetalles(){
         System.out.println("Producto: " + nombre);

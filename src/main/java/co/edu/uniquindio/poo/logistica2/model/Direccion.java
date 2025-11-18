@@ -7,6 +7,15 @@ public class Direccion {
     private Ciudad  ciudad;
     private String coordenadas;
 
+    /**
+     * Construye una nueva dirección con todos sus atributos.
+     *
+     * @param id           identificador único de la dirección
+     * @param alias        alias asignado a la dirección
+     * @param calle        nombre de la calle
+     * @param ciudad       ciudad donde se encuentra la dirección
+     * @param coordenadas  coordenadas geográficas
+     */
     public Direccion(String id, String alias, String calle, Ciudad ciudad, String coordenadas) {
         this.id = id;
         this.alias = alias;
@@ -53,5 +62,25 @@ public class Direccion {
 
     public void setCoordenadas(String coordenadas) {
         this.coordenadas = coordenadas;
+    }
+
+    /**
+     * Devuelve una representación legible de la dirección,
+     * formato amigable para mostrar en listas o reportes.
+     *
+     * @return cadena formateada con los datos principales de la dirección
+     */
+    @Override
+    public String toString() {
+        return String.format(
+                "Alias: %-15s\n" +
+                        "  Calle: %-25s\n" +
+                        "  Ciudad: %-20s\n" +
+                        "  Coordenadas: %-15s",
+                alias,
+                calle,
+                ciudad,
+                coordenadas
+        );
     }
 }

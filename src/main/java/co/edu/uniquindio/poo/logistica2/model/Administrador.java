@@ -14,7 +14,12 @@ public class Administrador extends Persona {
     private List<Ciudad> listCiudades;
     private List<Pedido> listPedidos;
 
-
+    /**
+     * Construye un administrador utilizando un Builder.
+     *
+     * @param builder objeto builder que contiene los datos base de la persona y del administrador
+     * @param salario salario del administrador
+     */
     public Administrador(Builder builder, double salario) {
         super(builder);
         this.salario = builder.salario;
@@ -27,6 +32,10 @@ public class Administrador extends Persona {
 
     }
 
+    /**
+     * Builder para construir objetos Administrador de forma flexible
+     * siguiendo el patrón Builder.
+     */
     public static class Builder extends Persona.Builder<Builder> {
         private double salario;
         private List<Usuario> listUsuarios = new ArrayList<>();
@@ -36,6 +45,11 @@ public class Administrador extends Persona {
         private List<Ciudad> listCiudades = new ArrayList<>();
         private List<Pedido> listPedidos = new ArrayList<>();
 
+        /**
+         * Construye y devuelve un objeto Administrador.
+         *
+         * @return un nuevo administrador con los valores configurados en el builder
+         */
         @Override
         public Administrador build() {
             return new Administrador(this, salario);
@@ -76,6 +90,12 @@ public class Administrador extends Persona {
         }
     }
 
+    /**
+     * Busca repartidores activos cuya zona de cobertura incluya la ruta especificada.
+     *
+     * @param ruta ruta que debe estar incluida en la zona de cobertura del repartidor
+     * @return lista de repartidores disponibles para esa ruta
+     */
     public List<Repartidor> buscarRepartidorRutaDisponible(Ruta ruta) {
         List<Repartidor> repartidors = new ArrayList<>();
         for (Repartidor repartidor : listRepartidores) {
@@ -89,6 +109,11 @@ public class Administrador extends Persona {
         return repartidors;
     }
 
+    /**
+     * Cambia el estado del repartidor a ENRUTA si actualmente se encuentra ACTIVO.
+     *
+     * @param repartidor repartidor cuyo estado será actualizado
+     */
     public void cambiarDisponibilidadEnRuta(Repartidor repartidor){
         Disponibilidad disponibilidad = repartidor.getDisponibilidad();
         if(disponibilidad ==  Disponibilidad.ACTIVO){
@@ -96,12 +121,24 @@ public class Administrador extends Persona {
         }
     }
 
+    /**
+     * Cambia el estado del repartidor a ACTIVO si actualmente está ENRUTA.
+     *
+     * @param repartidor repartidor cuyo estado será actualizado
+     */
     public void cambiarDisponibilidadActivo(Repartidor repartidor){
         Disponibilidad disponibilidad = repartidor.getDisponibilidad();
         if(disponibilidad ==  Disponibilidad.ENRUTA){
             repartidor.setDisponibilidad(Disponibilidad.ACTIVO);
         }
     }
+
+    /**
+     * Cambia la disponibilidad del repartidor a INACTIVO si alguno de sus envíos
+     * presenta una incidencia.
+     *
+     * @param repartidor repartidor cuyo estado será actualizado
+     */
     public void cambiarDisponibilidadInactivo(Repartidor repartidor){
         Disponibilidad disponibilidad = repartidor.getDisponibilidad();
         List<Envio> listEnviosRepartidor = repartidor.getListEnvios();
@@ -112,6 +149,12 @@ public class Administrador extends Persona {
         }
     }
 
+    /**
+     * Busca todos los pedidos asociados a la ruta especificada.
+     *
+     * @param ruta ruta a filtrar
+     * @return lista de pedidos correspondientes a esa ruta
+     */
     public List<Pedido> buscarPedidosRuta(Ruta ruta) {
         List<Pedido> pedidosSegunRuta = new ArrayList<>();
         for (Pedido pedido : listPedidos){
@@ -122,11 +165,17 @@ public class Administrador extends Persona {
         return pedidosSegunRuta;
     }
 
+    /** @return true si la persona fue agregada correctamente */
     public boolean agregarPersona(Persona persona) {
         return empresaLogistica.agregarPersona(persona);
     }
 
-
+    /**
+     * Agrega un envío a la empresa y actualiza la disponibilidad del repartidor.
+     *
+     * @param envio envío nuevo
+     * @return true si el envío fue agregado correctamente
+     */
     public boolean agregarEnvio(Envio envio) {
         cambiarDisponibilidadEnRuta(envio.getRepartidor());
         if(empresaLogistica.agregarEnvio(envio)){
