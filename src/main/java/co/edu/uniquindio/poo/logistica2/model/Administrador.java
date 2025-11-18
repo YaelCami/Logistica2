@@ -92,22 +92,22 @@ public class Administrador extends Persona {
     public void cambiarDisponibilidadEnRuta(Repartidor repartidor){
         Disponibilidad disponibilidad = repartidor.getDisponibilidad();
         if(disponibilidad ==  Disponibilidad.ACTIVO){
-            disponibilidad = Disponibilidad.ENRUTA;
+            repartidor.setDisponibilidad(Disponibilidad.ENRUTA);
         }
     }
 
     public void cambiarDisponibilidadActivo(Repartidor repartidor){
         Disponibilidad disponibilidad = repartidor.getDisponibilidad();
         if(disponibilidad ==  Disponibilidad.ENRUTA){
-            disponibilidad = Disponibilidad.ACTIVO;
+            repartidor.setDisponibilidad(Disponibilidad.ACTIVO);
         }
     }
     public void cambiarDisponibilidadInactivo(Repartidor repartidor){
         Disponibilidad disponibilidad = repartidor.getDisponibilidad();
         List<Envio> listEnviosRepartidor = repartidor.getListEnvios();
         for(Envio envio : listEnviosRepartidor){
-            if(envio.getEstadoEnvio().getNombre().equalsIgnoreCase("Incidencia")){
-                disponibilidad = Disponibilidad.INACTIVO;
+            if(envio.getEstadoEnvio().getNombre().equalsIgnoreCase("Incidencia")) {
+                repartidor.setDisponibilidad(Disponibilidad.INACTIVO);
             }
         }
     }
@@ -126,8 +126,8 @@ public class Administrador extends Persona {
         return empresaLogistica.agregarPersona(persona);
     }
 
+
     public boolean agregarEnvio(Envio envio) {
-        eliminarPedido(envio);
         cambiarDisponibilidadEnRuta(envio.getRepartidor());
         if(empresaLogistica.agregarEnvio(envio)){
             envio.asignar();
@@ -136,19 +136,6 @@ public class Administrador extends Persona {
         return false;
     }
 
-    public boolean eliminarPedido(Envio envio) {
-        boolean centinela = false;
-        List<Pedido> listPedidosEnvio = envio.getListPedidos();
-        for(Pedido pedido : listPedidosEnvio){
-            for(Pedido pedidoAux : listPedidos){
-                if(listPedidos.contains(pedido)){
-                    listPedidosEnvio.remove(pedido);
-                    centinela = true;
-                }
-            }
-        }
-        return centinela;
-    }
 
     public boolean agregarRuta(Ruta ruta) {
         return empresaLogistica.agregarRuta(ruta);

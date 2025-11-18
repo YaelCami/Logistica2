@@ -51,7 +51,10 @@ public class Pedido implements IPedido{
     }
 
     public String getEstado() {
-        return estado = "Solicitado";
+        if(this.getEnvio() == null){
+            return estado = "Solicitado";
+        }
+        return this.getEnvio().getEstadoEnvio().getNombre();
     }
 
     public void setEstado(String estado) {

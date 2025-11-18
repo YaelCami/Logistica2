@@ -16,7 +16,7 @@ public class HistorialEnviosController {
     public void irAlInicio() {
         app.openUsuario(usuario);
     }
-    public List<Pedido> verHistorial(IEstado estado,LocalDate fecha){
+    public List<Pedido> verHistorial(String estado,LocalDate fecha){
         return usuario.historialEstados(estado, fecha);
     }
     public List<Pedido> verPedidos(){

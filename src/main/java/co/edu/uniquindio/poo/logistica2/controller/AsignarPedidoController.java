@@ -42,16 +42,18 @@ public class AsignarPedidoController {
         }
         return repartidors;
     }
+
     public boolean crearEnvio(Envio envio){
         if (administrador.agregarEnvio(envio)){
-            List<Pedido> pedidos = envio.getListPedidos();
-            for (Pedido pedido : pedidos){
-                pedido.setEstado(envio.getEstadoEnvio().getNombre());
-                return true;
+            for (Pedido p : envio.getListPedidos()){
+                p.setEstado(envio.getEstadoEnvio().getNombre());
+                p.setEnvio(envio);
             }
+            return true;
         }
         return false;
     }
+
     public LocalDate calcularFechaEstimada(LocalDate fecha, Ruta ruta){
         Envio envio = new Envio("78", fecha, LocalDate.of(2025, 10,17), ruta, repartidor);
         if (fecha == null || ruta == null){

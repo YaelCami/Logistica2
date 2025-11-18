@@ -43,19 +43,22 @@ public class AsignarEnvioViewController {
     @FXML
     public void onAsignar(){
         Pedido seleccionado = cbxPedido.getSelectionModel().getSelectedItem();
-        Envio envio = buildEnvio();
-        if(!controller.asignarPedidoAlEnvio(envio, seleccionado)){
-            mostrarAlerta("Error", "pedido no agregado");
-        }
-        if(seleccionado != null){
-            controller.asignarPedidoAlEnvio(envio, seleccionado);
-            pedidosAsignados.add(seleccionado);
-            cbxPedido.setValue(null);
-            tbvEnvio.setItems(pedidosAsignados);
-        } else {
+        if (seleccionado == null) {
             mostrarAlerta("Error", "Seleccione un pedido");
+            return;
+        }
+
+        Envio envio = buildEnvio();
+
+        if (controller.asignarPedidoAlEnvio(envio, seleccionado)){
+            pedidosAsignados.add(seleccionado);
+            tbvEnvio.setItems(pedidosAsignados);
+            cbxPedido.setValue(null);
+        } else {
+            mostrarAlerta("Error", "Pedido no agregado");
         }
     }
+
     @FXML
     public void onCrearEnvio(){
         try{
@@ -119,15 +122,19 @@ public class AsignarEnvioViewController {
         cbxPedido.setValue(null);
         cbxRepartidor.setValue(null);
     }
-    public void cargarPedidos(){
+    public void cargarPedidos() {
         Ruta ruta = cbxRuta.getValue();
         if (ruta != null) {
             cbxPedido.getItems().clear();
-            cbxPedido.getItems().addAll(controller.getPedidos(ruta));
-            cbxPedido.setConverter(new StringConverter<Pedido>(){
+            List<Pedido> pedidosFiltrados = controller.getPedidos(ruta)
+                    .stream()
+                    .filter(p -> p.getEstado().equals("Solicitado"))
+                    .toList();
+            cbxPedido.getItems().addAll(pedidosFiltrados);
+            cbxPedido.setConverter(new StringConverter<Pedido>() {
                 @Override
                 public String toString(Pedido p) {
-                    return p != null ? p.getId() + " - " + p.getCosto(): "";
+                    return p != null ? p.getId() + " - " + p.getCosto() : "";
                 }
                 @Override
                 public Pedido fromString(String s) {
@@ -137,8 +144,8 @@ public class AsignarEnvioViewController {
         } else {
             cbxPedido.getItems().clear();
         }
-
     }
+
     private void cargarRutas(){
         cbxRuta.getItems().clear();
         cbxRuta.getItems().addAll(controller.obtenerRutas());

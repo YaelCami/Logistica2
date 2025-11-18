@@ -22,11 +22,11 @@ public class HistorialEnviosViewController {
     @FXML
     public TableView<Pedido> tbvHistorial;
     @FXML
-    public TableColumn<Pedido, String> tbcId, tbcDireccion;
+    public TableColumn<Pedido, String> tbcId, tbcDireccion, tbcEstado;
     @FXML
     public TableColumn<Pedido, LocalDate> tbcFechaEstimada;
     @FXML
-    public ComboBox<IEstado> cbxEstado;
+    public ComboBox<String> cbxEstado;
     @FXML
     public DatePicker dtpFecha;
     public void setController(HistorialEnviosController controller) {
@@ -38,14 +38,21 @@ public class HistorialEnviosViewController {
         this.usuario = usuario;
     }
     @FXML
-    public void onDescargar(){}
-    @FXML
     public void onRegresar(){
         controller.irAlInicio();
     }
     public void initialize(){
         tbcId.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getId()));
+        tbcDireccion.setCellValueFactory(cellData ->
+                new SimpleStringProperty(
+                        cellData.getValue().getDestino().getCiudad().getNombre()
+                                + " - " +
+                                cellData.getValue().getDestino().getCalle()
+                )
+        );
+        tbcEstado.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getEstado()));
         tbcFechaEstimada.setCellValueFactory(
                 cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getFechaEstimadaEntrega()));
         tbvHistorial.setItems(list);
@@ -53,35 +60,18 @@ public class HistorialEnviosViewController {
     }
     public void cargarEvento(){
         dtpFecha.valueProperty().addListener((obs, old, newVal) -> mostrarPedidos());
+        cbxEstado.getSelectionModel().selectedItemProperty().addListener((obs, old, newVal) -> {mostrarPedidos();});
     }
     private void mostrarPedidos(){
         LocalDate fecha = dtpFecha.getValue();
-        IEstado estado = cbxEstado.getSelectionModel().getSelectedItem();
+        String estado = cbxEstado.getSelectionModel().getSelectedItem();
         if(fecha != null){
             list.setAll(controller.verHistorial(estado, fecha));
         }
     }
     private void cargarEstados(){
-        cbxEstado.getItems().addAll(
-                new Asignado(),
-                new EnRuta(),
-                new Entregado(),
-                new Incidencia()
+        cbxEstado.getItems().addAll( "Solicitado", "Asignado", "EnRuta", "Entregado", "Incidencia"
         );
-        cbxEstado.setCellFactory(listView -> new ListCell<IEstado>() {
-            @Override
-            protected void updateItem(IEstado estado, boolean empty) {
-                super.updateItem(estado, empty);
-                setText(empty || estado == null ? "" : estado.getNombre());
-            }
-        });
-        cbxEstado.setButtonCell(new ListCell<IEstado>() {
-            @Override
-            protected void updateItem(IEstado estado, boolean empty) {
-                super.updateItem(estado, empty);
-                setText(empty || estado == null ? "" : estado.getNombre());
-            }
-        });
 
     }
     private void verPedidos(){

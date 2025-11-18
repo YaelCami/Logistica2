@@ -2,13 +2,31 @@
             DETALLE DEL PEDIDO
 =========================================
 ID Pedido: 5002
-Fecha de creación: 2025-11-17
-Fecha estimada de entrega: 2025-11-22
-Direccion Origen : , alias='Casa', calle='Cra 60', ciudad=Quimbaya, coordenadas='634020
-Direccion Destino : , alias='Oficina', calle='Cra 4', ciudad=Armenia, coordenadas='630001
-Estado : Solicitado
+Fecha de creación: 2025-11-18
+Fecha estimada de entrega: 2025-11-23
+
+Estado: Entregado
+Direccion Origen:
+Alias: Casa           
+  Calle: Cra 60                   
+  Ciudad: Quimbaya            
+  Coordenadas: 634020         
+
+Direccion Destino:
+Alias: Oficina        
+  Calle: Cra 4                    
+  Ciudad: Armenia             
+  Coordenadas: 630001         
+
 -----------------------------------------
-INFO DEL USUARIO          
-ID Usuario 1230
-Nombre Usuario Raul
-Correo Us
+INFO DEL USUARIO
+ID Usuario: 1230
+Nombre Usuario: Raul
+Correo Usuario: null
+
+PRODUCTOS DEL PAQUETE
+Producto                  Cantidad   Peso (kg)   
+-----------------------------------------
+Pestañina                 1          4,00        
+-----------------------------------------
+TOTAL A PAGAR: 9000,00

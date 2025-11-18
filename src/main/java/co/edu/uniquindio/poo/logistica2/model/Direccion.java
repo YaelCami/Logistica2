@@ -57,9 +57,18 @@ public class Direccion {
 
     @Override
     public String toString() {
-        return ", alias='" + alias + '\'' +
-                ", calle='" + calle + '\'' +
-                ", ciudad=" + ciudad +
-                ", coordenadas='" + coordenadas ;
+        return String.format(
+                "Alias: %-15s\n" +
+                        "  Calle: %-25s\n" +
+                        "  Ciudad: %-20s\n" +
+                        "  Coordenadas: %-15s",
+                alias,
+                calle,
+                ciudad,
+                coordenadas
+        );
     }
+
+
+
 }

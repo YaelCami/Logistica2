@@ -9,45 +9,58 @@ import java.io.IOException;
 import java.util.List;
 
 public class ExportadorArchivo {
+
     public static void exportarPedido(Pedido pedido, String rutaArchivoTxt) throws IOException {
-        // Asegurar carpeta existente
         File archivo = new File(rutaArchivoTxt);
         File carpeta = archivo.getParentFile();
         if (carpeta != null && !carpeta.exists()) {
             carpeta.mkdirs();
         }
 
-        FileWriter writer = new FileWriter(archivo);
-        writer.write("=========================================\n");
-        writer.write("            DETALLE DEL PEDIDO\n");
-        writer.write("=========================================\n");
-        writer.write("ID Pedido: " + pedido.getId() + "\n");
-        writer.write("Fecha de creación: " + pedido.getFechaCreacion() + "\n");
-        writer.write("Fecha estimada de entrega: " + pedido.getFechaEstimadaEntrega() + "\n");
-        writer.write("Direccion Origen : " + pedido.getOrigen() + "\n");
-        writer.write("Direccion Destino : " + pedido.getDestino() + "\n");
-        writer.write("Estado : " + pedido.getEstado() + "\n");
-        writer.write("-----------------------------------------\n");
-        writer.write("INFO DEL USUARIO          \n");
-        writer.write("ID Usuario "+ pedido.getUsuario().getId() +"\n");
-        writer.write("Nombre Usuario "+ pedido.getUsuario().getNombre()   +"\n");
-        writer.write("Correo Usuario "+ pedido.getUsuario().getCorreo() +"\n");
+        try (FileWriter writer = new FileWriter(archivo)) {
 
-        writer.write(String.format("%-25s %8s %12s\n", "Producto", "Cantidad", "Peso (en kg)"));
-        writer.write("-----------------------------------------\n");
+            writer.write("=========================================\n");
+            writer.write("            DETALLE DEL PEDIDO\n");
+            writer.write("=========================================\n");
 
-        List<Producto> detalles = pedido.getPaquete().getListproductos();
-        for (int i = 0; i < detalles.size(); i++) {
-            Producto d = detalles.get(i);
-            String nombre = d.getNombre();
-            int cantidad = d.getCantidad();
-            double peso = d.getPeso();
-            writer.write(String.format("%-25s %8d %12.2f\n", nombre, cantidad, peso));
+            writer.write(String.format("ID Pedido: %s\n", pedido.getId()));
+            writer.write(String.format("Fecha de creación: %s\n", pedido.getFechaCreacion()));
+            writer.write(String.format("Fecha estimada de entrega: %s\n", pedido.getFechaEstimadaEntrega()));
+            writer.write(String.format("Estado: %s\n\n", pedido.getEstado()));
+
+            // ------- DIRECCIÓN ORIGEN --------
+            writer.write("Direccion Origen:\n");
+            writer.write(pedido.getOrigen().toString());
+            writer.write("\n\n");
+
+            // ------- DIRECCIÓN DESTINO --------
+            writer.write("Direccion Destino:\n");
+            writer.write(pedido.getDestino().toString());
+            writer.write("\n\n");
+
+            writer.write("-----------------------------------------\n");
+            writer.write("INFO DEL USUARIO\n");
+            writer.write(String.format("ID Usuario: %s\n", pedido.getUsuario().getId()));
+            writer.write(String.format("Nombre Usuario: %s\n", pedido.getUsuario().getNombre()));
+            writer.write(String.format("Correo Usuario: %s\n\n", pedido.getUsuario().getCorreo()));
+
+            // ------- TABLA DE PRODUCTOS --------
+            writer.write("PRODUCTOS DEL PAQUETE\n");
+            writer.write(String.format("%-25s %-10s %-12s\n", "Producto", "Cantidad", "Peso (kg)"));
+            writer.write("-----------------------------------------\n");
+
+            for (Producto d : pedido.getPaquete().getListproductos()) {
+                writer.write(String.format(
+                        "%-25s %-10d %-12.2f\n",
+                        d.getNombre(),
+                        d.getCantidad(),
+                        d.getPeso()
+                ));
+            }
+
+            writer.write("-----------------------------------------\n");
+            writer.write(String.format("TOTAL A PAGAR: %.2f\n", pedido.getCosto()));
         }
-
-        writer.write("-----------------------------------------\n");
-        writer.write(String.format("TOTAL: %.2f\n", pedido.getCosto()));
-        writer.write("=========================================\n");
-        writer.write("-------------servientrega UQ-------------\n");
     }
 }
+

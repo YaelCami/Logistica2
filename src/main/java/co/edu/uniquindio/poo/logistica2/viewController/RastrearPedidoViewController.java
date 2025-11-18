@@ -21,7 +21,9 @@ public class RastrearPedidoViewController {
         this.usuario = usuario;
     }
     @FXML
-    public void onLimpiar(){}
+    public void onLimpiar(){
+        txaInfoPedido.clear();
+    }
     @FXML
     public void onBuscarPedido(){
         txaInfoPedido.setText(controller.rastrearPedido(txtIdPedido.getText()));

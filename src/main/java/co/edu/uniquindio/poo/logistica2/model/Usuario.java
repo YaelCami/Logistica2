@@ -67,10 +67,10 @@ public class Usuario extends Persona implements IObservador{
 
     }
 
-    public List<Pedido> historialEstados(IEstado estado, LocalDate fecha){
+    public List<Pedido> historialEstados(String estado, LocalDate fecha){
         List<Pedido> historialEstados = new ArrayList<>();
         for(Pedido p : listPedidos){
-            if(p.getEnvio().getEstadoEnvio().equals(estado) && p.getFechaCreacion().equals(fecha)){
+            if(p.getEstado().equalsIgnoreCase(estado) && p.getFechaCreacion().equals(fecha)){
                 historialEstados.add(p);
             }
         }
