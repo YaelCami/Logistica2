@@ -33,7 +33,7 @@ public class ExportadorArchivo {
         writer.write("Nombre Usuario "+ pedido.getUsuario().getNombre()   +"\n");
         writer.write("Correo Usuario "+ pedido.getUsuario().getCorreo() +"\n");
 
-        writer.write(String.format("%-25s %8s %12s\n", "Producto", "Cantidad", "Peso"));
+        writer.write(String.format("%-25s %8s %12s\n", "Producto", "Cantidad", "Peso (en kg)"));
         writer.write("-----------------------------------------\n");
 
         List<Producto> detalles = pedido.getPaquete().getListproductos();
@@ -47,6 +47,7 @@ public class ExportadorArchivo {
 
         writer.write("-----------------------------------------\n");
         writer.write(String.format("TOTAL: %.2f\n", pedido.getCosto()));
-        writer.close();
+        writer.write("=========================================\n");
+        writer.write("-------------servientrega UQ-------------\n");
     }
 }

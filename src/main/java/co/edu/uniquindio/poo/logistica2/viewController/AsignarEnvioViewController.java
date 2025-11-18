@@ -63,6 +63,9 @@ public class AsignarEnvioViewController {
             List<Pedido> pedidos = new ArrayList<>(pedidosAsignados);
             envio.setListPedidos(pedidos);
             if(controller.crearEnvio(envio)){
+                for(Pedido p : pedidos){
+                    p.setEstado(envio.getEstadoEnvio().getNombre());//NO FUNCIONA
+                }
                 pedidosAsignados.clear();
                 limpiarCampos();
             } else {

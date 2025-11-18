@@ -1,7 +1,7 @@
 =========================================
             DETALLE DEL PEDIDO
 =========================================
-ID Pedido: 5002
+ID Pedido: 1111
 Fecha de creación: 2025-11-17
 Fecha estimada de entrega: 2025-11-22
 Direccion Origen : , alias='Casa', calle='Cra 60', ciudad=Quimbaya, coordenadas='634020
@@ -11,4 +11,11 @@ Estado : Solicitado
 INFO DEL USUARIO          
 ID Usuario 1230
 Nombre Usuario Raul
-Correo Us
+Correo Usuario null
+Producto                  Cantidad Peso (en kg)
+-----------------------------------------
+Labial                           2         0,04
+Base                             3         0,40
+Primer                           1         1,00
+-----------------------------------------
+TOTAL: 17000,00
