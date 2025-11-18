@@ -1,10 +1,14 @@
 package co.edu.uniquindio.poo.logistica2.model;
 
+import java.util.List;
+import java.util.Objects;
+
 public class Ruta {
     private String id;
     private Ciudad ciudadOrigen;
     private Ciudad ciudadDestino;
     private double distancia;
+    private List<Envio> listEnvios;
 
     public Ruta(String id, Ciudad ciudadOrigen, Ciudad ciudadDestino, double distancia) {
         this.id = id;
@@ -44,4 +48,25 @@ public class Ruta {
     public void setDistancia(double distancia) {
         this.distancia = distancia;
     }
+
+    @Override
+    public String toString() {
+        return ciudadOrigen.getNombre() +
+                " - " + ciudadDestino.getNombre() ;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ruta ruta = (Ruta) o;
+        return ciudadOrigen.equals(ruta.ciudadOrigen) &&
+                ciudadDestino.equals(ruta.ciudadDestino);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ciudadOrigen, ciudadDestino);
+    }
+
 }

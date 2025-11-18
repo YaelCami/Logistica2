@@ -17,7 +17,7 @@ public class Repartidor extends Persona {
         this.listEnvios = builder.listEnvios;
 
     }
-    public static class Builder extends Persona.Builder {
+    public static class Builder extends Persona.Builder<Builder> {
         private String documento;
         private Disponibilidad disponibilidad;
         private List<Ruta> zonaCobertura = new ArrayList<>();
