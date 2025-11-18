@@ -52,6 +52,7 @@ public class Usuario extends Persona implements IObservador{
     }
     public void solicitarPedido(Pedido p){
         agregarPedido(p);
+        p.setEstado("Solicitado:");
         empresa.getListPedidos().add(p);
     }
 

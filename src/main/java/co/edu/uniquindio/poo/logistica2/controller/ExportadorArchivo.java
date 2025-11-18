@@ -25,7 +25,7 @@ public class ExportadorArchivo {
         writer.write("Fecha de creación: " + pedido.getFechaCreacion() + "\n");
         writer.write("Fecha estimada de entrega: " + pedido.getFechaEstimadaEntrega() + "\n");
         writer.write("Direccion Origen : " + pedido.getOrigen() + "\n");
-        writer.write("Direccion Destino : " + pedido.getOrigen() + "\n");
+        writer.write("Direccion Destino : " + pedido.getDestino() + "\n");
         writer.write("Estado : " + pedido.getEstado() + "\n");
         writer.write("-----------------------------------------\n");
         writer.write("INFO DEL USUARIO          \n");

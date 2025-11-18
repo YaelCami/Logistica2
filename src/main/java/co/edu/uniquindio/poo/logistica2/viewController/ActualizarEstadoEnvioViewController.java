@@ -79,7 +79,6 @@ public class ActualizarEstadoEnvioViewController {
     private void cambiarEstado() {
         Envio envioSeleccionado = tbvEnvio.getSelectionModel().getSelectedItem();
         IEstado estadoSeleccionado = cbxEstado.getValue();
-
         if (envioSeleccionado != null && estadoSeleccionado != null) {
             controller.cambiarEstadoEnvio(envioSeleccionado, estadoSeleccionado);
             tbvEnvio.refresh(); // refresca el estado mostrado en la tabla

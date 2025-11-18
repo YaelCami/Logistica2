@@ -41,7 +41,7 @@ public class Envio implements ITarifa, ISujeto {
             notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
         }
     }
-    public String ejecutarAccion(String accion){//QUITAR O CORREGIR
+    public String ejecutarAccion(String accion){
         return "";
     }
     // Métodos de estado

@@ -48,6 +48,7 @@ public class AsignarEnvioViewController {
             mostrarAlerta("Error", "pedido no agregado");
         }
         if(seleccionado != null){
+            controller.asignarPedidoAlEnvio(envio, seleccionado);
             pedidosAsignados.add(seleccionado);
             cbxPedido.setValue(null);
             tbvEnvio.setItems(pedidosAsignados);
