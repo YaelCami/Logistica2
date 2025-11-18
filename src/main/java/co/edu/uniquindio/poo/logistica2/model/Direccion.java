@@ -54,4 +54,12 @@ public class Direccion {
     public void setCoordenadas(String coordenadas) {
         this.coordenadas = coordenadas;
     }
+
+    @Override
+    public String toString() {
+        return ", alias='" + alias + '\'' +
+                ", calle='" + calle + '\'' +
+                ", ciudad=" + ciudad +
+                ", coordenadas='" + coordenadas ;
+    }
 }

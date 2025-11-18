@@ -81,7 +81,7 @@ public class Administrador extends Persona {
         for (Repartidor repartidor : listRepartidores) {
             List<Ruta> rutas = repartidor.getZonaCobertura();
             for(Ruta r: rutas ){
-                if(repartidor.getDisponibilidad() == Disponibilidad.ACTIVO && ruta==r){
+                if(repartidor.getDisponibilidad() == Disponibilidad.ACTIVO && r.equals(ruta)){
                     repartidors.add(repartidor);
             }
             }
@@ -122,18 +122,18 @@ public class Administrador extends Persona {
         return pedidosSegunRuta;
     }
 
-
-
-
-
     public boolean agregarPersona(Persona persona) {
         return empresaLogistica.agregarPersona(persona);
-
     }
 
     public boolean agregarEnvio(Envio envio) {
         eliminarPedido(envio);
-        return empresaLogistica.agregarEnvio(envio);
+        cambiarDisponibilidadEnRuta(envio.getRepartidor());
+        if(empresaLogistica.agregarEnvio(envio)){
+            envio.asignar();
+            return true;
+        }
+        return false;
     }
 
     public boolean eliminarPedido(Envio envio) {

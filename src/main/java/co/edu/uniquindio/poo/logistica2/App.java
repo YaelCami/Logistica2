@@ -233,7 +233,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    public void openActualizarEnvio(){
+    public void openActualizarEnvio(Administrador a){
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("ActualizarEstadoEnvio.fxml"));
@@ -241,6 +241,8 @@ public class App extends Application {
             ActualizarEstadoEnvioViewController viewController = loader.getController();
             ActualizarEstadoEnvioController controller = new ActualizarEstadoEnvioController();
             controller.setApp(this);
+            controller.setAdministrador(a);
+            viewController.setAdministrador(a);
             viewController.setController(controller);
             viewController.setApp(this);
 
@@ -372,7 +374,7 @@ public class App extends Application {
         Direccion direccion5 = new Direccion("5000", "Casa", "Cra 10", ciudad5, "633001");
         Producto producto1 = new Producto.Builder().id("2020").nombre("Pestañina").marca("prosa").peso(4).categoria(Categoria.JUGUETES).cantidad(1).build();
         Paquete paquete1 = new Paquete.Builder().id("5002").peso(4).volumen(3).build();
-        Pedido pedido1 = new Pedido("0101", LocalDate.of(2025, 11, 2), direccion3, direccion2,usuario1, LocalDate.of(2025,11,7), paquete1);
+        Pedido pedido1 = new Pedido("0101", LocalDate.of(2025, 11, 2), direccion1, direccion2,usuario1, LocalDate.of(2025,11,7), paquete1);
         Pedido pedido2 = new Pedido("0202", LocalDate.of(2025, 11,8), direccion1, direccion4,usuario1, LocalDate.of(2025,11,13), paquete1);
         Repartidor repartidor1 = new Repartidor.Builder().id("0304").nombre("Lucia").correo("@lucia").documento("0909").disponibilidad(Disponibilidad.ACTIVO).build();
         if (repartidor1 != null) {
@@ -388,6 +390,11 @@ public class App extends Application {
             paquete1.agregarProductos(producto1);
         } else {
             System.out.println("Error: el objeto no es paquete ");
+        }
+        if (administrador1 != null){
+            administrador1.agregarPersona(repartidor1);
+        } else {
+            System.out.println("Error: el objeto no es un Administrador.");
         }
         empresa.agregarPersona(usuario1);
         empresa.agregarPersona(usuario2);

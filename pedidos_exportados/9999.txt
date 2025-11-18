@@ -1,0 +1,20 @@
+=========================================
+            DETALLE DEL PEDIDO
+=========================================
+ID Pedido: 9999
+Fecha de creación: 2025-11-25
+Fecha estimada de entrega: 2025-11-30
+Direccion Origen : , alias='casa', calle='cra 6 #22-11', ciudad=Circasia, coordenadas='1280
+Direccion Destino : , alias='casa', calle='cra 6 #22-11', ciudad=Circasia, coordenadas='1280
+-----------------------------------------
+INFO DEL USUARIO          
+ID Usuario 2000
+Nombre Usuario Alejandra
+Correo Usuario alejandra@gmail.com
+Producto                  Cantidad         Peso
+-----------------------------------------
+Pestañina                        2         4,00
+Zapatilla                        4         1,00
+Ventilador                       1         6,00
+-----------------------------------------
+TOTAL: 24000,00

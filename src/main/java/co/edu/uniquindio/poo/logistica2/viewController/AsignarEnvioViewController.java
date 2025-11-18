@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AsignarEnvioViewController {
@@ -42,6 +43,10 @@ public class AsignarEnvioViewController {
     @FXML
     public void onAsignar(){
         Pedido seleccionado = cbxPedido.getSelectionModel().getSelectedItem();
+        Envio envio = buildEnvio();
+        if(!controller.asignarPedidoAlEnvio(envio, seleccionado)){
+            mostrarAlerta("Error", "pedido no agregado");
+        }
         if(seleccionado != null){
             pedidosAsignados.add(seleccionado);
             cbxPedido.setValue(null);
@@ -51,15 +56,27 @@ public class AsignarEnvioViewController {
         }
     }
     @FXML
-    public void onCrearEnvio(){}
+    public void onCrearEnvio(){
+        try{
+            Envio envio = buildEnvio();
+            List<Pedido> pedidos = new ArrayList<>(pedidosAsignados);
+            envio.setListPedidos(pedidos);
+            if(controller.crearEnvio(envio)){
+                pedidosAsignados.clear();
+                limpiarCampos();
+            } else {
+                mostrarAlerta("Error", "Error al crear el envio");
+            }
+        }catch (Exception e) {
+            mostrarAlerta("Error", "Datos invalidos:" + e.getMessage());
+        }
+    }
     public void setApp(App app) {
         this.app = app;
     }
     public void setController(AsignarPedidoController controller) {
         this.controller = controller;
-        cargarPedidos();
         cargarRutas();
-        cargarRepartidores();
     }
     public void setAdministrador(Administrador administrador) {
         this.administrador = administrador;
@@ -69,7 +86,10 @@ public class AsignarEnvioViewController {
                 new SimpleStringProperty(cellData.getValue().getId()));
         tbcRuta.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getRuta().toString()));
-
+        cbxRuta.valueProperty().addListener((obs, oldValue, horaSeleccionada) -> {
+            cargarPedidos();
+            cargarRepartidores();
+        });
         tbvEnvio.setItems(pedidosAsignados);
 
     }
@@ -78,8 +98,8 @@ public class AsignarEnvioViewController {
         LocalDate fecha = dtpFecha.getValue();
         Repartidor repartidor = cbxRepartidor.getValue();
         Ruta ruta = cbxRuta.getValue();
-        Pedido pedido = cbxPedido.getValue();
-        return new Envio(id, fecha, pedido.getFechaEstimadaEntrega(), ruta, repartidor);//MODIFICAR FECHA ESTIMADA DE ENTREGA
+        LocalDate fechaEstEntrega = dtpFecha.getValue();
+        return new Envio(id, fecha, fechaEstEntrega, ruta, repartidor);//MODIFICAR FECHA ESTIMADA DE ENTREGA
 
     }
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -96,18 +116,24 @@ public class AsignarEnvioViewController {
         cbxRepartidor.setValue(null);
     }
     public void cargarPedidos(){
-        cbxPedido.getItems().clear();
-        cbxPedido.getItems().addAll(controller.obtenerPedidos());
-        cbxPedido.setConverter(new StringConverter<Pedido>(){
-            @Override
-            public String toString(Pedido p) {
-                return p != null ? p.getId() + " - " + p.getCosto(): "";
-            }
-            @Override
-            public Pedido fromString(String s) {
-                return null;
-            }
-        });
+        Ruta ruta = cbxRuta.getValue();
+        if (ruta != null) {
+            cbxPedido.getItems().clear();
+            cbxPedido.getItems().addAll(controller.getPedidos(ruta));
+            cbxPedido.setConverter(new StringConverter<Pedido>(){
+                @Override
+                public String toString(Pedido p) {
+                    return p != null ? p.getId() + " - " + p.getCosto(): "";
+                }
+                @Override
+                public Pedido fromString(String s) {
+                    return null;
+                }
+            });
+        } else {
+            cbxPedido.getItems().clear();
+        }
+
     }
     private void cargarRutas(){
         cbxRuta.getItems().clear();
@@ -125,19 +151,24 @@ public class AsignarEnvioViewController {
         });
     }
     private void cargarRepartidores(){
-        cbxRepartidor.getItems().clear();
-        cbxRepartidor.getItems().addAll(controller.obtenerRepartidores());
-        cbxRepartidor.setConverter(new StringConverter<Repartidor>() {
-            @Override
-            public String toString(Repartidor repartidor) {
-                return repartidor != null ? repartidor.getNombre() + " - " + repartidor.getId() : "";
-            }
+        Ruta ruta = cbxRuta.getValue();
+        if (ruta != null) {
+            cbxRepartidor.getItems().clear();
+            cbxRepartidor.getItems().addAll(controller.getRepartidores(ruta));
+            cbxRepartidor.setConverter(new StringConverter<Repartidor>() {
+                @Override
+                public String toString(Repartidor repartidor) {
+                    return repartidor != null ? repartidor.getNombre() + " - " + repartidor.getId() : "";
+                }
 
-            @Override
-            public Repartidor fromString(String string) {
-                return null;
-            }
-        });
+                @Override
+                public Repartidor fromString(String string) {
+                    return null;
+                }
+            });
+        } else {
+            cbxRepartidor.getItems().clear();
+        }
     }
 
 }

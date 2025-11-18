@@ -20,7 +20,7 @@ public class AdministradorController {
         app.openGestionarUsuario(administrador);
     }
     public void irAActualizarEstadoEnvio(){
-        app.openActualizarEnvio();
+        app.openActualizarEnvio(administrador);
     }
     public void irAAsignarPedido(){
         app.openAsignarPedido(administrador);

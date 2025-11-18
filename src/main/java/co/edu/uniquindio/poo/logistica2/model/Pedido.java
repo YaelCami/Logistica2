@@ -84,7 +84,7 @@ public class Pedido implements IPedido{
     }
 
     public Ruta puedePedir(Direccion origen, Direccion destino){
-        Ruta ruta= null;
+        ruta= null;
         List<Ruta> listaRutas = empresaLogistica.getListRutas();
         for(Ruta r: listaRutas){
             if(origen.getCiudad().equals(r.getCiudadOrigen()) && destino.getCiudad().equals(r.getCiudadDestino())){

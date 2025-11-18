@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.logistica2.controller;
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AsignarPedidoController {
@@ -15,11 +16,29 @@ public class AsignarPedidoController {
     public void setAdministrador(Administrador administrador) {
         this.administrador = administrador;
     }
-    public List<Pedido> obtenerPedidos(){
-        return administrador.getListPedidos();
+
+    public List<Pedido> getPedidos(Ruta ruta){
+        List<Pedido> pedidosSegunRuta = new ArrayList<>();
+        List<Pedido> listPedidos = empresaLogistica.getListPedidos();
+        for (Pedido pedido : listPedidos){
+            if(pedido.getOrigen().getCiudad().equals(ruta.getCiudadOrigen()) && pedido.getDestino().getCiudad().equals(ruta.getCiudadDestino())){
+                pedidosSegunRuta.add(pedido);
+            }
+        }
+        return pedidosSegunRuta;
     }
-    public List<Repartidor> obtenerRepartidores(){
-        return empresaLogistica.getListRepartidores();
+    public List<Repartidor> getRepartidores(Ruta ruta){
+        List<Repartidor> repartidors = new ArrayList<>();
+        List<Repartidor> listRepartidores = empresaLogistica.getListRepartidores();
+        for (Repartidor repartidor : listRepartidores) {
+            List<Ruta> rutas = repartidor.getZonaCobertura();
+            for(Ruta r: rutas ){
+                if(repartidor.getDisponibilidad() == Disponibilidad.ACTIVO && r.equals(ruta)){
+                    repartidors.add(repartidor);
+                }
+            }
+        }
+        return repartidors;
     }
     public boolean crearEnvio(Envio envio){
         return administrador.agregarEnvio(envio);
@@ -28,12 +47,18 @@ public class AsignarPedidoController {
         return envio.agregarPedido(pedido);
     }
     public List<Ruta> obtenerRutas(){
-        return administrador.getListRutas();
+        return empresaLogistica.getListRutas();
     }
     public void volver(){
         app.openAdministrador(administrador);
     }
     public void setApp(App app) {
         this.app = app;
+    }
+    public List<Repartidor> obtenerRepartidores(Ruta ruta){
+        return administrador.buscarRepartidorRutaDisponible(ruta);
+    }
+    public List<Pedido> obtenerPedidos(Ruta ruta){
+        return administrador.buscarPedidosRuta(ruta);
     }
 }
