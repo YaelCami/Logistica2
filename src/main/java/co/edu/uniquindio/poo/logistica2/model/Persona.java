@@ -13,32 +13,33 @@ public class Persona {
         this.telefono = builder.telefono;
     }
 
-    public static class Builder {
+    public static class Builder<T extends Builder<T>> {
         private String id;
         private String nombre;
         private String correo;
         private String telefono;
 
-        public Builder id(String id) {
-                this.id = id;
-                return this;
+        public T id(String id) {
+            this.id = id;
+            return (T) this;
         }
-        public Builder nombre(String nombre) {
+        public T nombre(String nombre) {
             this.nombre = nombre;
-            return this;
+            return (T) this;
         }
-        public Builder correo(String correo) {
+        public T correo(String correo) {
             this.correo = correo;
-            return this;
+            return (T) this;
         }
-        public Builder telefono(String telefono) {
+        public T telefono(String telefono) {
             this.telefono = telefono;
-            return this;
+            return (T) this;
         }
 
         public Persona build(){
             return new Persona(this);
         }
+
 
     }
 

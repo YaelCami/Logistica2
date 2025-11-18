@@ -41,7 +41,9 @@ public class Envio implements ITarifa, ISujeto {
             notificarObservador("El envío ahora está: " + estadoEnvio.getNombre());
         }
     }
-
+    public String ejecutarAccion(String accion){
+        return "";
+    }
     // Métodos de estado
 
     public void asignar() { estadoEnvio.asignar(this); }
@@ -53,12 +55,12 @@ public class Envio implements ITarifa, ISujeto {
 
     @Override
     public void agregarObservador(IObservador observador) {
-       listObservadores.add(observador);
+        listObservadores.add(observador);
     }
 
     @Override
     public void eliminarObservador(IObservador observador) {
-       listObservadores.remove(observador);
+        listObservadores.remove(observador);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class Envio implements ITarifa, ISujeto {
 
     }
 
-    public LocalDate calcularFechaEstimadaEntrega(Ruta ruta){
+    public LocalDate calcularFechaEstimadaEntrega(LocalDate fecha, Ruta ruta){
         double distancia = ruta.getDistancia();
         int diasAdicionales = 0;
         if (distancia > 0 && distancia < 50) {
@@ -79,7 +81,7 @@ public class Envio implements ITarifa, ISujeto {
         } else {
             diasAdicionales = 15;
         }
-        LocalDate fechaCalculada = fechaInicio.plusDays(diasAdicionales);
+        LocalDate fechaCalculada = fecha.plusDays(diasAdicionales);
         this.fechaEstimadaEntrega = fechaCalculada;
         return fechaCalculada;
     }
@@ -98,8 +100,8 @@ public class Envio implements ITarifa, ISujeto {
     public boolean agregarPedido(Pedido pedido) {
         boolean centinela = false;
         if (!verificarPedido(pedido.getId())) {
-                listPedidos.add(pedido);
-                centinela = true;
+            listPedidos.add(pedido);
+            centinela = true;
 
         }
 

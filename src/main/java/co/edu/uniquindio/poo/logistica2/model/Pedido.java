@@ -24,7 +24,7 @@ public class Pedido implements IPedido{
     private Paquete paquete;
 
 
-    public Pedido(String id, LocalDate fechaCreacion, Direccion origen, Direccion destino, Usuario usuario){
+    public Pedido(String id, LocalDate fechaCreacion, Direccion origen, Direccion destino, Usuario usuario, LocalDate fechaEstimadaEntrega, Paquete paquete) {
         this.id = id;
         this.fechaCreacion = fechaCreacion;
         this.ruta = ruta;
@@ -38,6 +38,7 @@ public class Pedido implements IPedido{
         this.origen = origen;
         this.destino = destino;
         this.paquete = paquete;
+        this.iPedido = iPedido;
         this.pago = pago;
     }
     @Override
@@ -50,7 +51,10 @@ public class Pedido implements IPedido{
     }
 
     public String getEstado() {
-        return estado = "Solicitado";
+        if(this.getEnvio() == null){
+            return estado = "Solicitado";
+        }
+        return this.getEnvio().getEstadoEnvio().getNombre();
     }
 
     public void setEstado(String estado) {
@@ -83,7 +87,7 @@ public class Pedido implements IPedido{
     }
 
     public Ruta puedePedir(Direccion origen, Direccion destino){
-        Ruta ruta= null;
+        ruta= null;
         List<Ruta> listaRutas = empresaLogistica.getListRutas();
         for(Ruta r: listaRutas){
             if(origen.getCiudad().equals(r.getCiudadOrigen()) && destino.getCiudad().equals(r.getCiudadDestino())){
@@ -94,7 +98,7 @@ public class Pedido implements IPedido{
         return ruta;
     }
 
-    public LocalDate calcularFechaEstimadaEntrega(Ruta ruta){
+    public LocalDate calcularFechaEstimadaEntrega(LocalDate fechaCreacion, Ruta ruta) {
         double distancia = ruta.getDistancia();
         int diasAdicionales = 0;
         if (distancia > 0 && distancia < 50) {
@@ -223,5 +227,11 @@ public class Pedido implements IPedido{
 
     public void setPaquete(Paquete paquete) {
         this.paquete = paquete;
+    }
+    public void setDecorador(IPedido iPedido) {
+        this.iPedido = iPedido;
+    }
+    public void setExtras(Double extras) {
+        this.extra = extras;
     }
 }
