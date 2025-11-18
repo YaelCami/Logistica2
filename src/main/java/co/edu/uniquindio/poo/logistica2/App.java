@@ -353,7 +353,7 @@ public class App extends Application {
 
 
     public void inicializarData() {
-        Usuario usuario1 = new Usuario.Builder().id("1230").nombre("Raul").telefono("322470").build();
+        Usuario usuario1 = new Usuario.Builder().id("1230").nombre("Samuel").telefono("322470").build();
         Usuario usuario2 = new Usuario.Builder().id("2222").nombre("Camila").telefono("322470").build();
         Usuario usuario3 = new Usuario.Builder().id("3333").nombre("Sofia").telefono("322470").correo("@sofi").build();
         Administrador administrador1 = new Administrador.Builder().id("0321").nombre("Susana").correo("Susana@gmail.com").build();
