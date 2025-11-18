@@ -12,6 +12,10 @@ public class ActualizarEstadoEnvioController {
 
     public void cambiarEstadoEnvio(Envio envio, IEstado nuevoEstado) {
         envio.cambiarEstado(nuevoEstado);
+        List<Pedido> pedidos = envio.getListPedidos();
+        for (Pedido pedido : pedidos){
+            pedido.setEstado(nuevoEstado.getNombre());
+        }
         if (nuevoEstado instanceof EnRuta) {
             envio.enRuta();
             administrador.cambiarDisponibilidadEnRuta(envio.getRepartidor());

@@ -98,8 +98,8 @@ public class AsignarEnvioViewController {
         LocalDate fecha = dtpFecha.getValue();
         Repartidor repartidor = cbxRepartidor.getValue();
         Ruta ruta = cbxRuta.getValue();
-        LocalDate fechaEstEntrega = dtpFecha.getValue();
-        return new Envio(id, fecha, fechaEstEntrega, ruta, repartidor);//MODIFICAR FECHA ESTIMADA DE ENTREGA
+        LocalDate fechaEstEntrega = controller.calcularFechaEstimada(fecha, ruta);
+        return new Envio(id, fecha, fechaEstEntrega, ruta, repartidor);
 
     }
     private void mostrarAlerta(String titulo, String mensaje) {

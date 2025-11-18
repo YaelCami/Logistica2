@@ -30,6 +30,7 @@ public class RastrearPedidoViewController {
     public void setApp(App app) {
         this.app = app;
     }
+
     public void setController(RastrearPedidoController controller) {
         this.controller = controller;
     }

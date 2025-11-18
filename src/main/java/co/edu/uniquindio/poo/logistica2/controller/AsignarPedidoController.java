@@ -3,12 +3,14 @@ package co.edu.uniquindio.poo.logistica2.controller;
 import co.edu.uniquindio.poo.logistica2.App;
 import co.edu.uniquindio.poo.logistica2.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AsignarPedidoController {
     private App app;
     private Administrador administrador;
+    private Repartidor repartidor;
     private EmpresaLogistica empresaLogistica = EmpresaLogistica.getInstance();
     public AsignarPedidoController(Administrador administrador) {
         this.administrador = administrador;
@@ -41,10 +43,39 @@ public class AsignarPedidoController {
         return repartidors;
     }
     public boolean crearEnvio(Envio envio){
-        return administrador.agregarEnvio(envio);
+        if (administrador.agregarEnvio(envio)){
+            List<Pedido> pedidos = envio.getListPedidos();
+            for (Pedido pedido : pedidos){
+                pedido.setEstado(envio.getEstadoEnvio().getNombre());
+                return true;
+            }
+        }
+        return false;
+    }
+    public LocalDate calcularFechaEstimada(LocalDate fecha, Ruta ruta){
+        Envio envio = new Envio("78", fecha, LocalDate.of(2025, 10,17), ruta, repartidor);
+        if (fecha == null || ruta == null){
+            System.out.println("Algún valor es nulo para calcular fecha estimad de entrega");
+            return null;
+        }
+        try{
+            System.out.println("Calculando Fecha Estimada");
+            LocalDate fechaEstimada = envio.calcularFechaEstimadaEntrega(fecha, ruta);
+            if (fechaEstimada == null){
+                System.out.println("Fecha Estimada no encontrada");
+                return null;
+            }
+            System.out.println("Fecha Estimada: " + fechaEstimada);
+            return fechaEstimada;
+        } catch (Exception e){
+            System.out.println("Exception: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
     public boolean asignarPedidoAlEnvio(Envio envio, Pedido pedido){
         return envio.agregarPedido(pedido);
+
     }
     public List<Ruta> obtenerRutas(){
         return empresaLogistica.getListRutas();
