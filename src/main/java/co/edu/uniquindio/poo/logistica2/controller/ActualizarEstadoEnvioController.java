@@ -10,6 +10,11 @@ public class ActualizarEstadoEnvioController {
     private Administrador administrador;
     private EmpresaLogistica empresaLogistica = EmpresaLogistica.getInstance();
 
+    /**
+     * Metodo para cambiar el estado del envio seleccionado, por el estado seleccionado en el combo box
+     * @param envio
+     * @param nuevoEstado
+     */
     public void cambiarEstadoEnvio(Envio envio, IEstado nuevoEstado) {
         envio.cambiarEstado(nuevoEstado);
         List<Pedido> pedidos = envio.getListPedidos();
@@ -30,14 +35,23 @@ public class ActualizarEstadoEnvioController {
         }
     }
 
-    public void setAdministrador(Administrador administrador) {
-        this.administrador = administrador;
-    }
+    /**
+     * Metodo para volver a interfaz administrador
+     */
     public void volver(){
         app.openAdministrador(administrador);
     }
+
+    /**
+     * Metodo para obtener la lista de envios almacenados
+     * @return lista de envios creados
+     */
     public List<Envio> obtenerEnvios(){
         return empresaLogistica.getListEnvios();
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
     }
     public void setApp(App app) {
         this.app = app;
