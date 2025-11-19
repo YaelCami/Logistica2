@@ -9,7 +9,13 @@ public class Ciudad {
     private String nombre;
     private int habitantes;
 
-
+    /**
+     * Crea una nueva ciudad con su información básica.
+     *
+     * @param id identificador único de la ciudad
+     * @param nombre nombre de la ciudad
+     * @param habitantes cantidad de habitantes que residen en la ciudad
+     */
     public Ciudad(String id, String nombre, int habitantes) {
         this.id = id;
         this.nombre = nombre;
@@ -41,6 +47,12 @@ public class Ciudad {
     public void setHabitantes(int habitantes) {
         this.habitantes = habitantes;
     }
+    /**
+     * Compara dos ciudades según su ID.
+     *
+     * @param o el objeto a comparar
+     * @return true si el objeto representa la misma ciudad, false en caso contrario
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,6 +61,9 @@ public class Ciudad {
         Ciudad ciudad = (Ciudad) o;
         return id.equals(ciudad.id);
     }
+    /**
+     * Genera un hash basado en el ID de la ciudad.
+     */
 
     @Override
     public int hashCode() {

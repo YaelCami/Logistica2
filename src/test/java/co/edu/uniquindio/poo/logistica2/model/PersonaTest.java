@@ -8,13 +8,11 @@ class PersonaTest {
 
     @Test
     void verificarCorreo() {
-    }
-
-    @Test
-    void getId() {
-    }
-
-    @Test
-    void setId() {
+        Persona p1=new Persona.Builder()
+                .id("1")
+                .nombre("q")
+                .correo("@Raul")
+                .build();
+        assertTrue(p1.verificarCorreo(p1.getCorreo()));
     }
 }

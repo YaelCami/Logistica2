@@ -10,6 +10,11 @@ public class Paquete implements IProducto{
     private List<Producto> listproductos;
     private List<IProducto> hijos;
 
+    /**
+     * Constructor privado que recibe un Builder} para crear el paquete.
+     *
+     * @param builder Objeto constructor que contiene los valores iniciales.
+     */
     public Paquete(Builder builder){
         this.id= builder.id;
         this.peso= builder.peso;
@@ -18,7 +23,9 @@ public class Paquete implements IProducto{
         this.hijos= builder.hijos;
 
     }
-
+    /**
+     * Builder para crear objetos  Paquete} de manera flexible.
+     */
     public static class Builder{
         private String id;
         private double peso;
@@ -51,6 +58,10 @@ public class Paquete implements IProducto{
         }
 
     }
+    /**
+     * Muestra los detalles del paquete y de todos sus hijos (Composite).
+     * Cada hijo también imprime sus propios detalles.
+     */
 
     @Override
     public void mostrarDetalles() {
@@ -60,19 +71,37 @@ public class Paquete implements IProducto{
         }
 
     }
-
+    /**
+     * Agrega un componente hijo al paquete (Composite).
+     *
+     * @param hijo Producto o subpaquete a agregar.
+     */
     public void agregarIProducto(IProducto hijo){
         hijos.add(hijo);
     }
+    /**
+     * Agrega un producto a la lista de productos internos si no existe otro
+     * producto con el mismo ID.
+     *
+     * @param producto Producto a agregar.
+     * @return true si se agregó correctamente, false si ya existe un producto con ese ID.
+     */
     public boolean agregarProductos(Producto producto) {
         boolean centinela = false;
         if (!verificarProducto(producto.getId())) {
-                listproductos.add(producto);
-                centinela = true;
+            listproductos.add(producto);
+            centinela = true;
         }
 
         return centinela;
     }
+    /**
+     * Verifica si existe un producto con el ID indicado dentro del paquete.
+     *
+     * @param id Identificador del producto a buscar.
+     * @return true si el producto existe, false en caso contrario.
+     */
+
     public boolean verificarProducto(String id) {
         boolean centinela = false;
         for (Producto p : listproductos) {
@@ -83,7 +112,12 @@ public class Paquete implements IProducto{
         }
         return centinela;
     }
-
+    /**
+     * Elimina un producto dentro del paquete según su ID.
+     *
+     * @param id Identificador del producto a eliminar.
+     * @return true si se eliminó correctamente, false si no se encontró.
+     */
     public boolean eliminarProducto(String id) {
         boolean centinela = false;
         for (Producto p : listproductos) {
@@ -95,7 +129,13 @@ public class Paquete implements IProducto{
         }
         return centinela;
     }
-
+    /**
+     * Actualiza los datos de un producto existente dentro del paquete.
+     *
+     * @param id ID del producto a actualizar.
+     * @param actualizado Objeto con los nuevos valores.
+     * @return true si se actualizó correctamente, false si no se encontró.
+     */
     public boolean actualizarProducto(String id, Producto actualizado) {
         boolean centinela = false;
         for (Producto p : listproductos) {
@@ -112,6 +152,12 @@ public class Paquete implements IProducto{
         }
         return centinela;
     }
+    /**
+     * Busca un producto dentro del paquete según su ID.
+     *
+     * @param id Identificador del producto.
+     * @return El producto encontrado o null si no existe.
+     */
     public Producto buscarProducto(String id) {
         for (Producto p: listproductos) {
             if (p.getId().equals(id)) {
