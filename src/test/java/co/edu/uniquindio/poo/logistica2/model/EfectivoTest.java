@@ -8,5 +8,6 @@ class EfectivoTest {
 
     @Test
     void pagar() {
+        
     }
 }

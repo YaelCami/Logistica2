@@ -234,4 +234,5 @@ public class Pedido implements IPedido{
     public void setExtras(Double extras) {
         this.extra = extras;
     }
+
 }

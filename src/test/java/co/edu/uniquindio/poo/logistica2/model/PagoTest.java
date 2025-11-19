@@ -9,12 +9,4 @@ class PagoTest {
     @Test
     void ejecutarPago() {
     }
-
-    @Test
-    void getMetodoPago() {
-    }
-
-    @Test
-    void setMetodoPago() {
-    }
 }
